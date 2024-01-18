@@ -3,7 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: #f3fdf0;
   background-color: #364149;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -25,8 +25,9 @@ body {
 
 main {
   margin: 30px;
+  margin-right: 0;
   height: calc(100vh - 60px);
-  width: calc(100vw - 60px);
+  width: calc(100vw - 30px);
   overflow: hidden;
 }
 
@@ -39,13 +40,15 @@ main {
 
 .todo {
   border-radius: 30px;
-  background-color: #4C5760;
+  background-color: #E5F9E0;
+  color: #4C5760;
   width: 400px;
   padding: 30px;
   margin-right: 30px;
 }
 
 .blocks {
+  width: calc(100% - 442px);
   border-radius: 30px;
   flex-grow: 1;
 }
@@ -56,10 +59,39 @@ main {
 }
 
 .block {
-  width: calc(33.3333333333% - 30px);
-  display: inline-block;
+  transition: 0.2s;
+  position: relative;
   border-radius: 20px;
+  margin: 0 40px 40px 0;
+  display: inline-block;
+  background-color: #4C5760;
   aspect-ratio: 1/1;
-  margin: 0 30px 30px 0;
-  background-color: #2CA58D;
+  width: calc(33.3333333333% - 40px - 4px);
+  border: dashed 2px rgba(76, 87, 96, 0);
+}
+.block.empty {
+  cursor: pointer;
+  background-color: transparent;
+  border-color: rgba(229, 249, 224, 0.5019607843);
+  color: #E5F9E0;
+}
+.block.empty:hover {
+  color: #4C5760;
+  border-style: solid;
+  background-color: rgba(229, 249, 224, 0.5019607843);
+}
+
+.widget {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+.widget.insert {
+  align-items: center;
+  font-size: 3rem;
+}
+.widget .body {
+  padding: 30px;
 }/*# sourceMappingURL=index.css.map */
