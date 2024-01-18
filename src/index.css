@@ -1,13 +1,18 @@
 :root {
+  font-family: "Exo 2";
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #364149;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
 }
 
 body {
@@ -15,5 +20,46 @@ body {
   display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
+  height: 100vh;
+}
+
+main {
+  margin: 30px;
+  height: calc(100vh - 60px);
+  width: calc(100vw - 60px);
+  overflow: hidden;
+}
+
+.container {
+  width: auto;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.todo {
+  border-radius: 30px;
+  background-color: #4C5760;
+  width: 400px;
+  padding: 30px;
+  margin-right: 30px;
+}
+
+.blocks {
+  border-radius: 30px;
+  flex-grow: 1;
+}
+
+.box {
+  width: 100%;
+  height: calc(100% - 24px);
+}
+
+.block {
+  width: calc(33.3333333333% - 30px);
+  display: inline-block;
+  border-radius: 20px;
+  aspect-ratio: 1/1;
+  margin: 0 30px 30px 0;
+  background-color: #2CA58D;
 }/*# sourceMappingURL=index.css.map */
