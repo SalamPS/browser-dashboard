@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
+import Clock from "./Clock"
 
 const Widget = ({isEmpty, newBlock}) => {
   return (
@@ -18,19 +19,19 @@ const Widget = ({isEmpty, newBlock}) => {
 
 export default function App () {
   const [Block, setBlock] = useState([
-    {},
+    // {},
     {isEmpty: true},
   ])
 
   const newBlock = () => {
     const copy = Block.slice();
-    if(copy.length == 6) copy.pop();
+    if(copy.length == 4) copy.pop();
     copy.splice(copy.length-2, 0, {});
     setBlock(copy)
   }
   const removeBlock = () => {
     const copy = Block.slice();
-    if(copy.length == 6) copy.pop();
+    if(copy.length == 4) copy.pop();
     copy.splice(copy.length-2, 0, {});
     setBlock(copy)
   }
@@ -45,12 +46,22 @@ export default function App () {
         </div>
         <div className="blocks">
           <div className="box">
+            <div className="welcome">
+              <div className="inner">
+                <div className="pad">
+                  <span className="head">Welcome, Salam <Clock/></span>
+                </div>
+              </div>
+            </div>
             {Block.map((content, i) => (<Widget key={i} 
               isEmpty={content.isEmpty}
               newBlock={newBlock}
             />))}
           </div>
-          <div>By LamP</div>
+          <div className="watermark">
+            <span>By LamP</span>
+            <div className="line"></div>
+          </div>
         </div>
       </div>
     </main>

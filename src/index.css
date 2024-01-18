@@ -25,10 +25,15 @@ body {
 
 main {
   margin: 30px;
-  margin-right: 0;
   height: calc(100vh - 60px);
-  width: calc(100vw - 30px);
+  width: calc(100vw - 60px);
   overflow: hidden;
+}
+@media screen and (min-width: 750px) {
+  main {
+    margin-right: 0;
+    width: calc(100vw - 30px);
+  }
 }
 
 .container {
@@ -36,6 +41,11 @@ main {
   height: 100%;
   display: flex;
   justify-content: space-between;
+}
+@media screen and (max-width: 750px) {
+  .container {
+    flex-direction: column;
+  }
 }
 
 .todo {
@@ -46,6 +56,11 @@ main {
   padding: 30px;
   margin-right: 30px;
 }
+@media screen and (max-width: 750px) {
+  .todo {
+    width: 100%;
+  }
+}
 
 .blocks {
   width: calc(100% - 442px);
@@ -55,33 +70,35 @@ main {
 
 .box {
   width: 100%;
-  height: calc(100% - 24px);
+  max-height: calc(100% - 24px);
+  overflow-y: scroll;
 }
 
 .block {
-  transition: 0.2s;
   position: relative;
-  border-radius: 20px;
-  margin: 0 40px 40px 0;
   display: inline-block;
+  margin: 0 40px 40px 0;
   background-color: #4C5760;
+  transition: 0.2s;
   aspect-ratio: 1/1;
+  border-radius: 20px;
   width: calc(33.3333333333% - 40px - 4px);
   border: dashed 2px rgba(76, 87, 96, 0);
 }
 .block.empty {
   cursor: pointer;
   background-color: transparent;
-  border-color: rgba(229, 249, 224, 0.5019607843);
+  border-color: rgba(229, 249, 224, 0.3764705882);
   color: #E5F9E0;
 }
 .block.empty:hover {
-  color: #4C5760;
+  color: #E5F9E0;
   border-style: solid;
-  background-color: rgba(229, 249, 224, 0.5019607843);
+  background-color: rgba(229, 249, 224, 0.1254901961);
 }
 
 .widget {
+  overflow: hidden;
   display: flex;
   position: absolute;
   justify-content: center;
@@ -94,4 +111,49 @@ main {
 }
 .widget .body {
   padding: 30px;
+}
+
+.welcome {
+  position: relative;
+  display: inline-block;
+  width: calc(66.6666666667% - 40px - 4px);
+  margin: 0 40px 40px 0;
+  background-color: #DE6B48;
+  aspect-ratio: 2.15/1;
+  border-radius: 20px;
+}
+@media screen and (max-width: 750px) {
+  .welcome {
+    width: calc(100% - 40px);
+  }
+}
+.welcome .inner {
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+.welcome .pad {
+  padding: 20px 30px;
+  width: inherit;
+}
+.welcome .head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 2rem;
+}
+
+.watermark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.watermark .line {
+  display: inline-block;
+  height: 2px;
+  flex-grow: 1;
+  background-color: rgba(229, 249, 224, 0.3764705882);
+  margin-left: 20px;
+  margin-top: 4px;
 }/*# sourceMappingURL=index.css.map */
