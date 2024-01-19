@@ -1,5 +1,8 @@
 'use client'
 
+import { Exo_2 } from 'next/font/google'
+const font = Exo_2({ subsets: ['latin'] })
+
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react"
 
@@ -8,11 +11,14 @@ const Clock = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTime(new Date());
+      if (typeof window !== 'undefined') {
+        setTime(new Date());
+      }
     }, 1000);
-
+  
     return () => clearInterval(intervalId);
-  }, []); // Efek hanya dijalankan sekali setelah render pertama
+  }, []);
+  
 
   const hours = time.getHours();
   const minutes = time.getMinutes();
@@ -25,7 +31,7 @@ const Clock = () => {
       {seconds < 10 ? '0' : ''}{seconds}
     </span>
   );
-}
+};
 
 const Widget = ({isEmpty, newBlock, name}) => {
   const widgets = [
@@ -56,7 +62,7 @@ const Widget = ({isEmpty, newBlock, name}) => {
   )
 }
 
-export default function Home () {
+export default function Main () {
   const [Block, setBlock] = useState([
     {name: 'tugas'},
     {isEmpty: true},
@@ -76,7 +82,7 @@ export default function Home () {
   }
 
   return (<>
-    <main>
+    <main className={font.className}>
       <div className="container">
         <div className="todo">
           <h1>
