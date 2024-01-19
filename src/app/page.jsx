@@ -11,7 +11,6 @@ const Clock = () => {
       setTime(new Date());
     }, 1000);
 
-    // Membersihkan interval saat komponen di-unmount
     return () => clearInterval(intervalId);
   }, []); // Efek hanya dijalankan sekali setelah render pertama
 
@@ -89,7 +88,10 @@ export default function Home () {
             <div className="welcome">
               <div className="inner">
                 <div className="pad">
-                  <span className="head">Welcome, Salam <Clock/></span>
+                  <span className="head">
+                    <span>Welcome, Salam </span>
+                    {/* <Clock/> */}
+                  </span>
                 </div>
               </div>
             </div>

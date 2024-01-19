@@ -1,0 +1,40 @@
+{
+  "theme_color":"#e5f9e0",
+  "background_color":"#364149",
+  "icons":[
+    {
+      "purpose":"maskable",
+      "sizes":"512x512",
+      "src":"lamp_maskable.png",
+      "type":"image/png"
+    },
+    {
+      "purpose":"any",
+      "sizes":"512x512",
+      "src":"lamp_rounded.png",
+      "type":"image/png"
+    }
+  ],
+  "orientation":"landscape",
+  "display":"standalone",
+  "dir":"auto",
+  "lang":"en-US",
+  "name":"Dashboard",
+  "short_name":"Dashboard",
+  "description": "...",
+  "start_url":"/",
+  "scope":"/",
+  "screenshots": [
+    {
+      "src": "lamp_rounded.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "ss.png",
+      "sizes": "1369x865",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+}
