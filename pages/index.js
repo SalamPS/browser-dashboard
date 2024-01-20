@@ -1,5 +1,10 @@
 import Head from "next/head";
-import Main from "./Main";
+import Welcome from "./Welcome";
+import Widget from "./Widget";
+import Todo from "./Todo";
+
+import { Exo_2 } from 'next/font/google'
+const font = Exo_2({ subsets: ['latin'] })
 
 export default function Home() {
   return (
@@ -11,7 +16,22 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.webmanifest" />
       </Head>
-      <Main/>
+      
+      <main className={font.className}>
+        <div className="container">
+          <Todo/>
+          <div className="blocks">
+            <div className="box">
+              <Welcome/>
+              <Widget/>
+            </div>
+            <div className="watermark">
+              <span>By LamP</span>
+              <div className="line"></div>
+            </div>
+          </div>
+        </div>
+      </main>
     </>
   );
 }
