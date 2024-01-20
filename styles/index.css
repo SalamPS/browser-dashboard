@@ -61,6 +61,76 @@ main {
   }
 }
 
+.todolist {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.list {
+  height: 80px;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  max-width: 100%;
+  border-radius: 20px;
+  transition: 0.2s;
+  background-color: #4C5760;
+  border: solid 5px #4C5760;
+  color: #f3fdf0;
+}
+.list h2 {
+  font-weight: 400;
+}
+.list:hover {
+  scale: 1.02;
+}
+.list:hover .mark {
+  box-shadow: 0 0 20px #002035;
+}
+.list .mark {
+  transition: 0.2s;
+  margin-right: 20px;
+  height: 100%;
+  width: 5px;
+}
+.list .mark.safe {
+  background-color: #00fb00;
+}
+.list .mark.hint {
+  background-color: #fbff00;
+}
+.list .mark.warn {
+  background-color: #fb0000;
+}
+.list .info {
+  width: calc(100% - 80px);
+  padding: 7px 0;
+}
+.list .info h2 {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.list .edit {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 15px;
+}
+.list .edit .bi {
+  margin: 2px 0;
+}
+.list .edit .bi:hover {
+  transition: 0.1s;
+  color: #f89172;
+}
+
+.isNear {
+  display: inline-block;
+  margin-right: 10px;
+}
+
 .blocks {
   width: calc(100% - 442px);
   border-radius: 30px;
@@ -169,4 +239,12 @@ main {
   background-color: rgba(229, 249, 224, 0.3764705882);
   margin-left: 20px;
   margin-top: 4px;
+}
+
+.time {
+  display: inline-block;
+  transition: 0.2s;
+}
+.time.fade {
+  opacity: 0;
 }/*# sourceMappingURL=index.css.map */

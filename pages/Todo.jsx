@@ -6,8 +6,8 @@ export default function Todo () {
     name: {},
     todo: [
       {
-        title: "Makan nasi",
-        desc: "Makanlah kawan, jika tidak kau akan kelaparan",
+        title: "Create your Dashboard",
+        desc: "Create an account and customize yours!",
         dead: 1705728382,
         made: 1705641982,
         important: false
@@ -22,15 +22,10 @@ export default function Todo () {
     const options = { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
     return date.toLocaleString('en-GB', options);
   };
-  const formatDeadIcon = (req) => {
-    if (req > 259200) return '🟢'
-    else if (req > 86400) return '🟡'
-    else return '🔴'
-  }
-  const formatDeadClass = (req) => {
-    if (req > 259200) return 'green'
-    else if (req > 86400) return 'yellow'
-    else return 'red'
+  const formatDead = (req) => {
+    if (req > 259200) return 'safe'
+    else if (req > 86400) return 'hint'
+    else return 'warn'
   }
 
   useEffect(() => {
@@ -50,15 +45,17 @@ export default function Todo () {
       <h1>ToDo</h1>
       <div className="todolist">
         {userConfig.todo.map((list, i) => {
-          const epoch = new Date().getTime()
+          const isDead = formatDead(new Date().getTime() - list.dead)
           return (
-            <div className="list" key={i}>
-              <div className="mark"></div>
+            <div className={`list ${isDead}`} key={i}>
+              <div className={`mark ${isDead}`}/>
               <div className="info">
                 <h2>{list.title}</h2>
-                <p>
-                  {'20/01/24, 12:15:43'}
-                </p>
+                <p>{'20/01/24, 12:15:43'}</p>
+              </div>
+              <div className="edit">
+                <div className="bi bi-pencil-square"></div>
+                <div className="bi bi-trash3-fill"></div>
               </div>
             </div>
           )})}
