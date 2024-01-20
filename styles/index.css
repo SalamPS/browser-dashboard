@@ -132,6 +132,70 @@ main {
 .list .edit .bi-check-circle-fill {
   font-size: 1.5rem;
 }
+.list.add {
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: dashed 2px;
+  font-size: 2rem;
+}
+.list.add:hover {
+  background-color: rgba(76, 87, 96, 0.1254901961);
+  border-style: solid;
+  border-color: rgba(76, 87, 96, 0.5647058824);
+}
+.list.form {
+  color: #f3fdf0;
+  height: auto;
+  padding: 20px;
+  cursor: default;
+}
+.list.form form {
+  width: 100%;
+}
+.list.form label {
+  flex-direction: column;
+  display: flex;
+}
+.list.form span {
+  margin-left: 15px;
+  display: block;
+}
+.list.form input {
+  transition: 0.2s;
+  border-radius: 10px;
+  border: solid 1px rgba(229, 249, 224, 0.3764705882);
+  outline: none;
+  padding: 15px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.list.form input:active, .list.form input:focus {
+  border-color: #E5F9E0;
+}
+.list.form button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border-radius: 10px;
+  transition: 0.2s;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+.list.form button:hover {
+  scale: 1.05;
+}
+.list.form #submit {
+  background-color: #E5F9E0;
+  color: #4C5760;
+}
+.list.form #cancel {
+  background-color: #DE6B48;
+  color: #f3fdf0;
+}
 .list.clear1 {
   height: 0;
   border: 0;
@@ -139,9 +203,6 @@ main {
 }
 .list.clear2 {
   display: none;
-}
-.list:hover {
-  scale: 1.03;
 }
 .list:hover .mark {
   box-shadow: 0 0 20px #002035;
