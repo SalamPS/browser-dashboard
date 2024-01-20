@@ -1,1 +1,0 @@
-self.__NEXT_FONT_MANIFEST='{"pages":{"/Time":["static/media/3d372fc6ad648ff2-s.p.woff2"],"/Welcome":["static/media/3d372fc6ad648ff2-s.p.woff2"],"/":["static/media/c2e6efaf026ea7b6-s.p.woff2","static/media/3d372fc6ad648ff2-s.p.woff2"]},"app":{},"appUsingSizeAdjust":false,"pagesUsingSizeAdjust":true}';
