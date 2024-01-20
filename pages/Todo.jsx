@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 
 export default function Todo () {
+
+  // Set Client Configuration in Cache for offline usage and API Controls
   const storageKey = 'userConfig';
   const [userConfig, setUserConfig] = useState({
     name: {},
@@ -17,17 +19,27 @@ export default function Todo () {
       {}
     ]
   });
+
+  // Format date to be Readable
+  // Output Example -> 20/01/24, 12:15:43
   const formatDate = (date) => {
     date = new Date(date * 1000)
     const options = { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
     return date.toLocaleString('en-GB', options);
   };
+
+  // Format Deadline into an usable string
+  // safe -> More than 3 days from the deadline
+  // hint -> Less than 3 days from the deadline
+  // warn -> Less than 1 day from the deadline
   const formatDead = (req) => {
     if (req > 259200) return 'safe'
     else if (req > 86400) return 'hint'
     else return 'warn'
   }
 
+  // Get recent cache from Client Local Storage
+  // Gonna be Fetched first if Client is Online
   useEffect(() => {
     formatDate(new Date().getTime())
     const storedUserConfig = localStorage.getItem(storageKey);
@@ -36,6 +48,7 @@ export default function Todo () {
     }
   }, []);
 
+  // Set new Values into Cache everytime Client makes any changes
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(userConfig));
   }, [userConfig]);
@@ -44,7 +57,10 @@ export default function Todo () {
     <div className="todo">
       <h1>ToDo</h1>
       <div className="todolist">
+        {/* Render Client's todo list */}
         {userConfig.todo.map((list, i) => {
+          // Initialize deadline marker
+          // Changed it's color according to it's time delta
           const isDead = formatDead(new Date().getTime() - list.dead)
           return (
             <div className={`list ${isDead}`} key={i}>
