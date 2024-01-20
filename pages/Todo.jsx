@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ReactDatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
+import Cookies from 'js-cookie';
 
 const TodoList = ({config, markClear}) => {
   // Format Deadline into an usable string
@@ -23,6 +24,7 @@ const TodoList = ({config, markClear}) => {
 
   return (<>
     {config.todo.map((list, i) => {
+      console.log(config)
       // 
       // Initialize deadline marker
       // Changed it's color according to it's time delta
@@ -71,8 +73,8 @@ const NewTodo = ({config, setConfig, setAdd}) => {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    config.todo.push(formData);
+    e.preventDefault()
+    config.todo.push(formData)
     setConfig(config)
     setAdd(false)
   }
@@ -131,31 +133,40 @@ export default function Todo () {
   // Set Client Configuration in Cache for offline usage and API Controls
   const storageKey = 'userConfig';
   const [userConfig, setUserConfig] = useState({
-    name: {},
-    todo: [
-      {
-        title: "Create your Dashboard",
-        desc: "Create an account and customize yours!",
-        dead: 1705721382,
-        made: 1705641982,
-        index: 0,
-        clear: 0,
-        important: false,
-      }
-    ],
-    widget: [
-      {}
-    ]
+    todo: [],
+    widget: []
   });
 
-  // Get recent cache from Client Local Storage
-  // Gonna be Fetched first if Client is Online
+  // Get recent cache from Client Local Storage and Fetch from Database
   useEffect(() => {
     const storedUserConfig = localStorage.getItem(storageKey);
     if (storedUserConfig) {
       setUserConfig(JSON.parse(storedUserConfig));
     }
+
+    // FetchData with token
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`api/default`);
+        if (response.ok) {
+          const data = await response.json();
+          setUserConfig((prevData) => ({
+            ...prevData,
+            ['todo']: data,
+          }))
+        } else {
+          console.error('Failed to fetch default data');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+
 
   // Set new Values into Cache everytime Client makes any changes
   useEffect(() => {

@@ -7,9 +7,6 @@ import { Exo_2 } from 'next/font/google'
 const font = Exo_2({ subsets: ['latin'] })
 
 export default function Home() {
-  const host = process.env.HOST || 'http://localhost:3000'
-
-
   return (
     <>
       <Head>

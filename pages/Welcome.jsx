@@ -1,4 +1,5 @@
 import Time from "./Time";
+import Cookies from 'js-cookie';
 
 export default function Welcome () {
   return (<>
