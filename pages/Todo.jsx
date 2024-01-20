@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 export default function Todo () {
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
   // Set Client Configuration in Cache for offline usage and API Controls
   const storageKey = 'userConfig';
@@ -12,7 +13,18 @@ export default function Todo () {
         desc: "Create an account and customize yours!",
         dead: 1705728382,
         made: 1705641982,
-        important: false
+        index: 0,
+        clear: 0,
+        important: false,
+      },
+      {
+        title: "Customize your Account",
+        desc: "Create an account and customize yours!",
+        dead: 1705728382,
+        made: 1705641982,
+        index: 0,
+        clear: 0,
+        important: false,
       }
     ],
     widget: [
@@ -52,6 +64,18 @@ export default function Todo () {
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(userConfig));
   }, [userConfig]);
+
+  // Mark the chosen to-do list as cleared
+  const markClear = async (index) => {
+    const write = (value) => {
+      const update = { ...userConfig }
+      update.todo[index].clear = value
+      setUserConfig(update)
+    }
+    write(1)
+    await delay(200)
+    write(2)
+  }
   
   return (<>
     <div className="todo">
@@ -62,16 +86,20 @@ export default function Todo () {
           // Initialize deadline marker
           // Changed it's color according to it's time delta
           const isDead = formatDead(new Date().getTime() - list.dead)
+          console.log(list.clear)
           return (
-            <div className={`list ${isDead}`} key={i}>
+            list.clear == 2 ? <></> : 
+            <div key={i}
+              className={`list${list.clear != 0 ? ` clear${list.clear}` : ''}`}>
               <div className={`mark ${isDead}`}/>
               <div className="info">
                 <h2>{list.title}</h2>
                 <p>{'20/01/24, 12:15:43'}</p>
               </div>
               <div className="edit">
-                <div className="bi bi-pencil-square"></div>
-                <div className="bi bi-trash3-fill"></div>
+                <div className={`bi bi-check${list.clear ? '-circle-fill' : ''}`}
+                  onClick={() => {markClear(i)}}
+                />
               </div>
             </div>
           )})}

@@ -1,3 +1,8 @@
+@keyframes hideDisplay {
+  100% {
+    display: none;
+  }
+}
 :root {
   line-height: 1.5;
   font-weight: 400;
@@ -67,26 +72,25 @@ main {
 }
 
 .list {
-  height: 80px;
+  height: 70px;
   cursor: pointer;
   overflow: hidden;
   display: flex;
   justify-content: space-between;
   max-width: 100%;
+  margin-bottom: 20px;
   border-radius: 20px;
   transition: 0.2s;
   background-color: #4C5760;
   border: solid 5px #4C5760;
-  color: #f3fdf0;
 }
 .list h2 {
+  font-size: 1.3rem;
+  color: #f3fdf0;
   font-weight: 400;
 }
-.list:hover {
-  scale: 1.02;
-}
-.list:hover .mark {
-  box-shadow: 0 0 20px #002035;
+.list p {
+  color: rgba(243, 253, 240, 0.6666666667);
 }
 .list .mark {
   transition: 0.2s;
@@ -104,31 +108,47 @@ main {
   background-color: #fb0000;
 }
 .list .info {
-  width: calc(100% - 80px);
+  flex-grow: 1;
   padding: 7px 0;
 }
 .list .info h2 {
   white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
 }
 .list .edit {
+  transition: 0.3s;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 15px;
 }
-.list .edit .bi {
-  margin: 2px 0;
-}
-.list .edit .bi:hover {
-  transition: 0.1s;
+.list .edit:hover .bi {
   color: #f89172;
 }
-
-.isNear {
-  display: inline-block;
-  margin-right: 10px;
+.list .edit .bi {
+  transition: 0.1s;
+  margin: 2px 0;
+  font-size: 2rem;
+}
+.list .edit .bi-check-circle-fill {
+  font-size: 1.5rem;
+}
+.list.clear1 {
+  height: 0;
+  border: 0;
+  margin: 0;
+}
+.list.clear2 {
+  display: none;
+}
+.list:hover {
+  scale: 1.03;
+}
+.list:hover .mark {
+  box-shadow: 0 0 20px #002035;
+}
+.list:hover .edit {
+  background-color: #E5F9E0;
+  padding: 15px;
 }
 
 .blocks {
