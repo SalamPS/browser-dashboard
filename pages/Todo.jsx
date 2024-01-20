@@ -83,11 +83,17 @@ export default function Todo () {
       <div className="todolist">
         {/* Render Client's todo list */}
         {userConfig.todo.map((list, i) => {
+          // 
           // Initialize deadline marker
           // Changed it's color according to it's time delta
           const isDead = formatDead(new Date().getTime() - list.dead)
           return (
-            list.clear == 2 ? <div key={i} className="clear2"></div> : 
+            // If the clear property's value == 2, then hide
+            list.clear == 2 ? <div key={i} className="clear2"></div> 
+            // 
+            : 
+            // If the clear property's value != 2, then show
+            // It handle clear event which will set clear value to 1, then 2
             <div key={i}
               className={`list${list.clear != 0 ? ` clear${list.clear}` : ''}`}>
               <div className={`mark ${isDead}`}/>
