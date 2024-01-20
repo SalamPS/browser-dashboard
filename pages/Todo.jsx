@@ -86,9 +86,8 @@ export default function Todo () {
           // Initialize deadline marker
           // Changed it's color according to it's time delta
           const isDead = formatDead(new Date().getTime() - list.dead)
-          console.log(list.clear)
           return (
-            list.clear == 2 ? <></> : 
+            list.clear == 2 ? <div key={i} className="clear2"></div> : 
             <div key={i}
               className={`list${list.clear != 0 ? ` clear${list.clear}` : ''}`}>
               <div className={`mark ${isDead}`}/>
