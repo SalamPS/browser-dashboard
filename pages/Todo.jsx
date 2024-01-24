@@ -45,7 +45,7 @@ const TodoList = ({config, markClear}) => {
           </div>
           <div className="edit">
             <div className={`bi bi-check${list.clear ? '-circle-fill' : ''}`}
-              onClick={() => {markClear(i)}}
+              onClick={() => {markClear(list.id_todo)}}
             />
           </div>
         </div>
@@ -56,14 +56,34 @@ const TodoList = ({config, markClear}) => {
 
 const NewTodo = ({config, setConfig, setAdd}) => {
   const [formData, setFormData] = useState({
+    id_todo: new Date().getTime(),
     title: '',
-    desc: '',
+    Desc: '',
     dead: '',
-    important: false,
-    made: new Date().getTime(),
-    index: 0,
+    vital: 0,
+    Index: 0,
     clear: 0,
   })
+  
+  const postData = async (data) => {
+    try {
+      const response = await fetch('/api/default?dest=todo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error('Error during POST request:', error);
+    }
+  };
 
   const handleChange = (name, value) => {
     setFormData((prevData) => ({
@@ -76,6 +96,7 @@ const NewTodo = ({config, setConfig, setAdd}) => {
     e.preventDefault()
     config.todo.push(formData)
     setConfig(config)
+    postData(formData)
     setAdd(false)
   }
 
@@ -94,8 +115,8 @@ const NewTodo = ({config, setConfig, setAdd}) => {
         <span>Description</span>
         <input
           type="text"
-          name="desc"
-          value={formData.desc}
+          name="Desc"
+          value={formData.Desc}
           onChange={(e) => handleChange(e.target.name, e.target.value)}
         />
       </label>
@@ -113,8 +134,8 @@ const NewTodo = ({config, setConfig, setAdd}) => {
         <span>Important</span>
         <input
           type="checkbox"
-          name="important"
-          checked={formData.important}
+          name="vital"
+          checked={formData.vital}
           onChange={(e) => {handleChange(e.target.name, e.target.checked)}}
         />
       </label>
@@ -139,10 +160,6 @@ export default function Todo () {
 
   // Get recent cache from Client Local Storage and Fetch from Database
   useEffect(() => {
-    const storedUserConfig = localStorage.getItem(storageKey);
-    if (storedUserConfig) {
-      setUserConfig(JSON.parse(storedUserConfig));
-    }
 
     // FetchData with token
     const fetchData = async () => {
@@ -150,10 +167,12 @@ export default function Todo () {
         const response = await fetch(`api/default`);
         if (response.ok) {
           const data = await response.json();
-          setUserConfig((prevData) => ({
-            ...prevData,
-            ['todo']: data,
-          }))
+          if (data.length) {
+            setUserConfig((prevData) => ({
+              ...prevData,
+              ['todo']: data,
+            }))
+          }
         } else {
           console.error('Failed to fetch default data');
         }
@@ -161,8 +180,11 @@ export default function Todo () {
         console.error('Error:', error);
       }
     };
-
     fetchData();
+    const storedUserConfig = localStorage.getItem(storageKey);
+    if (storedUserConfig) {
+      setUserConfig(JSON.parse(storedUserConfig));
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -176,17 +198,37 @@ export default function Todo () {
   // 
   // Storage Setup End
   /////////////////// 
+  
 
+  // Data DELETE
+  const deleteData = async (id) => {
+    try {
+      const response = await fetch(`/api/default?dest=todo&id=${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error('Error during POST request:', error);
+    }
+  };
   // Mark the chosen to-do list as cleared
-  const markClear = async (index) => {
+  const markClear = async (id) => {
+    const update = { ...userConfig }
     const write = (value) => {
-      const update = { ...userConfig }
-      update.todo[index].clear = value
+      update.todo.find(list => list.id_todo == id).clear = value
       setUserConfig(update)
     }
     write(1)
     await delay(200)
     write(2)
+    deleteData(id)
   }
 
   // AddNew Todo Trigger

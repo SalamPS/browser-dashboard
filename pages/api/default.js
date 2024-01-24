@@ -11,35 +11,33 @@ import mysql from 'mysql'
 export default function handler(req, res) {
   let sql = ''
   const cookie = req.cookies.token;
-  const db = mysql.createConnection({
-    host: host,  
-    user: user,
-    password: password,
-    database: database, 
-  });
-  db.connect((err) => {
-    if (err) {
-      console.error('Koneksi ke database gagal:', err);
-      return;
-    }
-    console.log('Terhubung ke database MySQL');
-  });
+  const { dest, id } = req.query;
   if (req.method === 'GET') {
-    if (cookie == AF) sql = `SELECT * FROM todo WHERE id_user = 'arijf'`;
+    if (cookie == AF) sql = `SELECT * FROM todo WHERE id_user = 'arijf'`
     else if (cookie == SP) sql = `SELECT * FROM todo WHERE id_user = 'salamp'`
-    else {
-      res.status(200).json({
-        "todo": [],
-        "widget": []
-      })
-    }
+    else res.status(200).json([])
   }
-  db.query(sql, (err, results) => {
-    if (err) {
-      console.error('Error saat mengambil data:', err);
-      res.status(500).send('Terjadi kesalahan saat mengambil data dari database');
-      return;
-    }
-    res.json(results);
-  });
+  if (sql.length) {
+    const db = mysql.createConnection({
+      host: host,  
+      user: user,
+      password: password,
+      database: database, 
+    });
+    db.connect((err) => {
+      if (err) {
+        console.error('Koneksi ke database gagal:', err);
+        return;
+      }
+      console.log('Terhubung ke database MySQL');
+    });
+    db.query(sql, (err, results) => {
+      if (err) {
+        console.error('Error while Querying Data:', err);
+        res.status(500).send('Error while Querying Data');
+        return;
+      }
+      res.status(200).json(results);
+    });
+  }
 }
