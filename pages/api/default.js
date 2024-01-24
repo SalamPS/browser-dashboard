@@ -44,6 +44,23 @@ export default function handler(req, res) {
       res.status(500).json({ error: "Internal Server Error" });
     }
   }
+  else if (req.method === 'DELETE') {
+    try {
+      if (cookie == AF || cookie == SP) {
+        if (dest == 'todo') 
+        sql = `DELETE FROM todo WHERE id_todo = ${id}`
+        else if (dest == 'widget') 
+        sql = `
+          -- INSERT INTO todo (id_todo, title, Desc, dead, vital, Index, clear, id_user) 
+          -- VALUES (id_todo,'title','desc',dead,vital,Index,Clear,${user})
+        `
+      }
+    }
+    catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
   if (sql.length) {
     const db = mysql.createConnection({
       host: host,  
