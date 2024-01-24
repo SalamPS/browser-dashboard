@@ -6,6 +6,9 @@ const host = process.env.SQL_HOST || ''
 const user = process.env.SQL_USER || ''
 const password = process.env.SQL_PASSWORD || ''
 const database = process.env.SQL_DATABASE || ''
+const user1 = process.env.USER1 || '01'
+const user2 = process.env.USER2 || '02'
+
 import mysql from 'mysql'
 
 export default function handler(req, res) {
@@ -13,8 +16,8 @@ export default function handler(req, res) {
   const cookie = req.cookies.token;
   const { dest, id } = req.query;
   if (req.method === 'GET') {
-    if (cookie == AF) sql = `SELECT * FROM todo WHERE id_user = 'arijf'`
-    else if (cookie == SP) sql = `SELECT * FROM todo WHERE id_user = 'salamp'`
+    if (cookie == AF) sql = `SELECT * FROM todo WHERE id_user = '${user1}'`
+    else if (cookie == SP) sql = `SELECT * FROM todo WHERE id_user = '${user2}'`
     else res.status(200).json([])
   }
   if (sql.length) {
