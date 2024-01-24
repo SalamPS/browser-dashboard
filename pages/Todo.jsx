@@ -92,8 +92,7 @@ const NewTodo = ({config, setConfig, setAdd}) => {
     }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = () => {
     config.todo.push(formData)
     setConfig(config)
     postData(formData)
