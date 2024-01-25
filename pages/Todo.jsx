@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import ReactDatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
-import Cookies from 'js-cookie';
 
 const TodoList = ({config, markDone}) => {
   // Format Deadline into an usable string
@@ -76,7 +76,6 @@ const NewTodo = ({config, setConfig, setAdd}) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      response.status(201)
     } catch (error) {
       console.error('Error during POST request:', error);
     }
@@ -87,8 +86,6 @@ const NewTodo = ({config, setConfig, setAdd}) => {
       ...prevData,
       [name]: value,
     }))
-    
-    if (name == 'date') console.log(value)
   }
 
   const handleSubmit = () => {
@@ -148,57 +145,53 @@ const NewTodo = ({config, setConfig, setAdd}) => {
   )
 }
 
-export default function Todo () {
+export default function Todo ({savedConfig, setSavedConfig, storageKey, userConfig, setUserConfig, Valid, setValid}) {
   const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+  // AddNew Todo Trigger
+  const [Add, setAdd] = useState(false)
 
   ///////////////////
   // Storage Setup
   // 
+  //
   // Set Client Configuration in Cache for offline usage and API Controls
-  const storageKey = 'userConfig';
-  const [userConfig, setUserConfig] = useState({
-    todo: [],
-    widget: []
-  });
-
-  // Get recent cache from Client Local Storage and Fetch from Database
-  useEffect(() => {
-
-    // FetchData with token
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`api/default`);
-        if (response.ok) {
-          const data = await response.json();
-          if (data.length) {
-            setUserConfig((prevData) => ({
-              ...prevData,
-              ['todo']: data,
-            }))
-          }
-        } else {
-          console.error('Failed to fetch default data');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-    fetchData();
-    const storedUserConfig = localStorage.getItem(storageKey);
-    if (storedUserConfig) {
-      setUserConfig(JSON.parse(storedUserConfig));
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-
-
+  //
+  //
   // Set new Values into Cache everytime Client makes any changes
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(userConfig));
   }, [userConfig]);
+  //
+  //
+  // GET TodoList and Validate if the Online and Offline data are synced
+  // Get recent cache from Client Local Storage and Fetch from Database
+  useEffect(() => {
+    const oldStorage = JSON.parse(localStorage.getItem(storageKey))
+    const fetchValid = async () => {
+      try {
+        // Fetch Data and Save it to Temp
+        const response = await fetch(`api/default`)
+        if (response.ok) {
+          const data = await response.json();
+          setSavedConfig((prevData) => ({
+            ...prevData,
+            ['todo']: data,
+          }))
+          if (savedConfig.todo != oldStorage.todo) 
+              setValid((Valid) => ({...Valid,['todo']: false}))
+        } else {
+          console.error('Failed to fetch default data');
+        }
+      } catch (error) {
+        console.error('Error:', error)
+      }
+    };
+    fetchValid()
+  }, []);
   // 
   // 
+  //
   // Storage Setup End
   /////////////////// 
   
@@ -230,8 +223,6 @@ export default function Todo () {
     }
   }
 
-  // AddNew Todo Trigger
-  const [Add, setAdd] = useState(false)
   
   return (<>
     <div className="todo">

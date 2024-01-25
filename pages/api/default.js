@@ -13,6 +13,7 @@ import mysql from 'mysql'
 
 export default function handler(req, res) {
   let sql = ''
+  let result = [];
   const cookie = req.cookies.token;
   const { dest, id } = req.query;
   if (req.method === 'GET') {
@@ -88,7 +89,7 @@ export default function handler(req, res) {
       host: host,  
       user: user,
       password: password,
-      database: database, 
+      database: database,
     });
     db.connect((err) => {
       if (err) {
@@ -103,9 +104,10 @@ export default function handler(req, res) {
         res.status(500).send('Error while Querying Data');
         return;
       }
+      result = results;
+      if (req.method == 'GET') res.status(200).send(results)
     });
     switch(req.method) {
-      case 'GET' : res.status(200).send({get: true}); break;
       case 'PUT' : res.status(200).send({put: true}); break;
       case 'POST' : res.status(201).send({posted: true}); break;
       case 'DELETE' : res.status(204); break;
