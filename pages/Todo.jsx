@@ -3,7 +3,7 @@ import ReactDatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import Cookies from 'js-cookie';
 
-const TodoList = ({config, markClear}) => {
+const TodoList = ({config, markDone}) => {
   // Format Deadline into an usable string
   // safe -> More than 3 days from the deadline
   // hint -> Less than 3 days from the deadline
@@ -24,7 +24,6 @@ const TodoList = ({config, markClear}) => {
 
   return (<>
     {config.todo.map((list, i) => {
-      console.log(config)
       // 
       // Initialize deadline marker
       // Changed it's color according to it's time delta
@@ -45,7 +44,7 @@ const TodoList = ({config, markClear}) => {
           </div>
           <div className="edit">
             <div className={`bi bi-check${list.clear ? '-circle-fill' : ''}`}
-              onClick={() => {markClear(list.id_todo)}}
+              onClick={() => {markDone(list.id_todo)}}
             />
           </div>
         </div>
@@ -74,12 +73,10 @@ const NewTodo = ({config, setConfig, setAdd}) => {
         },
         body: JSON.stringify(data),
       });
-  
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      const result = await response.json();
-      console.log(result);
+      response.status(201)
     } catch (error) {
       console.error('Error during POST request:', error);
     }
@@ -90,10 +87,14 @@ const NewTodo = ({config, setConfig, setAdd}) => {
       ...prevData,
       [name]: value,
     }))
+    
+    if (name == 'date') console.log(value)
   }
 
   const handleSubmit = () => {
     config.todo.push(formData)
+    config.todo[config.todo.length - 1].dead = Math.floor((new Date(config.todo[config.todo.length - 1].dead).getTime())/1000);
+    config.todo[config.todo.length - 1].id_todo = Math.floor((config.todo[config.todo.length - 1].id_todo)/1000);
     setConfig(config)
     postData(formData)
     setAdd(false)
@@ -125,8 +126,11 @@ const NewTodo = ({config, setConfig, setAdd}) => {
           selected={formData.dead}
           onChange={(date) => handleChange('dead', date)}
           showTimeSelect
+          isClearable
+          withPortal
           timeIntervals={1}
-          dateFormat="yyyy-MM-dd HH:mm:ss"
+          minDate={new Date()}
+          dateFormat="dd-MM-yyyy | HH:mm:ss"
         />
       </label>
       <label>
@@ -199,26 +203,9 @@ export default function Todo () {
   /////////////////// 
   
 
-  // Data DELETE
-  const deleteData = async (id) => {
-    try {
-      const response = await fetch(`/api/default?dest=todo&id=${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const result = await response.json();
-      console.log(result);
-    } catch (error) {
-      console.error('Error during POST request:', error);
-    }
-  };
+  // Data Todo is Done
   // Mark the chosen to-do list as cleared
-  const markClear = async (id) => {
+  const markDone = async (id) => {
     const update = { ...userConfig }
     const write = (value) => {
       update.todo.find(list => list.id_todo == id).clear = value
@@ -227,7 +214,20 @@ export default function Todo () {
     write(1)
     await delay(200)
     write(2)
-    deleteData(id)
+    try {
+      const response = await fetch(`/api/default?dest=todo&id=${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(update.todo.find(list => list.id_todo == id)),
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+    } catch (error) {
+      console.error('Error during PUT request:', error);
+    }
   }
 
   // AddNew Todo Trigger
@@ -238,7 +238,7 @@ export default function Todo () {
       <h1>ToDo</h1>
       <div className="todolist">
         {/* Render Client's todo list */}
-        <TodoList config={userConfig} markClear={markClear}/>
+        <TodoList config={userConfig} markDone={markDone}/>
         {/* Add New todo list */}
         {Add ? 
         <div className="list form">
