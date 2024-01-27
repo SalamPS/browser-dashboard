@@ -23,7 +23,7 @@ const TodoList = ({config, markDone}) => {
   };
 
   return (<>
-    {config.todo.map((list, i) => {
+    {!config ? '' : config.todo.map((list, i) => {
       // 
       // Initialize deadline marker
       // Changed it's color according to it's time delta
@@ -150,50 +150,6 @@ export default function Todo ({savedConfig, setSavedConfig, storageKey, userConf
 
   // AddNew Todo Trigger
   const [Add, setAdd] = useState(false)
-
-  ///////////////////
-  // Storage Setup
-  // 
-  //
-  // Set Client Configuration in Cache for offline usage and API Controls
-  //
-  //
-  // Set new Values into Cache everytime Client makes any changes
-  useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(userConfig));
-  }, [userConfig]);
-  //
-  //
-  // GET TodoList and Validate if the Online and Offline data are synced
-  // Get recent cache from Client Local Storage and Fetch from Database
-  useEffect(() => {
-    const oldStorage = JSON.parse(localStorage.getItem(storageKey))
-    const fetchValid = async () => {
-      try {
-        // Fetch Data and Save it to Temp
-        const response = await fetch(`api/default`)
-        if (response.ok) {
-          const data = await response.json();
-          setSavedConfig((prevData) => ({
-            ...prevData,
-            ['todo']: data,
-          }))
-          if (savedConfig.todo != oldStorage.todo) 
-              setValid((Valid) => ({...Valid,['todo']: false}))
-        } else {
-          console.error('Failed to fetch default data');
-        }
-      } catch (error) {
-        console.error('Error:', error)
-      }
-    };
-    fetchValid()
-  }, []);
-  // 
-  // 
-  //
-  // Storage Setup End
-  /////////////////// 
   
 
   // Data Todo is Done

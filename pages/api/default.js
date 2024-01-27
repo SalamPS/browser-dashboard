@@ -19,7 +19,7 @@ export default function handler(req, res) {
   if (req.method === 'GET') {
     if (cookie == AF) sql = `SELECT * FROM todo WHERE id_user = '${user1}'`
     else if (cookie == SP) sql = `SELECT * FROM todo WHERE id_user = '${user2}'`
-    else res.status(200).send({success: true});
+    else res.status(200).send([]);
   }
   else if (req.method === 'POST') {
     let user = false
@@ -105,7 +105,7 @@ export default function handler(req, res) {
         return;
       }
       result = results;
-      if (req.method == 'GET') res.status(200).send(results)
+      if (req.method == 'GET') res.status(200).json(results)
     });
     switch(req.method) {
       case 'PUT' : res.status(200).send({put: true}); break;
