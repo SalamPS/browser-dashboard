@@ -347,6 +347,9 @@ main {
 .welcome .pad {
   padding: 20px 30px;
   width: inherit;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 .welcome .head {
   display: flex;

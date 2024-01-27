@@ -14,7 +14,7 @@ export default function Xcontainer () {
   const base = {
     todo:[], 
     widget:[],
-    shortcut: []
+    short: [],
   }
   const storageKey = 'userConfig';
   const [Init, setInit] = useState(false)
@@ -64,6 +64,7 @@ export default function Xcontainer () {
       }
     };
     fetchValid('todo')
+    fetchValid('short')
   }, []);
   // 
   // 
