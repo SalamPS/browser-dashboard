@@ -17,8 +17,8 @@ export default function handler(req, res) {
   const cookie = req.cookies.token;
   const { dest, id, type } = req.query;
   if (req.method === 'GET') {
-    if (cookie == AF) sql = `SELECT * FROM todo WHERE id_user = '${user1}'`
-    else if (cookie == SP) sql = `SELECT * FROM todo WHERE id_user = '${user2}'`
+    if (cookie == AF) sql = `SELECT \`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\` FROM todo WHERE id_user = '${user1}'`
+    else if (cookie == SP) sql = `SELECT \`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\` FROM todo WHERE id_user = '${user2}'`
     else res.status(200).send([]);
   }
   else if (req.method === 'POST') {
