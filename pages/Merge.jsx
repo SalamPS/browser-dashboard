@@ -4,6 +4,45 @@ const font = Exo_2({ subsets: ['latin'] })
 
 export default function Merge ({storageKey, savedConfig, setSavedConfig, userConfig, setUserConfig, Valid, setValid}) {
   const revalidate = () => setValid({todo:true, widget: true})
+  const pushData = async (dest) => {
+    const newData = userConfig[dest].filter(unknown => !savedConfig[dest].find(known => known[`id_${dest}`] === unknown[`id_${dest}`]));
+    if (newData.length) {
+      try {
+        const response = await fetch(`/api/default?dest=${dest}&type=merge`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newData),
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+      } catch (error) {
+        console.error('Error during POST request:', error);
+      }
+    }
+  }
+  const putData = async (dest) => {
+    const oldData = userConfig[dest].filter(unknown => savedConfig[dest].find(known => known[`id_${dest}`] === unknown[`id_${dest}`]));
+    const updatedData = oldData.filter(old => !savedConfig[dest].find(known => JSON.stringify(known) === JSON.stringify(old)));
+    if (updatedData.length) {
+      try {
+        const response = await fetch(`/api/default?dest=${dest}&type=merge`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedData),
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+      } catch (error) {
+        console.error('Error during POST request:', error);
+      }
+    }
+  }
   
   return (<>
     <div id="merge" className={font.className}>
@@ -23,16 +62,16 @@ export default function Merge ({storageKey, savedConfig, setSavedConfig, userCon
             onClick={() => {
               revalidate()
               setUserConfig(savedConfig)
-              localStorage.setItem(storageKey, JSON.stringify(savedConfig));
             }}>
             Prioritaskan
             <br />
             Data Online
           </button>
           <button className={font.className}
-            onClick={() => {
+            onClick={async () => {
               revalidate()
-              setSavedConfig(userConfig)
+              pushData('todo')
+              putData('todo')
             }}>
             Prioritaskan
             <br />

@@ -15,7 +15,7 @@ export default function handler(req, res) {
   let sql = ''
   let result = [];
   const cookie = req.cookies.token;
-  const { dest, id } = req.query;
+  const { dest, id, type } = req.query;
   if (req.method === 'GET') {
     if (cookie == AF) sql = `SELECT * FROM todo WHERE id_user = '${user1}'`
     else if (cookie == SP) sql = `SELECT * FROM todo WHERE id_user = '${user2}'`
@@ -29,8 +29,12 @@ export default function handler(req, res) {
 
       if (user) {
         const data = req.body;
-        if (dest == 'todo') 
-        sql = `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.vital},${data.Index},${data.clear},'${user}')`
+        if (dest == 'todo') {
+          if (type == 'merge') data.forEach(data => {
+            sql += `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.vital},${data.Index},${data.clear},'${user}'); `
+          })
+          else sql = `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.vital},${data.Index},${data.clear},'${user}')`
+        }
         else if (dest == 'widget') 
         sql = `
           -- INSERT INTO todo (id_todo, title, Desc, dead, vital, Index, clear, id_user) 
@@ -53,7 +57,10 @@ export default function handler(req, res) {
       if (user) {
         const data = req.body;
         if (dest == 'todo') {
-          sql = `UPDATE todo SET clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${user}'`;
+          if (type == 'merge') data.forEach(data => {
+            sql += `UPDATE todo SET \`title\`='${data.title}', \`Desc\`='${data.Desc}', \`dead\`=${data.dead}, \`vital\`=${data.vital}, \`Index\`=${data.Index}, \`clear\`=${data.clear} WHERE id_todo=${data.id_todo} AND id_user='${user}'; `
+          })
+          else sql = `UPDATE todo SET clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${user}'`;
         } else if (dest == 'widget') {
           sql = `
             -- UPDATE todo SET title='title', Desc='desc', dead=dead, vital=vital, \`Index\`=Index, clear=Clear WHERE id_todo=id_todo AND id_user='${user}'
