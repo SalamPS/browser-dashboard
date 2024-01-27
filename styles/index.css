@@ -381,12 +381,15 @@ main {
   opacity: 0;
 }
 
+.shortcut {
+  text-align: center;
+}
 .shortcut .short {
   display: inline-block;
   text-align: center;
-  width: 60px;
   padding: 0 10px;
   height: 65px;
+  width: 60px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -399,14 +402,15 @@ main {
   width: 20px;
 }
 .shortcut button {
-  font-size: 1.2rem;
   cursor: pointer;
-  border: dashed 2px #4C5760;
-  background-color: rgba(76, 87, 96, 0.1254901961);
+  transition: 0.2s;
+  font-size: 1.2rem;
   border-radius: 10px;
+  border: dashed 2px #4C5760;
+  background-color: transparent;
   height: 40px;
   width: 40px;
 }
 .shortcut button:hover {
-  background-color: rgba(76, 87, 96, 0.5647058824);
+  background-color: rgba(76, 87, 96, 0.1254901961);
 }/*# sourceMappingURL=index.css.map */
