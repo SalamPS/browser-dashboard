@@ -19,6 +19,8 @@
   margin: 0;
   outline: none;
   border: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 body {
@@ -377,4 +379,34 @@ main {
 }
 .time.fade {
   opacity: 0;
+}
+
+.shortcut .short {
+  display: inline-block;
+  text-align: center;
+  width: 60px;
+  padding: 0 10px;
+  height: 65px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.shortcut img {
+  background-color: #4C5760;
+  border-radius: 10px;
+  margin-bottom: -5px;
+  padding: 10px;
+  height: 20px;
+  width: 20px;
+}
+.shortcut button {
+  font-size: 1.2rem;
+  cursor: pointer;
+  border: dashed 2px #4C5760;
+  background-color: rgba(76, 87, 96, 0.1254901961);
+  border-radius: 10px;
+  height: 40px;
+  width: 40px;
+}
+.shortcut button:hover {
+  background-color: rgba(76, 87, 96, 0.5647058824);
 }/*# sourceMappingURL=index.css.map */
