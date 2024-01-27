@@ -11,17 +11,19 @@ import Todo from "./Todo";
 import { useState, useEffect } from "react";
 
 export default function Xcontainer () {
+  const base = {
+    todo:[], 
+    widget:[]
+  }
   const storageKey = 'userConfig';
   const [Init, setInit] = useState(false)
   const [Valid, setValid] = useState({todo:true, widget:true})
-  const [userConfig, setUserConfig] = useState({todo:[], widget:[]})
-  const [savedConfig, setSavedConfig] = useState({todo:[], widget:[]})
+  const [userConfig, setUserConfig] = useState({...base})
+  const [savedConfig, setSavedConfig] = useState({...base})
 
   useEffect(() => {
     if (Init) localStorage.setItem(storageKey, JSON.stringify(userConfig))
   }, [userConfig]);
-  //
-  //
 
   ///////////////////
   // Storage Setup
@@ -51,8 +53,6 @@ export default function Xcontainer () {
           }
           else if (JSON.stringify(data) !== JSON.stringify(userConfig.todo)) 
           {
-            console.log('fetch:',userConfig.todo)
-            console.log(userConfig.todo)
             setValid((Valid) => ({...Valid,['todo']: false}))
           }
         } 
