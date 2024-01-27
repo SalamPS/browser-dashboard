@@ -13,7 +13,8 @@ import { useState, useEffect } from "react";
 export default function Xcontainer () {
   const base = {
     todo:[], 
-    widget:[]
+    widget:[],
+    shortcut: []
   }
   const storageKey = 'userConfig';
   const [Init, setInit] = useState(false)
@@ -37,29 +38,29 @@ export default function Xcontainer () {
     const oldData = JSON.parse(localStorage.getItem(storageKey))
     if (oldData) setUserConfig(oldData)
 
-    const fetchValid = async () => {
+    const fetchValid = async (dest) => {
       try {
         // Fetch Data and Save it to Temp
-        const response = await fetch(`api/default`)
+        const response = await fetch(`api/default?dest=${dest}`)
         if (response.ok) {
           const data = await response.json();
           setSavedConfig((prevData) => ({
             ...prevData,
-            ['todo']: data,
+            [dest]: data,
           }))
           if (oldData) {
-            if ((JSON.stringify(data) !== JSON.stringify(oldData.todo)))
-              setValid((Valid) => ({...Valid,['todo']: false}))
+            if ((JSON.stringify(data) !== JSON.stringify(oldData[dest])))
+              setValid((Valid) => ({...Valid,[dest]: false}))
           }
-          else if (JSON.stringify(data) !== JSON.stringify(userConfig.todo)) 
+          else if (JSON.stringify(data) !== JSON.stringify(userConfig[dest])) 
           {
-            setValid((Valid) => ({...Valid,['todo']: false}))
+            setValid((Valid) => ({...Valid,[dest]: false}))
           }
         } 
-        else {console.error('Failed to fetch default data')}
+        else {console.error(`Failed to fetch ${dest} data`)}
         setInit(true)
       } catch (error) {
-        console.error('Error:', error)
+        console.error(`Error fetching ${dest}:`, error)
       }
     };
     fetchValid()
@@ -94,7 +95,15 @@ export default function Xcontainer () {
         />
         <div className="blocks">
           <div className="box">
-            <Welcome/>
+            <Welcome
+              storageKey={storageKey}
+              Valid={Valid} 
+              setValid={setValid}
+              savedConfig={savedConfig} 
+              setSavedConfig={setSavedConfig} 
+              userConfig={userConfig} 
+              setUserConfig={setUserConfig}
+            />
             <Widget/>
           </div>
           <div className="watermark">
