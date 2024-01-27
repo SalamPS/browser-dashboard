@@ -159,10 +159,12 @@ export default function Todo ({savedConfig, setSavedConfig, storageKey, userConf
     const write = (value) => {
       update.todo.find(list => list.id_todo == id).clear = value
       setUserConfig(update)
+      localStorage.setItem(storageKey, JSON.stringify(update))
     }
     write(1)
     await delay(200)
     write(2)
+    await delay(200)
     try {
       const response = await fetch(`/api/default?dest=todo&id=${id}`, {
         method: 'PUT',
