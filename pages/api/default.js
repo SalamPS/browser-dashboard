@@ -102,7 +102,6 @@ export default function handler(req, res) {
         res.status(500).send('Error while Querying Data');
         return;
       }
-      result = results;
       if (req.method == 'GET') res.status(200).json(results)
     });
     switch(req.method) {
