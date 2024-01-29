@@ -13,7 +13,7 @@ import mysql from 'mysql'
 
 export default function handler(req, res) {
   const cookie = req.cookies.token;
-  const { dest, id, type } = req.query;
+  const { dest, id, type, list } = req.query;
 
   let sql = ''
   let user = false
@@ -79,13 +79,8 @@ export default function handler(req, res) {
 
       case 'DELETE':
         if (cookie == AF || cookie == SP) {
-          if (dest == 'todo') 
-          sql = `DELETE FROM todo WHERE id_todo = ${id}`
-          else if (dest == 'widget') 
-          sql = `
-            -- INSERT INTO todo (id_todo, title, Desc, dead, vital, Index, clear, id_user) 
-            -- VALUES (id_todo,'title','desc',dead,vital,Index,Clear,${user})
-          `
+          if (id) sql = `DELETE FROM ${dest} WHERE id_${dest} = ${id}`
+          else if (list) sql=`DELETE FROM ${dest} WHERE id_${dest} IN (${list})`
         }
       break
     }

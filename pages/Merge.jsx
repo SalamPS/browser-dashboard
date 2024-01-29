@@ -43,6 +43,26 @@ export default function Merge ({storageKey, savedConfig, setSavedConfig, userCon
       }
     }
   }
+  const deleteData = async (dest) => {
+    const expired = savedConfig[dest].filter(global => !userConfig[dest].find(local => local[`id_${dest}`] === global[`id_${dest}`]));
+    const list = expired.map((item,i) => item[`id_${dest}`]).toString()
+    if (expired.length) {
+      try {
+        const response = await fetch(`/api/default?dest=${dest}&list=${list}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(expired),
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+      } catch (error) {
+        console.error('Error during POST request:', error);
+      }
+    }
+  }
   
   return (<>
     <div id="merge" className={font.className}>
@@ -69,11 +89,11 @@ export default function Merge ({storageKey, savedConfig, setSavedConfig, userCon
           </button>
           <button className={font.className}
             onClick={async () => {
-              revalidate()
+              // revalidate()
               pushData('todo')
               putData('todo')
               pushData('short')
-              putData('short')
+              deleteData('short')
             }}>
             Prioritaskan
             <br />
