@@ -325,7 +325,22 @@ main {
   width: 100%;
 }
 
+.watermark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.watermark .line {
+  display: inline-block;
+  height: 2px;
+  flex-grow: 1;
+  background-color: rgba(229, 249, 224, 0.3764705882);
+  margin-left: 20px;
+  margin-top: 4px;
+}
+
 .welcome {
+  overflow: hidden;
   position: relative;
   display: inline-block;
   width: calc(66.6666666667% - 40px - 4px);
@@ -357,20 +372,6 @@ main {
   display: flex;
   justify-content: space-between;
   font-size: 2rem;
-}
-
-.watermark {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.watermark .line {
-  display: inline-block;
-  height: 2px;
-  flex-grow: 1;
-  background-color: rgba(229, 249, 224, 0.3764705882);
-  margin-left: 20px;
-  margin-top: 4px;
 }
 
 .time {
@@ -413,4 +414,73 @@ main {
 }
 .shortcut button:hover {
   background-color: rgba(76, 87, 96, 0.1254901961);
+}
+
+.addShort {
+  transition: opacity 0.3s;
+  opacity: 0;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  background-color: rgba(76, 87, 96, 0.6274509804);
+}
+.addShort .input {
+  padding: 20px 30px;
+}
+.addShort form {
+  width: 100%;
+}
+.addShort h3 {
+  margin-bottom: 5px;
+}
+.addShort label {
+  flex-direction: column;
+  display: flex;
+}
+.addShort span {
+  margin-left: 15px;
+  display: block;
+}
+.addShort input {
+  transition: 0.2s;
+  border-radius: 10px;
+  border: solid 1px rgba(229, 249, 224, 0.3764705882);
+  outline: none;
+  padding: 15px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.addShort input:active, .addShort input:focus {
+  border-color: #E5F9E0;
+}
+.addShort .button {
+  margin-top: 10px;
+  display: flex;
+  justify-content: right;
+}
+.addShort button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border-radius: 10px;
+  transition: 0.2s;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+.addShort button:hover {
+  scale: 1.05;
+}
+.addShort #submit {
+  background-color: #E5F9E0;
+  color: #4C5760;
+}
+.addShort #cancel {
+  background-color: #DE6B48;
+  color: #f3fdf0;
 }/*# sourceMappingURL=index.css.map */
