@@ -14,89 +14,74 @@ import mysql from 'mysql'
 export default function handler(req, res) {
   let sql = ''
   let result = [];
+  let user = false
+  if (cookie == AF) user = user1
+  else if (cookie == SP) user = user2
+
   const cookie = req.cookies.token;
   const { dest, id, type } = req.query;
-  if (req.method === 'GET') {
-    let user = false
-    if (cookie == AF) user = user1
-    else if (cookie == SP) user = user2
-
-    if (cookie == AF || cookie == SP) {
-      if (dest == 'todo') sql = `SELECT \`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\``
-      else if (dest == 'short') sql = `SELECT \`id_short\`, \`name\`, \`url\`, \`favicon\``
-      sql += ` FROM ${dest} WHERE id_user = '${user}'`
-    }
-    else res.status(200).send([]);
-  }
-  else if (req.method === 'POST') {
-    let user = false
-    try {
-      if (cookie == AF) user = user1
-      else if (cookie == SP) user = user2
-
-      if (user) {
-        const data = req.body;
-        if (dest == 'todo') {
-          if (type == 'merge') data.forEach(data => {
-            sql += `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.vital},${data.Index},${data.clear},'${user}'); `
-          })
-          else sql = `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.vital},${data.Index},${data.clear},'${user}')`
+  try {
+    switch(req.method) {
+      case 'GET' : 
+        if (cookie == AF || cookie == SP) {
+          if (dest == 'todo') sql = `SELECT \`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\``
+          else if (dest == 'short') sql = `SELECT \`id_short\`, \`name\`, \`url\``
+          sql += ` FROM ${dest} WHERE id_user = '${user}'`
         }
-        else if (dest == 'widget') 
-        sql = `
-          -- INSERT INTO todo (id_todo, title, Desc, dead, vital, Index, clear, id_user) 
-          -- VALUES (id_todo,'title','desc',dead,vital,Index,Clear,${user})
-        `
-      }
-      else res.status(500).json({ error: "Internal Server Error" });
-    }
-    catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  }
-  else if (req.method === 'PUT') {
-    let user = false;
-    try {
-      if (cookie == AF) user = user1;
-      else if (cookie == SP) user = user2;
+        else res.status(200).send([])
+      break
 
-      if (user) {
-        const data = req.body;
-        if (dest == 'todo') {
-          if (type == 'merge') data.forEach(data => {
-            sql += `UPDATE todo SET \`title\`='${data.title}', \`Desc\`='${data.Desc}', \`dead\`=${data.dead}, \`vital\`=${data.vital}, \`Index\`=${data.Index}, \`clear\`=${data.clear} WHERE id_todo=${data.id_todo} AND id_user='${user}'; `
-          })
-          else sql = `UPDATE todo SET clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${user}'`;
-        } else if (dest == 'widget') {
+      case 'PUT':
+        if (user) {
+          const data = req.body;
+          if (dest == 'todo') {
+            if (type == 'merge') data.forEach(data => {
+              sql += `UPDATE todo SET \`title\`='${data.title}', \`Desc\`='${data.Desc}', \`dead\`=${data.dead}, \`vital\`=${data.vital}, \`Index\`=${data.Index}, \`clear\`=${data.clear} WHERE id_todo=${data.id_todo} AND id_user='${user}'; `
+            })
+            else sql = `UPDATE todo SET clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${user}'`;
+          } else if (dest == 'widget') {
+            sql = `
+              -- UPDATE todo SET title='title', Desc='desc', dead=dead, vital=vital, \`Index\`=Index, clear=Clear WHERE id_todo=id_todo AND id_user='${user}'
+            `;
+          }
+        }
+      break
+
+      case 'POST':
+        if (user) {
+          const data = req.body;
+          if (dest == 'todo') {
+            if (type == 'merge') data.forEach(data => {
+              sql += `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.vital},${data.Index},${data.clear},'${user}'); `
+            })
+            else sql = `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.vital},${data.Index},${data.clear},'${user}')`
+          }
+          else if (dest == 'short') 
+          sql = `INSERT INTO short (id_short, name, url, id_user) VALUES (${data.id_short}, '${data.name}', '${data.url}', '${user}')`
+          else if (dest == 'widget') 
           sql = `
-            -- UPDATE todo SET title='title', Desc='desc', dead=dead, vital=vital, \`Index\`=Index, clear=Clear WHERE id_todo=id_todo AND id_user='${user}'
-          `;
+            -- INSERT INTO todo (id_todo, title, Desc, dead, vital, Index, clear, id_user) 
+            -- VALUES (id_todo,'title','desc',dead,vital,Index,Clear,${user})
+          `
         }
-      }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-      return;
+      break
+
+      case 'DELETE':
+        if (cookie == AF || cookie == SP) {
+          if (dest == 'todo') 
+          sql = `DELETE FROM todo WHERE id_todo = ${id}`
+          else if (dest == 'widget') 
+          sql = `
+            -- INSERT INTO todo (id_todo, title, Desc, dead, vital, Index, clear, id_user) 
+            -- VALUES (id_todo,'title','desc',dead,vital,Index,Clear,${user})
+          `
+        }
+      break
     }
   }
-  else if (req.method === 'DELETE') {
-    try {
-      if (cookie == AF || cookie == SP) {
-        if (dest == 'todo') 
-        sql = `DELETE FROM todo WHERE id_todo = ${id}`
-        else if (dest == 'widget') 
-        sql = `
-          -- INSERT INTO todo (id_todo, title, Desc, dead, vital, Index, clear, id_user) 
-          -- VALUES (id_todo,'title','desc',dead,vital,Index,Clear,${user})
-        `
-      }
-      else res.status(500).json({ error: "Internal Server Error" });
-    }
-    catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
+  catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
   if (sql.length) {
     const db = mysql.createConnection({
