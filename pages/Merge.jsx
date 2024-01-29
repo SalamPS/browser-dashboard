@@ -72,6 +72,8 @@ export default function Merge ({storageKey, savedConfig, setSavedConfig, userCon
               revalidate()
               pushData('todo')
               putData('todo')
+              pushData('short')
+              putData('short')
             }}>
             Prioritaskan
             <br />

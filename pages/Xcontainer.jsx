@@ -18,7 +18,7 @@ export default function Xcontainer () {
   }
   const storageKey = 'userConfig';
   const [Init, setInit] = useState(false)
-  const [Valid, setValid] = useState({todo:true, widget:true})
+  const [Valid, setValid] = useState({todo:true, widget:true, short: true})
   const [userConfig, setUserConfig] = useState({...base})
   const [savedConfig, setSavedConfig] = useState({...base})
 
@@ -56,6 +56,13 @@ export default function Xcontainer () {
           {
             setValid((Valid) => ({...Valid,[dest]: false}))
           }
+          console.log(dest)
+          console.log('oldData',oldData[dest])
+          console.log('userConfig',userConfig[dest])
+          console.log('data',data)
+          console.log('---------------------------')
+          setInit(true)
+          return data
         } 
         else {console.error(`Failed to fetch ${dest} data`)}
         setInit(true)
@@ -63,8 +70,11 @@ export default function Xcontainer () {
         console.error(`Error fetching ${dest}:`, error)
       }
     };
-    fetchValid('todo')
-    fetchValid('short')
+    const validate = async () => {
+      const todo = await fetchValid('todo')
+      const short = await fetchValid('short')
+    }
+    validate()
   }, []);
   // 
   // 
@@ -74,7 +84,7 @@ export default function Xcontainer () {
   
   
   return (<>
-    {(!Valid.todo || !Valid.widget) ? <Merge 
+    {(!Valid.todo || !Valid.widget || !Valid.short) ? <Merge 
       storageKey={storageKey}
       Valid={Valid} 
       setValid={setValid}
