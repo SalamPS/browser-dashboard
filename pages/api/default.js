@@ -39,7 +39,14 @@ export default function handler(req, res) {
               sql += `UPDATE todo SET \`title\`='${data.title}', \`Desc\`='${data.Desc}', \`dead\`=${data.dead}, \`vital\`=${data.vital}, \`Index\`=${data.Index}, \`clear\`=${data.clear} WHERE id_todo=${data.id_todo} AND id_user='${user}'; `
             })
             else sql = `UPDATE todo SET clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${user}'`;
-          } else if (dest == 'widget') {
+          } 
+          else if (dest == 'short') {
+            if (type == 'merge') data.forEach(data => {
+              sql += `(name, url, id_user) VALUES ('${data.name}', '${data.url}', '${user}'); `
+            })
+            else sql = `UPDATE todo SET clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${user}'`;
+          } 
+          else if (dest == 'widget') {
             sql = `
               -- UPDATE todo SET title='title', Desc='desc', dead=dead, vital=vital, \`Index\`=Index, clear=Clear WHERE id_todo=id_todo AND id_user='${user}'
             `;
@@ -56,8 +63,12 @@ export default function handler(req, res) {
             })
             else sql = `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.vital},${data.Index},${data.clear},'${user}')`
           }
-          else if (dest == 'short') 
-          sql = `INSERT INTO short (id_short, name, url, id_user) VALUES (${data.id_short}, '${data.name}', '${data.url}', '${user}')`
+          else if (dest == 'short') {
+            if (type == 'merge') data.forEach(data => {
+              sql += `INSERT INTO short (id_short, name, url, id_user) VALUES (${data.id_short}, '${data.name}', '${data.url}', '${user}'); `
+            })
+            else sql = `INSERT INTO short (id_short, name, url, id_user) VALUES (${data.id_short}, '${data.name}', '${data.url}', '${user}')`
+          }
           else if (dest == 'widget') 
           sql = `
             -- INSERT INTO todo (id_todo, title, Desc, dead, vital, Index, clear, id_user) 
