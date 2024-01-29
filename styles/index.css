@@ -82,6 +82,7 @@ main {
   padding-bottom: 8px;
   background-color: #4C5760;
   cursor: pointer;
+  color: #f3fdf0;
 }
 #merge .choice button:hover {
   scale: 1.05;
