@@ -12,13 +12,14 @@ const user2 = process.env.USER2 || '02'
 import mysql from 'mysql'
 
 export default function handler(req, res) {
+  const cookie = req.cookies.token;
+  const { dest, id, type } = req.query;
+
   let sql = ''
   let user = false
   if (cookie == AF) user = user1
   else if (cookie == SP) user = user2
-
-  const cookie = req.cookies.token;
-  const { dest, id, type } = req.query;
+  
   try {
     switch(req.method) {
       case 'GET' : 
