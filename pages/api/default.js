@@ -3,7 +3,7 @@
 const AF = process.env.AF || ''
 const SP = process.env.SP || ''
 const host = process.env.SQL_HOST || ''
-const user = process.env.SQL_USER || ''
+const sqluser = process.env.SQL_USER || ''
 const password = process.env.SQL_PASSWORD || ''
 const database = process.env.SQL_DATABASE || ''
 const user1 = process.env.USER1 || '01'
@@ -80,13 +80,12 @@ export default function handler(req, res) {
     }
   }
   catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
   if (sql.length) {
     const db = mysql.createConnection({
       host: host,  
-      user: user,
+      user: sqluser,
       password: password,
       database: database,
     });
