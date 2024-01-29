@@ -93,15 +93,18 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
       <div className="inner">
         <div className="pad">
           <div className="head">
-            <span>Welcome, Salam </span>
+            <span>Welcome, Salam</span>
             <Time/>
           </div>
           <div className="shortcut">
             {!userConfig ? <></> :
             userConfig.short.map((item) => {
               return (
-                <a href={item.url} className="short cut" key={item.id_short} target="_blank">
-                  {!item.favicon ? '' 
+                <a className="short cut" key={item.id_short} target="_blank"
+                   href={item.url.startsWith('http') ? item.url : 
+                   `http://${item.url}`}
+                >
+                  {!item.favicon ? <div className="alternate">{item.name[0]}</div> 
                   : <img src={`https://logo.clearbit.com/${item.url.replace(/^(https?:|)\/\//, '')}`} alt={item.name} />}
                   <br />
                   <span>{item.name}</span>

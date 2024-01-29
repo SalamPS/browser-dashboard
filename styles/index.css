@@ -416,6 +416,15 @@ main {
 .shortcut button:hover {
   background-color: rgba(76, 87, 96, 0.1254901961);
 }
+.shortcut .alternate {
+  background-color: #4C5760;
+  display: inline-block;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  letter-spacing: 0;
+}
 
 .addShort {
   transition: opacity 0.3s;
