@@ -42,8 +42,8 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
     try {
       (async () => {
         await fetch(`https://logo.clearbit.com/${formData.url.replace(/^(https?:|)\/\//, '')}`)
-        .then(() => pushShort(true))
-        .catch(() => pushShort(false))
+        .then(() => pushShort(1))
+        .catch(() => pushShort(0))
       })();
     } 
     catch (error) {
