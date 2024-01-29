@@ -63,7 +63,7 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
     <div className="welcome">
       <div className="addShort" style={ToggleShortcut ? {zIndex: 2, opacity: 1} : {zIndex: -1, opacity: 0}}>
         <div className="input">
-          <form onSubmit={(e) => {saveShort(e)}}>
+          <form>
             <h3>New Shortcut</h3>
             <label>
               <span>Name</span>
@@ -84,8 +84,8 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
               />
             </label>
             <div className="button">
-              <button id="cancel" title="Cancel" onClick={() => {setToggleShortcut(false)}}>Cancel</button>
-              <button id="submit" type="submit" title="Save new List">Submit</button>
+              <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); setToggleShortcut(false)}}>Cancel</button>
+              <button id="submit" type="submit" title="Save new List" onClick={(e) => {saveShort(e)}}>Submit</button>
             </div>
           </form>
         </div>
