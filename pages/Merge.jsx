@@ -3,7 +3,7 @@ import { Exo_2 } from 'next/font/google'
 const font = Exo_2({ subsets: ['latin'] })
 
 export default function Merge ({storageKey, savedConfig, setSavedConfig, userConfig, setUserConfig, Valid, setValid}) {
-  const revalidate = () => setValid({todo:true, widget: true})
+  const revalidate = () => setValid({todo:true, widget: true, short: true})
   const pushData = async (dest) => {
     const newData = userConfig[dest].filter(unknown => !savedConfig[dest].find(known => known[`id_${dest}`] === unknown[`id_${dest}`]));
     if (newData.length) {

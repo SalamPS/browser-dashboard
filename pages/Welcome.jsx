@@ -86,7 +86,7 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
             {!userConfig ? <></> :
             userConfig.short.map((item) => (
               <a href={item.url} className="short cut" key={item.id_short} target="_blank">
-                <img src={`https://logo.clearbit.com/${item.url}`} alt={item.name} /> <br />
+                <img src={`https://logo.clearbit.com/${item.url.replace(/^(https?:|)\/\//, '')}`} alt={item.name} /> <br />
                 <span>{item.name}</span>
               </a>
             ))}
