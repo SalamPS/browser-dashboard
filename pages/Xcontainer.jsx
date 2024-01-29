@@ -56,11 +56,6 @@ export default function Xcontainer () {
           {
             setValid((Valid) => ({...Valid,[dest]: false}))
           }
-          console.log(dest)
-          console.log('oldData',oldData[dest])
-          console.log('userConfig',userConfig[dest])
-          console.log('data',data)
-          console.log('---------------------------')
           setInit(true)
           return data
         } 

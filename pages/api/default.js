@@ -25,7 +25,7 @@ export default function handler(req, res) {
       case 'GET' : 
         if (cookie == AF || cookie == SP) {
           if (dest == 'todo') sql = `SELECT \`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\``
-          else if (dest == 'short') sql = `SELECT \`id_short\`, \`name\`, \`url\``
+          else if (dest == 'short') sql = `SELECT \`id_short\`, \`name\`, \`url\`, \`favicon\``
           sql += ` FROM ${dest} WHERE id_user = '${user}'`
         }
         else res.status(200).send([])
@@ -65,9 +65,9 @@ export default function handler(req, res) {
           }
           else if (dest == 'short') {
             if (type == 'merge') data.forEach(data => {
-              sql += `INSERT INTO short (id_short, name, url, id_user) VALUES (${data.id_short}, '${data.name}', '${data.url}', '${user}'); `
+              sql += `INSERT INTO short (id_short, name, url, favicon, id_user) VALUES (${data.id_short}, '${data.name}', '${data.url}', ${data.favicon}, '${user}'); `
             })
-            else sql = `INSERT INTO short (id_short, name, url, id_user) VALUES (${data.id_short}, '${data.name}', '${data.url}', '${user}')`
+            else sql = `INSERT INTO short (id_short, name, url, favicon, id_user) VALUES (${data.id_short}, '${data.name}', '${data.url}', ${data.favicon}, '${user}')`
           }
           else if (dest == 'widget') 
           sql = `

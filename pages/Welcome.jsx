@@ -9,33 +9,47 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
   const [formData, setFormData] = useState({
     id_short: 0,
     name: '',
-    url: ''
+    url: '',
   })
   
   // Setup Data for Shortcut
   // 
+  // Check if available in clearbit
+  // 
   const saveShort = async (e) => {
     e.preventDefault()
-    try {
+    const pushShort = async (isValid) => {
+      const validated = {...formData}
+      validated.favicon = isValid;
       const response = await fetch('/api/default?dest=short', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(validated),
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-    } catch (error) {
+
+      const temp = {...userConfig}
+      temp.short.push(validated)
+      setUserConfig(temp)
+      localStorage.setItem(storageKey, JSON.stringify(temp))
+      
+      console.log(temp)
+    }
+    try {
+      (async () => {
+        await fetch(`https://logo.clearbit.com/${formData.url.replace(/^(https?:|)\/\//, '')}`)
+        .then(() => pushShort(true))
+        .catch(() => pushShort(false))
+      })();
+    } 
+    catch (error) {
       console.error('Error during POST request:', error);
     }
     setToggleShortcut(false)
-
-    const temp = {...userConfig}
-    temp.short.push(formData)
-    setUserConfig(temp)
-    localStorage.setItem(storageKey, JSON.stringify(temp))
   }
 
   const handleChange = (name, value) => {
@@ -84,16 +98,20 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
           </div>
           <div className="shortcut">
             {!userConfig ? <></> :
-            userConfig.short.map((item) => (
-              <a href={item.url} className="short cut" key={item.id_short} target="_blank">
-                <img src={`https://logo.clearbit.com/${item.url.replace(/^(https?:|)\/\//, '')}`} alt={item.name} /> <br />
-                <span>{item.name}</span>
-              </a>
-            ))}
+            userConfig.short.map((item) => {
+              return (
+                <a href={item.url} className="short cut" key={item.id_short} target="_blank">
+                  {!item.favicon ? '' 
+                  : <img src={`https://logo.clearbit.com/${item.url.replace(/^(https?:|)\/\//, '')}`} alt={item.name} />}
+                  <br />
+                  <span>{item.name}</span>
+                </a>
+              )
+            })}
             {userConfig.short.length > 6 ? '' : 
             <div className="short">
               <button onClick={() => {
-                handleChange('id_short', new Date().getTime() / 1000)
+                handleChange('id_short', Math.floor(new Date().getTime() / 1000))
                 setToggleShortcut(true)
               }}>+</button>
             </div>}
