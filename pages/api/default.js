@@ -13,7 +13,6 @@ import mysql from 'mysql'
 
 export default function handler(req, res) {
   let sql = ''
-  let result = [];
   let user = false
   if (cookie == AF) user = user1
   else if (cookie == SP) user = user2
