@@ -26,6 +26,9 @@ export default function handler(req, res) {
         if (cookie == AF || cookie == SP) {
           if (dest == 'todo') sql = `SELECT \`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\``
           else if (dest == 'short') sql = `SELECT \`id_short\`, \`name\`, \`url\`, \`favicon\``
+          else if (dest == 'widget') sql = `SELECT \`id_widget\`, \`type\`, \`id_ref\``
+          else if (dest == 'widget_spotTask') sql = `SELECT \`id_widget_spotTask\`, \`name\`, \`matkul\`, \`part\`, \`url\`, \`dead\``
+
           sql += ` FROM ${dest} WHERE id_user = '${user}'`
         }
         else res.status(200).send([])
