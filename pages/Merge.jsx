@@ -71,7 +71,7 @@ export default function Merge ({storageKey, savedConfig, setSavedConfig, userCon
         <h1>Unsynchronized Data</h1>
         Data{' '}
         {!Valid.todo ? <span className='invalid'>todo-list</span> : ''}
-        {(!Valid.todo && !Valid.widget) ? ' dan ' : ''}
+        {!Valid.short ? <span className='invalid'>short</span> : ''}
         {!Valid.widget ? <span className='invalid'>widget</span> : ''}
         {' '}yang ada di browser anda dan di database online berbeda.
         <br />
