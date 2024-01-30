@@ -103,11 +103,13 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
                 <a className="short cut" key={item.id_short} target="_blank"
                    href={item.url.startsWith('http') ? item.url : 
                    `http://${item.url}`}
-                >
+                  >
                   {!item.favicon ? <div className="alternate">{item.name[0]}</div> 
                   : <img src={`https://logo.clearbit.com/${item.url.replace(/^(https?:|)\/\//, '')}`} alt={item.name} />}
                   <br />
-                  <span>{item.name}</span>
+                  <div className="text">
+                    <span>{item.name}</span>
+                  </div>
                 </a>
               )
             })}
