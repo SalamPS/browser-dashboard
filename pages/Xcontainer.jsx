@@ -14,6 +14,7 @@ export default function Xcontainer () {
   const base = {
     todo:[], 
     widget:[],
+    widgets:[],
     short: [],
   }
   const storageKey = 'userConfig';
@@ -68,6 +69,7 @@ export default function Xcontainer () {
     const validate = async () => {
       const todo = await fetchValid('todo')
       const short = await fetchValid('short')
+      const widget = await fetchValid('widget')
     }
     validate()
   }, []);
@@ -110,7 +112,15 @@ export default function Xcontainer () {
               userConfig={userConfig} 
               setUserConfig={setUserConfig}
             />
-            <Widget/>
+            <Widget
+              storageKey={storageKey}
+              Valid={Valid} 
+              setValid={setValid}
+              savedConfig={savedConfig} 
+              setSavedConfig={setSavedConfig} 
+              userConfig={userConfig} 
+              setUserConfig={setUserConfig}
+            />
           </div>
           <div className="watermark">
             <span>By LamP</span>

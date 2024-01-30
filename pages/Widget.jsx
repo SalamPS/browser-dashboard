@@ -1,61 +1,64 @@
 'use client'
 
 /* eslint-disable react/prop-types */
-import { useState } from "react"
+import SpotTask from "./widgets/_spotTask"
 
-const Box = ({isEmpty, newBlock, name}) => {
-  const widgets = [
-    {
-      name: 'tugas',
-      content: <>
-        <h2>List Tugas</h2>
-      </>
+const Box = ({type, userConfig, setSavedConfig, setValid}) => {
+  const fetchWidget = async (dest) => {
+    try {
+      // Fetch Data and Save it to Temp
+      const response = await fetch(`api/default?dest=${dest}`)
+      if (response.ok) {
+        const data = await response.json();
+        setSavedConfig((prevData) => ({
+          ...prevData,
+          ['widgets']: data
+        }))
+        if (JSON.stringify(data) !== JSON.stringify(userConfig['widgets'])) 
+        {
+          setValid((Valid) => ({...Valid,['widget']: false}))
+        }
+        return data
+      } 
+      else {console.error(`Failed to fetch ${dest} data`)}
+    } catch (error) {
+      console.error(`Error fetching ${dest}:`, error)
     }
-  ]
-  const Widget = ({name}) => {
-    return widgets.find(widget => widget.name == name).content
+  };
+
+  const widgets = {
+    spotTask: <SpotTask fetchWidget={fetchWidget} data={userConfig.widgets.filter(item => item.id_widget_spotTask)}/>
   }
 
   return (
-    <div className={`block ${isEmpty ? 'empty' : ''}`}>
-      {isEmpty?
-      <div className="widget insert" onClick={newBlock}>
-        <span>+</span>
-      </div>
-      :
+    <div className="block">
       <div className="widget feat">
         <div className="body">
-          <Widget name={name}/>
+          {widgets[type]}
         </div>
-      </div>}
+      </div>
     </div>
   )
 }
 
-export default function Widget () {
-  const [Block, setBlock] = useState([
-    {name: 'tugas'},
-    {isEmpty: true},
-  ])
-
+export default function Widget ({savedConfig, setSavedConfig, storageKey, userConfig, setUserConfig, Valid, setValid }) {
   const newBlock = () => {
-    const copy = Block.slice();
-    if(copy.length == 4) copy.pop();
-    copy.splice(copy.length-2, 0, {name: 'tugas'});
-    setBlock(copy)
   }
   const removeBlock = () => {
-    const copy = Block.slice();
-    if(copy.length == 4) copy.pop();
-    copy.splice(copy.length-2, 0, {});
-    setBlock(copy)
   }
 
-  return (<>
-    {Block.map((content, i) => (<Box key={i} 
-      isEmpty={content.isEmpty}
-      newBlock={newBlock}
-      name={content.name}
+  return (!userConfig ? '' 
+  : <>
+    {userConfig.widget.map((content, i) => (<Box key={i} type={content.type}
+      userConfig={userConfig}
+      setSavedConfig={setSavedConfig}
+      setValid={setValid}
     />))}
+    {userConfig.widget.length > 4 ? '' : 
+    <div className="block empty" onClick={() => {console.log(savedConfig)}}>
+      <div className="widget insert">
+        <span>+</span>
+      </div>
+    </div>}
   </>)
 }

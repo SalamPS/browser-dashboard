@@ -94,6 +94,10 @@ export default function Merge ({storageKey, savedConfig, setSavedConfig, userCon
               putData('todo')
               pushData('short')
               deleteData('short')
+              pushData('widget')
+              putData('widget')
+              pushData('widgets')
+              putData('widgets')
             }}>
             Prioritaskan
             <br />
