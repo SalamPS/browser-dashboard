@@ -19,6 +19,7 @@
 *.pem
 *.scss
 *.map
+*.zip
 
 # debug
 npm-debug.log*
