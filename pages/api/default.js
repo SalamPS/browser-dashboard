@@ -31,7 +31,7 @@ export default function handler(req, res) {
 
           sql += ` FROM ${dest} WHERE id_user = '${user}'`
         }
-        else res.status(200).send([])
+        else res.status(200).send({guest: true})
       break
 
       case 'PUT':
@@ -118,5 +118,11 @@ export default function handler(req, res) {
       case 'POST' : res.status(201).send({posted: true}); break;
       case 'DELETE' : res.status(204); break;
     }
+    db.end((err) => {
+      if (err) {console.error('Error saat menutup koneksi:', err);
+        return;
+      }
+      console.log('Koneksi ke database ditutup');
+    });
   }
 }
