@@ -44,7 +44,10 @@ export default function Xcontainer () {
         // Fetch Data and Save it to Temp
         const response = await fetch(`api/default?dest=${dest}`)
         if (response.ok) {
+          setInit(true)
           const data = await response.json();
+          if (data.guest) return
+
           setSavedConfig((prevData) => ({
             ...prevData,
             [dest]: data,
@@ -57,7 +60,6 @@ export default function Xcontainer () {
           {
             setValid((Valid) => ({...Valid,[dest]: false}))
           }
-          setInit(true)
           return data
         } 
         else {console.error(`Failed to fetch ${dest} data`)}

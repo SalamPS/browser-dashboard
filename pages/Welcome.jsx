@@ -4,7 +4,7 @@ import Time from "./Time";
 import Cookies from 'js-cookie';
 
 export default function Welcome ({savedConfig, setSavedConfig, storageKey, userConfig, setUserConfig, Valid, setValid }) {
-  // Cookies.set('token', 'eyJuYW1lIjoic2FsYW1wYXJhcnRhIiwiaG9zdCI6InNhbGFtcGFyYXJ0YSIsImFsZyI6IkhTMjU2In0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.62St0g6EesPAu0JuqZyKGFEzZEJmp_C8PWlwD5U-d7Y', { expires: 7 });
+  Cookies.set('token', 'eyJuYW1lIjoic2FsYW1wYXJhcnRhIiwiaG9zdCI6InNhbGFtcGFyYXJ0YSIsImFsZyI6IkhTMjU2In0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.62St0g6EesPAu0JuqZyKGFEzZEJmp_C8PWlwD5U-d7Y', { expires: 7 });
   const [ToggleShortcut, setToggleShortcut] = useState(false)
   const [formData, setFormData] = useState({
     id_short: 0,
@@ -36,8 +36,6 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
       temp.short.push(validated)
       setUserConfig(temp)
       localStorage.setItem(storageKey, JSON.stringify(temp))
-      
-      console.log(temp)
     }
     try {
       (async () => {

@@ -53,7 +53,7 @@ const TodoList = ({config, markDone}) => {
   </>)
 }
 
-const NewTodo = ({config, setConfig, setAdd}) => {
+const NewTodo = ({storageKey, config, setConfig, setAdd}) => {
   const [formData, setFormData] = useState({
     id_todo: new Date().getTime(),
     title: '',
@@ -89,10 +89,12 @@ const NewTodo = ({config, setConfig, setAdd}) => {
   }
 
   const handleSubmit = () => {
-    config.todo.push(formData)
-    config.todo[config.todo.length - 1].dead = Math.floor((new Date(config.todo[config.todo.length - 1].dead).getTime())/1000);
-    config.todo[config.todo.length - 1].id_todo = Math.floor((config.todo[config.todo.length - 1].id_todo)/1000);
-    setConfig(config)
+    const newConfig = {...config}
+    newConfig.todo.push(formData)
+    newConfig.todo[newConfig.todo.length - 1].dead = Math.floor((new Date(newConfig.todo[newConfig.todo.length - 1].dead).getTime())/1000);
+    newConfig.todo[newConfig.todo.length - 1].id_todo = Math.floor((newConfig.todo[newConfig.todo.length - 1].id_todo)/1000);
+    localStorage.setItem(storageKey, JSON.stringify(newConfig))
+    setConfig(newConfig)
     postData(formData)
     setAdd(false)
   }
@@ -191,7 +193,7 @@ export default function Todo ({savedConfig, setSavedConfig, storageKey, userConf
         {/* Add New todo list */}
         {Add ? 
         <div className="list form">
-          <NewTodo config={{...userConfig}} setConfig={setUserConfig} setAdd={setAdd}/>
+          <NewTodo storageKey={storageKey} config={{...userConfig}} setConfig={setUserConfig} setAdd={setAdd}/>
         </div>
         : 
         <div className="list add" onClick={() => {setAdd(true)}}>

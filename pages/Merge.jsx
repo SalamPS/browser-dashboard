@@ -89,15 +89,13 @@ export default function Merge ({storageKey, savedConfig, setSavedConfig, userCon
           </button>
           <button className={font.className}
             onClick={async () => {
-              // revalidate()
+              revalidate()
               pushData('todo')
               putData('todo')
               pushData('short')
               deleteData('short')
               pushData('widget')
               putData('widget')
-              pushData('widgets')
-              putData('widgets')
             }}>
             Prioritaskan
             <br />
