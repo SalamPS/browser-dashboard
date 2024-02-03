@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Time from "./Time";
 import Cookies from 'js-cookie';
 
-export default function Welcome ({storageKey, userConfig, setUserConfig, Login, setLogin }) {
+export default function Welcome ({storageKey, userConfig, setUserConfig, Login, setLogin, Mobile }) {
   const [ToggleShortcut, setToggleShortcut] = useState(false)
   const [shortFormData, setshortFormData] = useState({
     id_short: 0,
@@ -163,7 +163,7 @@ export default function Welcome ({storageKey, userConfig, setUserConfig, Login, 
             {' '}
             <i className="login bi bi-person-circle" onClick={() => {setToggleLogin(true)}}></i>
           </span>
-          <Time/>
+          {Mobile ? '' : <Time/>}
         </div>
         <div className="shortcut">
           {!userConfig ? <></> :

@@ -118,7 +118,9 @@ main {
 }
 @media screen and (max-width: 750px) {
   .shadowBox.shadowTodo {
-    width: 100%;
+    width: calc(100% - 60px);
+    height: 100%;
+    order: 2;
   }
 }
 .shadowBox.shadowWelcome {
@@ -132,7 +134,9 @@ main {
 }
 @media screen and (max-width: 750px) {
   .shadowBox.shadowWelcome {
+    margin: 0;
     width: calc(100% - 40px);
+    order: 1;
   }
 }
 .shadowBox.shadowWidget {
@@ -301,6 +305,11 @@ main {
 .blocks ::-webkit-scrollbar {
   width: 0;
 }
+@media screen and (max-width: 750px) {
+  .blocks {
+    margin-bottom: 30px;
+  }
+}
 
 .box {
   max-height: calc(100% - 24px);
@@ -402,6 +411,11 @@ main {
 .shortcut {
   text-align: center;
 }
+@media screen and (max-width: 750px) {
+  .shortcut {
+    margin-top: 20px;
+  }
+}
 .shortcut .short {
   display: inline-block;
   text-align: center;
@@ -409,6 +423,11 @@ main {
   height: 65px;
   width: 70px;
   overflow: hidden;
+}
+@media screen and (max-width: 750px) {
+  .shortcut .short {
+    padding: 0;
+  }
 }
 .shortcut img {
   background-color: #4C5760;
@@ -563,4 +582,11 @@ main {
   background-color: rgba(76, 87, 96, 0.5647058824);
   margin-left: 20px;
   margin-top: 4px;
+}
+@media screen and (max-width: 750px) {
+  .watermark {
+    margin-left: 0;
+    margin-top: 20px;
+    order: 3;
+  }
 }/*# sourceMappingURL=index.css.map */

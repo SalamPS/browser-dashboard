@@ -20,6 +20,7 @@ export default function Xcontainer () {
   const storageKey = 'userConfig';
   const [Init, setInit] = useState(false)
   const [Login, setLogin] = useState(false)
+  const [Mobile, setMobile] = useState(false)
   const [Valid, setValid] = useState({todo:true, widget:true, short: true})
   const [userConfig, setUserConfig] = useState({...base})
   const [savedConfig, setSavedConfig] = useState({...base})
@@ -94,6 +95,11 @@ export default function Xcontainer () {
   //
   // Storage Setup End
   /////////////////// 
+
+  useEffect(() => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) setMobile(true)
+  }, []);
   
   
   return (<>
@@ -125,13 +131,20 @@ export default function Xcontainer () {
               setUserConfig={setUserConfig}
               Login={Login}
               setLogin={setLogin}
+              Mobile={Mobile}
             />
           </div>
+          {Mobile ? '' : 
           <div className="watermark">
             <span>By LamP</span>
             <div className="line"></div>
-          </div>
+          </div>}
         </div>
+        {!Mobile ? '' : 
+        <div className="watermark">
+          <span>By LamP</span>
+          <div className="line"></div>
+        </div>}
       </div>
     </main>
   </>)

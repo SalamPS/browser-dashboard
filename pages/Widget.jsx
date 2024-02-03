@@ -36,7 +36,7 @@ const Box = ({type, userConfig, setUserConfig}) => {
   )
 }
 
-export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin}) {
+export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile}) {
   const newBlock = () => {
   }
   const removeBlock = () => {
@@ -52,19 +52,21 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
           setUserConfig={setUserConfig}
           Login={Login}
           setLogin={setLogin}
+          Mobile={Mobile}
         />
       </div>
-      {userConfig.widget.map((content, i) => {
+      {Mobile ? '' : userConfig.widget.map((content, i) => {
         if (i == 0) return (<Box key={i} type={content.type}
         userConfig={userConfig}
         setUserConfig={setUserConfig}
         setValid={setValid}
       />)})}
-      {(userConfig.widget.length != 0) ? '' : 
+      {Mobile ? '' : (userConfig.widget.length != 0) ? '' : 
       <div className="block empty" onClick={() => {console.log(savedConfig)}}>
         <span>+</span>
       </div>}
     </div>
+    {Mobile ? '' : 
     <div className="bot">
       {userConfig.widget.map((content, i) => {
         if (i > 0) return (<Box key={i} type={content.type}
@@ -76,6 +78,6 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
       <div className="block empty" onClick={() => {console.log(savedConfig)}}>
         <span>+</span>
       </div>}
-    </div>
+    </div>}
   </>)
 }
