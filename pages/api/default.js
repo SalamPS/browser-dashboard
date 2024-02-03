@@ -1,11 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
-const valid = [process.env.AF, process.env.SP]
-const host = process.env.SQL_HOST || ''
-const sqluser = process.env.SQL_USER || ''
-const password = process.env.SQL_PASSWORD || ''
-const database = process.env.SQL_DATABASE || ''
-
 import mysql from 'mysql'
 
 export default function handler(req, res) {
@@ -14,6 +7,7 @@ export default function handler(req, res) {
 
   let sql = ''
   const USER = cookie.id_user || false
+  const valid = [process.env.AF || 'token_1', process.env.SP || 'token_2']
   const ALLOW = valid.includes(cookie.token)
   
   try {
@@ -89,11 +83,15 @@ export default function handler(req, res) {
     res.status(500).json({ error: "Internal Server Error" });
   }
   if (sql.length) {
+    const HOST = process.env.SQL_HOST || 'localhost'
+    const USER = process.env.SQL_USER || 'localhost'
+    const PASSWORD = process.env.SQL_PASSWORD || 'password'
+    const DATABASE = process.env.SQL_DATABASE || 'database'
     const db = mysql.createConnection({
-      host: host,  
-      user: sqluser,
-      password: password,
-      database: database,
+      host: HOST,
+      user: USER,
+      password: PASSWORD,
+      database: DATABASE,
     });
     db.connect((err) => {
       if (err) {
