@@ -3,21 +3,17 @@
 /* eslint-disable react/prop-types */
 import SpotTask from "./widgets/_spotTask"
 
-const Box = ({type, userConfig, setSavedConfig, setValid}) => {
+const Box = ({type, userConfig, setUserConfig, setValid}) => {
   const fetchWidget = async (dest) => {
     try {
       // Fetch Data and Save it to Temp
       const response = await fetch(`api/default?dest=${dest}`)
       if (response.ok) {
         const data = await response.json();
-        setSavedConfig((prevData) => ({
+        setUserConfig((prevData) => ({
           ...prevData,
           ['widgets']: data
         }))
-        if (JSON.stringify(data) !== JSON.stringify(userConfig['widgets'])) 
-        {
-          setValid((Valid) => ({...Valid,['widget']: false}))
-        }
         return data
       } 
       else {console.error(`Failed to fetch ${dest} data`)}
@@ -51,7 +47,7 @@ export default function Widget ({savedConfig, setSavedConfig, storageKey, userCo
   : <>
     {userConfig.widget.map((content, i) => (<Box key={i} type={content.type}
       userConfig={userConfig}
-      setSavedConfig={setSavedConfig}
+      setUserConfig={setUserConfig}
       setValid={setValid}
     />))}
     {userConfig.widget.length > 4 ? '' : 
