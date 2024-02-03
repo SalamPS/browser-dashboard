@@ -1,5 +1,6 @@
 'use client'
 
+import Welcome from "./Welcome";
 /* eslint-disable react/prop-types */
 import SpotTask from "./widgets/_spotTask"
 
@@ -27,17 +28,15 @@ const Box = ({type, userConfig, setUserConfig}) => {
   }
 
   return (
-    <div className="block">
-      <div className="widget feat">
-        <div className="body">
-          {widgets[type]}
-        </div>
+    <div className="shadowBox shadowWidget">
+      <div className="block">
+        {widgets[type]}
       </div>
     </div>
   )
 }
 
-export default function Widget ({setValid, savedConfig, userConfig, setUserConfig}) {
+export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin}) {
   const newBlock = () => {
   }
   const removeBlock = () => {
@@ -45,16 +44,38 @@ export default function Widget ({setValid, savedConfig, userConfig, setUserConfi
 
   return (!userConfig ? '' 
   : <>
-    {userConfig.widget.map((content, i) => (<Box key={i} type={content.type}
-      userConfig={userConfig}
-      setUserConfig={setUserConfig}
-      setValid={setValid}
-    />))}
-    {userConfig.widget.length > 4 ? '' : 
-    <div className="block empty" onClick={() => {console.log(savedConfig)}}>
-      <div className="widget insert">
-        <span>+</span>
+    <div className="top">
+      <div className="shadowBox shadowWelcome">
+        <Welcome
+          storageKey={storageKey}
+          userConfig={userConfig} 
+          setUserConfig={setUserConfig}
+          Login={Login}
+          setLogin={setLogin}
+        />
       </div>
-    </div>}
+      {userConfig.widget.map((content, i) => {
+        if (i == 0) return (<Box key={i} type={content.type}
+        userConfig={userConfig}
+        setUserConfig={setUserConfig}
+        setValid={setValid}
+      />)})}
+      {(userConfig.widget.length != 0) ? '' : 
+      <div className="block empty" onClick={() => {console.log(savedConfig)}}>
+        <span>+</span>
+      </div>}
+    </div>
+    <div className="bot">
+      {userConfig.widget.map((content, i) => {
+        if (i > 0) return (<Box key={i} type={content.type}
+        userConfig={userConfig}
+        setUserConfig={setUserConfig}
+        setValid={setValid}
+      />)})}
+      {(userConfig.widget.length > 4 && userConfig.widget.length == 0) ? '' : 
+      <div className="block empty" onClick={() => {console.log(savedConfig)}}>
+        <span>+</span>
+      </div>}
+    </div>
   </>)
 }

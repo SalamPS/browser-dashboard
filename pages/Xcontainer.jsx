@@ -108,25 +108,23 @@ export default function Xcontainer () {
     /> : ''}
     <main className={font.className}>
       <div className="container">
-        <Todo 
-          storageKey={storageKey}
-          userConfig={userConfig} 
-          setUserConfig={setUserConfig}
-        />
+        <div className="shadowBox shadowTodo">
+          <Todo 
+            storageKey={storageKey}
+            userConfig={userConfig} 
+            setUserConfig={setUserConfig}
+          />
+        </div>
         <div className="blocks">
           <div className="box">
-            <Welcome
-              storageKey={storageKey}
-              userConfig={userConfig} 
-              setUserConfig={setUserConfig}
-              Login={Login}
-              setLogin={setLogin}
-            />
             <Widget
+              storageKey={storageKey}
               setValid={setValid}
               setSavedConfig={setSavedConfig} 
               userConfig={userConfig} 
               setUserConfig={setUserConfig}
+              Login={Login}
+              setLogin={setLogin}
             />
           </div>
           <div className="watermark">
