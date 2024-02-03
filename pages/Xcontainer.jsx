@@ -97,10 +97,6 @@ export default function Xcontainer () {
       <div className="container">
         <Todo 
           storageKey={storageKey}
-          Valid={Valid} 
-          setValid={setValid}
-          savedConfig={savedConfig} 
-          setSavedConfig={setSavedConfig} 
           userConfig={userConfig} 
           setUserConfig={setUserConfig}
         />
@@ -108,20 +104,13 @@ export default function Xcontainer () {
           <div className="box">
             <Welcome
               storageKey={storageKey}
-              Valid={Valid} 
-              setValid={setValid}
-              savedConfig={savedConfig} 
-              setSavedConfig={setSavedConfig} 
               userConfig={userConfig} 
               setUserConfig={setUserConfig}
               Login={Login}
               setLogin={setLogin}
             />
             <Widget
-              storageKey={storageKey}
-              Valid={Valid} 
               setValid={setValid}
-              savedConfig={savedConfig} 
               setSavedConfig={setSavedConfig} 
               userConfig={userConfig} 
               setUserConfig={setUserConfig}

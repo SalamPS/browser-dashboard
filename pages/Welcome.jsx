@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Time from "./Time";
 import Cookies from 'js-cookie';
 
-export default function Welcome ({savedConfig, setSavedConfig, storageKey, userConfig, setUserConfig, Valid, setValid, Login, setLogin }) {
+export default function Welcome ({storageKey, userConfig, setUserConfig, Login, setLogin }) {
   const [ToggleShortcut, setToggleShortcut] = useState(false)
   const [shortFormData, setshortFormData] = useState({
     id_short: 0,

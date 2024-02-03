@@ -3,7 +3,7 @@
 /* eslint-disable react/prop-types */
 import SpotTask from "./widgets/_spotTask"
 
-const Box = ({type, userConfig, setUserConfig, setValid}) => {
+const Box = ({type, userConfig, setUserConfig}) => {
   const fetchWidget = async (dest) => {
     try {
       // Fetch Data and Save it to Temp
@@ -37,7 +37,7 @@ const Box = ({type, userConfig, setUserConfig, setValid}) => {
   )
 }
 
-export default function Widget ({savedConfig, setSavedConfig, storageKey, userConfig, setUserConfig, Valid, setValid }) {
+export default function Widget ({setValid, savedConfig, userConfig, setUserConfig}) {
   const newBlock = () => {
   }
   const removeBlock = () => {

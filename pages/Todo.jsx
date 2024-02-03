@@ -147,7 +147,7 @@ const NewTodo = ({storageKey, config, setConfig, setAdd}) => {
   )
 }
 
-export default function Todo ({savedConfig, setSavedConfig, storageKey, userConfig, setUserConfig, Valid, setValid}) {
+export default function Todo ({storageKey, userConfig, setUserConfig}) {
   const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
   // AddNew Todo Trigger
