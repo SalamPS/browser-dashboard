@@ -40,6 +40,16 @@ export default function Xcontainer () {
     const oldData = JSON.parse(localStorage.getItem(storageKey))
     if (oldData) setUserConfig(oldData)
 
+    const logged = JSON.parse(localStorage.getItem('userAuth'))
+    if (logged) setLogin(logged)
+  }, []);
+  // 
+  // 
+  // 
+  // If user Logged in, fetch data from online database
+  // 
+  useEffect(() => {
+    const oldData = JSON.parse(localStorage.getItem(storageKey))
     const fetchValid = async (dest) => {
       try {
         // Fetch Data and Save it to Temp
@@ -64,19 +74,22 @@ export default function Xcontainer () {
           return data
         } 
         else {console.error(`Failed to fetch ${dest} data`)}
-        setInit(true)
       } catch (error) {
         console.error(`Error fetching ${dest}:`, error)
       }
     };
-    const validate = async () => {
-      const todo = await fetchValid('todo')
-      const short = await fetchValid('short')
-      const widget = await fetchValid('widget')
+    if (Login != false && Login != "guest") {
+      (async () => {
+        fetchValid('todo').then(
+          fetchValid('short')
+        ).then(
+          fetchValid('widget')
+        ).then(
+          setInit(true)
+        )
+      })();
     }
-    validate()
-  }, []);
-  // 
+  }, [Login])
   // 
   //
   // Storage Setup End

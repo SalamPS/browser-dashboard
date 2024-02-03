@@ -78,8 +78,6 @@ export default function Welcome ({storageKey, userConfig, setUserConfig, Login, 
             Cookies.set('id_user', data[0].id_user);
             localStorage.setItem('userAuth', JSON.stringify({nama: data[0].nama}))
           }
-        }).then(()=>{
-          location.reload()
         })
       }
       else {console.error(`Failed to fetch ${dest} data`)}
