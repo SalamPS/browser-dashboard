@@ -4,7 +4,7 @@ import Time from "./Time";
 import Cookies from 'js-cookie';
 
 export default function Welcome ({savedConfig, setSavedConfig, storageKey, userConfig, setUserConfig, Valid, setValid }) {
-  Cookies.set('token', 'eyJuYW1lIjoic2FsYW1wYXJhcnRhIiwiaG9zdCI6InNhbGFtcGFyYXJ0YSIsImFsZyI6IkhTMjU2In0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.62St0g6EesPAu0JuqZyKGFEzZEJmp_C8PWlwD5U-d7Y', { expires: 7 });
+  // Cookies.set('token', 'eyJuYW1lIjoic2FsYW1wYXJhcnRhIiwiaG9zdCI6InNhbGFtcGFyYXJ0YSIsImFsZyI6IkhTMjU2In0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.62St0g6EesPAu0JuqZyKGFEzZEJmp_C8PWlwD5U-d7Y', { expires: 7 });
   const [ToggleShortcut, setToggleShortcut] = useState(false)
   const [formData, setFormData] = useState({
     id_short: 0,
@@ -59,70 +59,70 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
     }))
   }
 
-  return (<>
-    <div className="welcome">
-      <div className="addShort" style={ToggleShortcut ? {zIndex: 2, opacity: 1} : {zIndex: -1, opacity: 0}}>
-        <div className="input">
-          <form>
-            <h3>New Shortcut</h3>
-            <label>
-              <span>Name</span>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-              />
-            </label>
-            <label>
-              <span>Link</span>
-              <input
-                type="text"
-                name="url"
-                value={formData.url}
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-              />
-            </label>
-            <div className="button">
-              <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); setToggleShortcut(false)}}>Cancel</button>
-              <button id="submit" type="submit" title="Save new List" onClick={(e) => {saveShort(e)}}>Submit</button>
-            </div>
-          </form>
-        </div>
+  return (!userConfig ? '' : <>
+  <div className="welcome">
+    <div className="addShort" style={ToggleShortcut ? {zIndex: 2, opacity: 1} : {zIndex: -1, opacity: 0}}>
+      <div className="input">
+        <form>
+          <h3>New Shortcut</h3>
+          <label>
+            <span>Name</span>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={(e) => handleChange(e.target.name, e.target.value)}
+            />
+          </label>
+          <label>
+            <span>Link</span>
+            <input
+              type="text"
+              name="url"
+              value={formData.url}
+              onChange={(e) => handleChange(e.target.name, e.target.value)}
+            />
+          </label>
+          <div className="button">
+            <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); setToggleShortcut(false)}}>Cancel</button>
+            <button id="submit" type="submit" title="Save new List" onClick={(e) => {saveShort(e)}}>Submit</button>
+          </div>
+        </form>
       </div>
-      <div className="inner">
-        <div className="pad">
-          <div className="head">
-            <span>Welcome, Salam</span>
-            <Time/>
-          </div>
-          <div className="shortcut">
-            {!userConfig ? <></> :
-            userConfig.short.map((item) => {
-              return (
-                <a className="short cut" key={item.id_short} target="_blank"
-                   href={item.url.startsWith('http') ? item.url : 
-                   `http://${item.url}`}
-                  >
-                  {!item.favicon ? <div className="alternate">{item.name[0]}</div> 
-                  : <img src={`https://logo.clearbit.com/${item.url.replace(/^(https?:|)\/\//, '')}`} alt={item.name} />}
-                  <br />
-                  <div className="text">
-                    <span>{item.name}</span>
-                  </div>
-                </a>
-              )
-            })}
-            {userConfig.short.length > 6 ? '' : 
-            <div className="short">
-              <button onClick={() => {
-                handleChange('id_short', Math.floor(new Date().getTime() / 1000))
-                setToggleShortcut(true)
-              }}>+</button>
-            </div>}
-          </div>
+    </div>
+    <div className="inner">
+      <div className="pad">
+        <div className="head">
+          <span>Welcome, Salam</span>
+          <Time/>
+        </div>
+        <div className="shortcut">
+          {!userConfig ? <></> :
+          userConfig.short.map((item) => {
+            return (
+              <a className="short cut" key={item.id_short} target="_blank"
+                  href={item.url.startsWith('http') ? item.url : 
+                  `http://${item.url}`}
+                >
+                {!item.favicon ? <div className="alternate">{item.name[0]}</div> 
+                : <img src={`https://logo.clearbit.com/${item.url.replace(/^(https?:|)\/\//, '')}`} alt={item.name} />}
+                <br />
+                <div className="text">
+                  <span>{item.name}</span>
+                </div>
+              </a>
+            )
+          })}
+          {userConfig.short.length > 6 ? '' : 
+          <div className="short">
+            <button onClick={() => {
+              handleChange('id_short', Math.floor(new Date().getTime() / 1000))
+              setToggleShortcut(true)
+            }}>+</button>
+          </div>}
         </div>
       </div>
     </div>
+  </div>
   </>)
 }
