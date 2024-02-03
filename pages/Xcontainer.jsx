@@ -19,6 +19,7 @@ export default function Xcontainer () {
   }
   const storageKey = 'userConfig';
   const [Init, setInit] = useState(false)
+  const [Login, setLogin] = useState(false)
   const [Valid, setValid] = useState({todo:true, widget:true, short: true})
   const [userConfig, setUserConfig] = useState({...base})
   const [savedConfig, setSavedConfig] = useState({...base})
@@ -46,7 +47,7 @@ export default function Xcontainer () {
         if (response.ok) {
           setInit(true)
           const data = await response.json();
-          if (data.guest) return
+          if (data.guest) return data
 
           setSavedConfig((prevData) => ({
             ...prevData,
@@ -113,6 +114,8 @@ export default function Xcontainer () {
               setSavedConfig={setSavedConfig} 
               userConfig={userConfig} 
               setUserConfig={setUserConfig}
+              Login={Login}
+              setLogin={setLogin}
             />
             <Widget
               storageKey={storageKey}

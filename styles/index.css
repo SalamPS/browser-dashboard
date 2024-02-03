@@ -374,6 +374,12 @@ main {
   justify-content: space-between;
   font-size: 2rem;
 }
+.welcome .bi {
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 1.5rem;
+}
 
 .time {
   display: inline-block;

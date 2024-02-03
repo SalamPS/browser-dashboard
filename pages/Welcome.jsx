@@ -1,15 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
-import { useState } from "react";
+'use client'
+
+import { useEffect, useState } from "react";
 import Time from "./Time";
 import Cookies from 'js-cookie';
 
-export default function Welcome ({savedConfig, setSavedConfig, storageKey, userConfig, setUserConfig, Valid, setValid }) {
-  Cookies.set('token', 'eyJuYW1lIjoic2FsYW1wYXJhcnRhIiwiaG9zdCI6InNhbGFtcGFyYXJ0YSIsImFsZyI6IkhTMjU2In0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.62St0g6EesPAu0JuqZyKGFEzZEJmp_C8PWlwD5U-d7Y', { expires: 7 });
+export default function Welcome ({savedConfig, setSavedConfig, storageKey, userConfig, setUserConfig, Valid, setValid, Login, setLogin }) {
   const [ToggleShortcut, setToggleShortcut] = useState(false)
-  const [formData, setFormData] = useState({
+  const [shortFormData, setshortFormData] = useState({
     id_short: 0,
     name: '',
     url: '',
+  })
+  
+  const [ToggleLogin, setToggleLogin] = useState(false)
+  const [LoginData, setLoginData] = useState({
+    uname: '',
+    token: '',
   })
   
   // Setup Data for Shortcut
@@ -19,7 +27,7 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
   const saveShort = async (e) => {
     e.preventDefault()
     const pushShort = async (isValid) => {
-      const validated = {...formData}
+      const validated = {...shortFormData}
       validated.favicon = isValid;
       const response = await fetch('/api/default?dest=short', {
         method: 'POST',
@@ -39,7 +47,7 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
     }
     try {
       (async () => {
-        await fetch(`https://logo.clearbit.com/${formData.url.replace(/^(https?:|)\/\//, '')}`)
+        await fetch(`https://logo.clearbit.com/${shortFormData.url.replace(/^(https?:|)\/\//, '')}`)
         .then(() => pushShort(1))
         .catch(() => pushShort(0))
       })();
@@ -49,13 +57,45 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
     }
     setToggleShortcut(false)
   }
-
   const handleChange = (name, value) => {
-    setFormData((prevData) => ({
+    setshortFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }))
   }
+
+  // Client Login
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await fetch(`/api/default?dest=user&id=${LoginData.uname}&token=${LoginData.token}`);
+      if (response.ok) {
+        response.json().then(data => {
+          if (data == []) setLogin('guest')
+          else {
+            setLogin({nama: data[0].nama})
+            Cookies.set('token', data[0].token);
+            Cookies.set('id_user', data[0].id_user);
+            localStorage.setItem('userAuth', JSON.stringify({nama: data[0].nama}))
+          }
+        }).then(()=>{
+          location.reload()
+        })
+      }
+      else {console.error(`Failed to fetch ${dest} data`)}
+    } catch (err) {}
+    setToggleLogin(false)
+  }
+  const handleInput = (name, value) => {
+    setLoginData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
+  }
+  useEffect(() => {
+    const auth = localStorage.getItem('userAuth')
+    auth ? setLogin(JSON.parse(auth)) : ''
+  }, [])
 
   return (!userConfig ? '' : <>
   <div className="welcome">
@@ -68,7 +108,7 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
             <input
               type="text"
               name="name"
-              value={formData.name}
+              value={shortFormData.name}
               onChange={(e) => handleChange(e.target.name, e.target.value)}
             />
           </label>
@@ -77,7 +117,7 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
             <input
               type="text"
               name="url"
-              value={formData.url}
+              value={shortFormData.url}
               onChange={(e) => handleChange(e.target.name, e.target.value)}
             />
           </label>
@@ -88,10 +128,43 @@ export default function Welcome ({savedConfig, setSavedConfig, storageKey, userC
         </form>
       </div>
     </div>
+    <div className="addShort" style={ToggleLogin ? {zIndex: 2, opacity: 1} : {zIndex: -1, opacity: 0}}>
+      <div className="input">
+        <form>
+          <h3>LamP OAuth | Portal</h3>
+          <label>
+            <span>Username</span>
+            <input
+              type="text"
+              name="uname"
+              value={LoginData.uname}
+              onChange={(e) => handleInput(e.target.name, e.target.value)}
+            />
+          </label>
+          <label>
+            <span>Token</span>
+            <input
+              type="text"
+              name="token"
+              value={LoginData.token}
+              onChange={(e) => handleInput(e.target.name, e.target.value)}
+            />
+          </label>
+          <div className="button">
+            <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); setToggleLogin(false)}}>Cancel</button>
+            <button id="submit" type="submit" title="Save new List" onClick={(e) => {handleLogin(e)}}>Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
     <div className="inner">
       <div className="pad">
         <div className="head">
-          <span>Welcome, Salam</span>
+          <span>
+            Welcome, {Login ? Login.nama : 'Master'}
+            {' '}
+            <i className="login bi bi-person-circle" onClick={() => {setToggleLogin(true)}}></i>
+          </span>
           <Time/>
         </div>
         <div className="shortcut">

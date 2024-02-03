@@ -13,7 +13,7 @@ import mysql from 'mysql'
 
 export default function handler(req, res) {
   const cookie = req.cookies.token;
-  const { dest, id, type, list } = req.query;
+  const { dest, id, type, list, token } = req.query;
 
   let sql = ''
   let user = false
@@ -31,6 +31,7 @@ export default function handler(req, res) {
 
           sql += ` FROM ${dest} WHERE id_user = '${user}'`
         }
+        else if (dest == 'user') sql = `SELECT \`id_user\`, \`nama\`, \`token\` from user WHERE id_user='${id}' AND token='${token}'`
         else res.status(200).send({guest: true})
       break
 
