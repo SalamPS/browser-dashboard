@@ -169,21 +169,23 @@ export default function Welcome ({storageKey, userConfig, setUserConfig, Login, 
           {!userConfig ? <></> :
           userConfig.short.map((item) => {
             return (
-              <a className="short cut" key={item.id_short} target="_blank"
-                  href={item.url.startsWith('http') ? item.url : 
-                  `http://${item.url}`}
-                >
-                {!item.favicon ? <div className="alternate">{item.name[0]}</div> 
-                : <img src={`https://logo.clearbit.com/${item.url.replace(/^(https?:|)\/\//, '')}`} alt={item.name} />}
-                <br />
+              <div className="short cut" key={item.id_short}>
+                <div className="delete">
+                  <div className="x" onClick={() => {console.log('delete')}}>x</div>
+                </div>
+                <a target="_blank" href={item.url.startsWith('http') ? item.url : `http://${item.url}`}>
+                  {!item.favicon ? <div className="alternate">{item.name[0]}</div> 
+                  : <img src={`https://logo.clearbit.com/${item.url.replace(/^(https?:|)\/\//, '')}`} alt={item.name} />}
+                  <br />
+                </a>
                 <div className="text">
                   <span>{item.name}</span>
                 </div>
-              </a>
+              </div>
             )
           })}
-          {userConfig.short.length > 6 ? '' : 
-          <div className="short">
+          {userConfig.short.length > 4 ? '' : 
+          <div className="short add">
             <button onClick={() => {
               handleChange('id_short', Math.floor(new Date().getTime() / 1000))
               setToggleShortcut(true)
