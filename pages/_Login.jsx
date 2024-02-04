@@ -57,7 +57,7 @@ export default function Login ({toggle, setLogin}) {
     </label>
     <div className="button">
       <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); toggle(false)}}>Cancel</button>
-      <button id="submit" type="submit" title="Save new List" onClick={(e) => {handleLogin(e)}}>Submit</button>
+      <button id="submit" type="submit" title="Login" onClick={(e) => {handleLogin(e)}}>Submit</button>
     </div>
   </form>)
 }

@@ -82,14 +82,16 @@ export default function Todo ({storageKey, config, setConfig, toggle}) {
           dateFormat="dd-MM-yyyy | HH:mm:ss"
         />
       </label>
-      <button id="cancel" title="Cancel" onClick={(e) => {
-        e.preventDefault()
-        toggle(false)
-      }}>Cancel</button>
-      <button id="submit" title="Save new List" onClick={(e) => {
-        e.preventDefault()
-        handleSubmit()
-      }}>Submit</button>
+      <div className="button">
+        <button id="cancel" title="Cancel" onClick={(e) => {
+          e.preventDefault()
+          toggle(false)
+        }}>Cancel</button>
+        <button id="submit" title="Save new List" onClick={(e) => {
+          e.preventDefault()
+          handleSubmit()
+        }}>Post</button>
+      </div>
     </form>
   )
 }

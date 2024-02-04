@@ -595,9 +595,8 @@ main {
   }
 }
 #popup .button {
-  margin-top: 10px;
+  margin-top: 20px;
   display: flex;
-  justify-content: right;
 }
 #popup button {
   padding: 10px 20px;
@@ -659,11 +658,9 @@ main {
 #popup .important .check {
   padding: 5px;
 }
-#popup #Login, #popup #Short {
-  transition: 0s;
-}
-#popup #Login .input, #popup #Short .input {
-  padding: 20px 30px;
+#popup #Login .button, #popup #Short .button {
+  margin-top: 10px;
+  justify-content: right;
 }
 #popup #Todo {
   color: var(--color-font);
