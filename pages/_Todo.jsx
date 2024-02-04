@@ -8,7 +8,6 @@ export default function Todo ({storageKey, config, setConfig, toggle}) {
     title: '',
     Desc: '',
     dead: '',
-    vital: 0,
     Index: 0,
     clear: 0,
   })
@@ -81,16 +80,6 @@ export default function Todo ({storageKey, config, setConfig, toggle}) {
           timeIntervals={1}
           minDate={new Date()}
           dateFormat="dd-MM-yyyy | HH:mm:ss"
-        />
-      </label>
-      <label className="important">
-        <span className='span check'>Important</span>
-        <input
-          className="check"
-          type="checkbox"
-          name="vital"
-          checked={formData.vital}
-          onChange={(e) => {handleChange(e.target.name, e.target.checked)}}
         />
       </label>
       <button id="cancel" title="Cancel" onClick={(e) => {

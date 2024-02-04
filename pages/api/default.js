@@ -14,7 +14,7 @@ export default function handler(req, res) {
     switch(req.method) {
       case 'GET' : 
         if (ALLOW) {
-          if (dest == 'todo') sql = `SELECT \`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\``
+          if (dest == 'todo') sql = `SELECT \`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`Index\`, \`clear\``
           else if (dest == 'short') sql = `SELECT \`id_short\`, \`name\`, \`url\`, \`favicon\``
           else if (dest == 'widget') sql = `SELECT \`id_widget\`, \`type\`, \`id_ref\``
           else if (dest == 'widget_spotTask') sql = `SELECT \`id_widget_spotTask\`, \`name\`, \`matkul\`, \`part\`, \`url\`, \`dead\``
@@ -30,7 +30,7 @@ export default function handler(req, res) {
           const data = req.body;
           if (dest == 'todo') {
             if (type == 'merge') data.forEach(data => {
-              sql += `UPDATE todo SET \`title\`='${data.title}', \`Desc\`='${data.Desc}', \`dead\`=${data.dead}, \`vital\`=${data.vital}, \`Index\`=${data.Index}, \`clear\`=${data.clear} WHERE id_todo=${data.id_todo} AND id_user='${USER}'; `
+              sql += `UPDATE todo SET \`title\`='${data.title}', \`Desc\`='${data.Desc}', \`dead\`=${data.dead}, \`Index\`=${data.Index}, \`clear\`=${data.clear} WHERE id_todo=${data.id_todo} AND id_user='${USER}'; `
             })
             else sql = `UPDATE todo SET clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${USER}'`;
           } 
@@ -42,7 +42,7 @@ export default function handler(req, res) {
           } 
           else if (dest == 'widget') {
             sql = `
-              -- UPDATE todo SET title='title', Desc='desc', dead=dead, vital=vital, \`Index\`=Index, clear=Clear WHERE id_todo=id_todo AND id_user='${USER}'
+              -- UPDATE todo SET title='title', Desc='desc', dead=dead, \`Index\`=Index, clear=Clear WHERE id_todo=id_todo AND id_user='${USER}'
             `;
           }
         }
@@ -53,9 +53,9 @@ export default function handler(req, res) {
           const data = req.body;
           if (dest == 'todo') {
             if (type == 'merge') data.forEach(data => {
-              sql += `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.vital},${data.Index},${data.clear},'${USER}'); `
+              sql += `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.Index},${data.clear},'${USER}'); `
             })
-            else sql = `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`vital\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.vital},${data.Index},${data.clear},'${USER}')`
+            else sql = `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.Index},${data.clear},'${USER}')`
           }
           else if (dest == 'short') {
             if (type == 'merge') data.forEach(data => {
@@ -65,8 +65,8 @@ export default function handler(req, res) {
           }
           else if (dest == 'widget') 
           sql = `
-            -- INSERT INTO todo (id_todo, title, Desc, dead, vital, Index, clear, id_user) 
-            -- VALUES (id_todo,'title','desc',dead,vital,Index,Clear,${USER})
+            -- INSERT INTO todo (id_todo, title, Desc, dead, Index, clear, id_user) 
+            -- VALUES (id_todo,'title','desc',dead,Index,Clear,${USER})
           `
         }
       break
