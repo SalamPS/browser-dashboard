@@ -74,7 +74,7 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
         setUserConfig={setUserConfig}
         setValid={setValid}
       />)})}
-      {(userConfig.widget.length > 4 && userConfig.widget.length == 0) ? '' : 
+      {(userConfig.widget.length > 4 || userConfig.widget.length == 0) ? '' : 
       <div className="block empty" onClick={() => {console.log(savedConfig)}}>
         <span>+</span>
       </div>}
