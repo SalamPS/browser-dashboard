@@ -1,32 +1,46 @@
 :root {
   --color-main: #4C5760;
   --color-main-semi: #4C5760a0;
-  --color-main-fade: #4C576090;
+  --color-main-hove: #dedee2;
+  --color-main-fade: #dedee2;
   --color-main-thin: #4C576020;
   --color-font: #4C5760;
-  --color-font-fade: #f3fdf0aa;
+  --color-font-flip: #f4f4f5;
+  --color-font-fade: #4C5760aa;
   --color-line: #f4f4f5;
   --color-line-back: #f4f4f5;
-  --color-line-fade: #E5F9E060;
+  --color-line-hove: #e6e6e6;
+  --color-line-fade: #ebebeb;
   --color-line-fades: #E5F9E020;
   --color-edge: #DE6B48;
   --color-edge-fade: #DE6B4880;
+  --color-safe: #22ff22;
+  --color-hint: #ffff22;
+  --color-warn: #ff2222;
+  --shadow: 0 0 50px rgba(0,0,0,.1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-main: #2C3440;
-    --color-main-semi: #2C3440a0;
-    --color-main-fade: #2C344090;
+    --color-main: #CAD2EC;
+    --color-main-semi: #4a546b;
+    --color-main-hove: #2f3a53;
+    --color-main-fade: #283249;
     --color-main-thin: #2C344020;
-    --color-font: #d2d2df;
-    --color-font-fade: #d2d2dfaa;
+    --color-font: #CAD2EC;
+    --color-font-flip: #1f2940;
+    --color-font-fade: #CAD2ECaa;
     --color-line: #1f2940;
-    --color-line-back: #141b2d;
-    --color-line-fade: #33333360;
-    --color-line-fades: #33333320;
+    --color-line-back: #1e283e;
+    --color-line-hove: #1e283e;
+    --color-line-fade: #1b263f60;
+    --color-line-fades: #1f294020;
     --color-edge: #8C3D2E;
     --color-edge-fade: #8C3D2E80;
+    --color-safe: #77ff77;
+    --color-hint: #ffff77;
+    --color-warn: #ff7777;
+    --shadow: 0 0 50px rgba(0,0,0,.12);
   }
 }
 :root {
@@ -134,7 +148,7 @@ main {
 }
 
 .shadowBox {
-  box-shadow: 0 0 50px rgba(0, 52, 68, 0.2);
+  box-shadow: var(--shadow);
   background-color: var(--color-line);
   border-radius: 30px;
   z-index: 0;
@@ -193,8 +207,13 @@ main {
   margin-bottom: 20px;
   border-radius: 20px;
   transition: 0.2s;
-  background-color: var(--color-main);
-  border: solid 5px var(--color-main);
+  border: solid 5px var(--color-main-fade);
+  background-color: var(--color-main-fade);
+  color: var(--color-main-fade);
+}
+.list:hover {
+  background-color: var(--color-main-hove);
+  border-color: var(--color-main-hove);
 }
 .list h2 {
   font-size: 1.3rem;
@@ -211,13 +230,13 @@ main {
   width: 5px;
 }
 .list .mark.safe {
-  background-color: #00fb00;
+  background-color: var(--color-safe);
 }
 .list .mark.hint {
-  background-color: #fbff00;
+  background-color: var(--color-hint);
 }
 .list .mark.warn {
-  background-color: #fb0000;
+  background-color: var(--color-warn);
 }
 .list .info {
   flex-grow: 1;
@@ -245,16 +264,18 @@ main {
   font-size: 1.5rem;
 }
 .list.add {
+  color: var(--color-font);
   align-items: center;
   justify-content: center;
   background-color: transparent;
   border: dashed 2px;
+  border-color: var(--color-main-semi);
   font-size: 2rem;
 }
 .list.add:hover {
-  background-color: var(--color-main-thin);
+  background-color: var(--color-line-hove);
   border-style: solid;
-  border-color: var(--color-main-fade);
+  border-color: var(--color-main-semi);
 }
 .list.form {
   color: var(--color-font);
@@ -317,10 +338,11 @@ main {
   display: none;
 }
 .list:hover .mark {
-  box-shadow: 0 0 20px #002035;
+  box-shadow: 0 0 20px rgba(0, 91, 151, 0.5333333333);
 }
 .list:hover .edit {
-  background-color: var(--color-line);
+  background-color: var(--color-line-fade);
+  color: var(--color-font);
   padding: 15px;
 }
 
@@ -362,9 +384,9 @@ main {
   padding: 0;
   width: calc(33.3333333333% - 40px - 4px);
   margin: 0 0 40px 40px;
-  border-color: var(--color-main-fade);
+  border-color: var(--color-main-semi);
   background-color: transparent;
-  color: var(--color-main-fade);
+  color: var(--color-main-semi);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -374,7 +396,7 @@ main {
 .block.empty:hover {
   color: var(--color-font);
   border-style: solid;
-  background-color: var(--color-main-thin);
+  background-color: var(--color-line-hove);
 }
 
 .widget {
@@ -486,7 +508,7 @@ main {
   height: 40px;
   font-size: 24px;
   letter-spacing: 0;
-  color: var(--color-font);
+  color: var(--color-font-flip);
 }
 .shortcut .text {
   display: inline-block;
@@ -576,9 +598,10 @@ main {
   transition: 0.2s;
   align-items: center;
   border-radius: 10px;
+  width: 100%;
 }
 .spotTask:hover {
-  background-color: var(--color-main-thin);
+  background-color: var(--color-main-hove);
 }
 .spotTask .mark {
   width: 10px;
@@ -587,13 +610,13 @@ main {
   border-radius: 50%;
 }
 .spotTask .mark.safe {
-  background-color: #00fb00;
+  background-color: var(--color-safe);
 }
 .spotTask .mark.hint {
-  background-color: #fbff00;
+  background-color: var(--color-hint);
 }
 .spotTask .mark.warn {
-  background-color: #fb0000;
+  background-color: var(--color-warn);
 }
 
 .watermark {
@@ -607,7 +630,7 @@ main {
   display: inline-block;
   height: 2px;
   flex-grow: 1;
-  background-color: var(--color-main-fade);
+  background-color: var(--color-main-semi);
   margin-left: 20px;
   margin-top: 4px;
 }
