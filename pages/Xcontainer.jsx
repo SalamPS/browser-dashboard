@@ -4,7 +4,7 @@
 import { Exo_2 } from 'next/font/google'
 const font = Exo_2({ subsets: ['latin'] })
 
-import Popup from './Popup';
+import Popup from './popup/Popup';
 import Merge from "./Merge";
 import Widget from "./Widget";
 import Todo from "./Todo";
