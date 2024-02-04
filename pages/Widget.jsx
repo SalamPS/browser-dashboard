@@ -1,36 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
 'use client'
 
+import { useEffect, useState } from "react";
 import Welcome from "./Welcome";
-/* eslint-disable react/prop-types */
 import SpotTask from "./widgets/_spotTask"
 
-const Box = ({type, userConfig, setUserConfig}) => {
-  const fetchWidget = async (dest) => {
-    try {
-      // Fetch Data and Save it to Temp
-      const response = await fetch(`api/default?dest=${dest}`)
-      if (response.ok) {
-        const data = await response.json();
-        setUserConfig((prevData) => ({
-          ...prevData,
-          ['widgets']: data
-        }))
-        return data
-      } 
-      else {console.error(`Failed to fetch ${dest} data`)}
-    } catch (error) {
-      console.error(`Error fetching ${dest}:`, error)
-    }
-  };
+const Box = ({fetchWidget,type}) => {
+  const [content, setContent] = useState(<></>)
 
-  const widgets = {
-    spotTask: <SpotTask fetchWidget={fetchWidget} data={userConfig.widgets.filter(item => item.id_widget_spotTask)}/>
-  }
+  useEffect(() => {
+    switch(type) {
+      case 'spotTask' : setContent(<SpotTask fetchWidget={fetchWidget} type={type}/>)
+      break
+    }
+  }, [])
 
   return (
     <div className="shadowBox shadowWidget">
       <div className="block">
-        {widgets[type]}
+        {content}
       </div>
     </div>
   )
@@ -41,6 +30,18 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
   }
   const removeBlock = () => {
   }
+  const fetchWidget = async (dest,setData) => {
+    try {
+      // Fetch Data and Save it to Temp
+      const response = await fetch(`api/default?dest=${dest}`)
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem(dest, JSON.stringify(data))
+        setData(data)
+      }
+      else {console.error(`Failed to fetch ${dest}`)}
+    } catch (error) {console.error(`Error fetching ${dest}:`, error)}
+  };
 
   return (!userConfig ? '' 
   : <>
@@ -58,10 +59,9 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
         />
       </div>
       {Mobile ? '' : userConfig.widget.map((content, i) => {
-        if (i == 0) return (<Box key={i} type={content.type}
-        userConfig={userConfig}
-        setUserConfig={setUserConfig}
-        setValid={setValid}
+        if (i == 0) return (<Box key={i} 
+        fetchWidget={fetchWidget}
+        type={content.type}
       />)})}
       {Mobile ? '' : (userConfig.widget.length != 0) ? '' : 
       <div className="block empty" onClick={() => {console.log(savedConfig)}}>
@@ -71,10 +71,9 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
     {Mobile ? '' : 
     <div className="bot">
       {userConfig.widget.map((content, i) => {
-        if (i > 0) return (<Box key={i} type={content.type}
-        userConfig={userConfig}
-        setUserConfig={setUserConfig}
-        setValid={setValid}
+        if (i > 0) return (<Box key={i}
+        fetchWidget={fetchWidget}
+        type={content.type} 
       />)})}
       {(userConfig.widget.length > 4 || userConfig.widget.length == 0) ? '' : 
       <div className="block empty" onClick={() => {console.log(savedConfig)}}>

@@ -2,18 +2,26 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-export default function SpotTask ({fetchWidget, data}) {
+export default function SpotTask ({fetchWidget, type}) {
+  const [data, setData] = useState([])
+
   useEffect(() => {
-    (async () => {
-      fetchWidget('widget_spotTask')
-    })();
-  }, []);
+    const dest = `widget_${type}`
+    const old = localStorage.getItem(dest)
+    if (old) setData(JSON.parse(old))
+    else {
+      localStorage.setItem(dest, JSON.stringify([]))
+      setData([])
+    }
+    fetchWidget(dest)
+  }, [])
 
   const formatDate = (date) => {
     date = new Date(date * 1000); // Convert seconds to milliseconds
     const options = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' };
     return date.toLocaleString('id-ID', options).replace('pukul', '|');
   };
+
 
   const formatDead = (req) => {
     if (req > 259200) return 'safe'
