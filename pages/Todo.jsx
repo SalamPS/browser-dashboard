@@ -25,7 +25,7 @@ const TodoList = ({config, markDone}) => {
       // 
       // Initialize deadline marker
       // Changed it's color according to it's time delta
-      const isDead = formatDead(new Date().getTime() - list.dead)
+      const isDead = formatDead(Math.floor(new Date().getTime()/1000) - list.dead)
       return (
         // If the clear property's value == 2, then hide
         list.clear == 2 ? <div key={i} className="clear2"></div> 
