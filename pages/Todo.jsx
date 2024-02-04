@@ -54,10 +54,6 @@ const TodoList = ({config, markDone}) => {
 export default function Todo ({storageKey, userConfig, setUserConfig, setTogglePopup}) {
   const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-  // AddNew Todo Trigger
-  const [Add, setAdd] = useState(false)
-  
-
   // Data Todo is Done
   // Mark the chosen to-do list as cleared
   const markDone = async (id) => {
