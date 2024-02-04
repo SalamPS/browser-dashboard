@@ -76,6 +76,14 @@ body {
   height: 100%;
 }
 
+@media screen and (max-width: 750px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.2rem !important;
+  }
+}
 main {
   height: calc(100vh - 60px);
   width: calc(100vw - 60px);
@@ -444,6 +452,9 @@ main {
   justify-content: space-between;
   font-size: 2rem;
 }
+.welcome h1 {
+  font-weight: normal;
+}
 .welcome .bi {
   cursor: pointer;
   display: inline-block;
@@ -464,7 +475,7 @@ main {
 }
 @media screen and (max-width: 750px) {
   .shortcut {
-    margin-top: 20px;
+    margin-top: 30px;
   }
 }
 .shortcut .short {

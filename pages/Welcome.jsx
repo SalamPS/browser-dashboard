@@ -158,11 +158,11 @@ export default function Welcome ({storageKey, userConfig, setUserConfig, Login, 
     <div className="inner">
       <div className="pad">
         <div className="head">
-          <span>
+          <h1>
             Welcome, {Login ? Login.nama : 'Master'}
             {' '}
             <i className="login bi bi-person-circle" onClick={() => {setToggleLogin(true)}}></i>
-          </span>
+          </h1>
           {Mobile ? '' : <Time/>}
         </div>
         <div className="shortcut">
