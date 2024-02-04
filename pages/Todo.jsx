@@ -7,8 +7,9 @@ const TodoList = ({config, markDone}) => {
   // hint -> Less than 3 days from the deadline
   // warn -> Less than 1 day from the deadline
   const formatDead = (req) => {
-    if (req > 259200) return 'safe'
-    else if (req > 86400) return 'hint'
+
+    if (req > 2592) return 'safe'
+    else if (req > 864) return 'hint'
     else return 'warn'
   }
 
@@ -25,7 +26,7 @@ const TodoList = ({config, markDone}) => {
       // 
       // Initialize deadline marker
       // Changed it's color according to it's time delta
-      const isDead = formatDead(Math.floor(new Date().getTime()/1000) - list.dead)
+      const isDead = formatDead(list.dead - Math.floor(new Date().getTime()/1000))
       return (
         // If the clear property's value == 2, then hide
         list.clear == 2 ? <div key={i} className="clear2"></div> 
