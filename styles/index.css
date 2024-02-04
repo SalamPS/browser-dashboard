@@ -572,11 +572,12 @@ main {
   background-color: var(--color-line-fade);
   -webkit-backdrop-filter: blur(2px);
           backdrop-filter: blur(2px);
+  overflow: hidden;
   display: flex;
   position: absolute;
-  align-items: center;
+  align-items: stretch;
+  flex-direction: column;
   justify-content: center;
-  overflow: hidden;
 }
 @media screen and (max-width: 750px) {
   #popup {
@@ -584,14 +585,16 @@ main {
   }
 }
 #popup .holder {
+  padding: 40px;
   transition: 0.5s;
-  background-color: var(--color-line);
   border-radius: 20px;
+  background-color: var(--color-line);
   border: solid 2px var(--color-main-fade);
 }
-@media screen and (min-width: 750px) {
+@media screen and (max-width: 750px) {
   #popup .holder {
-    padding: 40px;
+    border-width: 2px 0 2px 0;
+    padding: 30px;
   }
 }
 #popup .button {
@@ -650,20 +653,16 @@ main {
   margin-left: 15px;
   display: block;
 }
-#popup .important {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-#popup .important .check {
-  padding: 5px;
-}
 #popup #Login .button, #popup #Short .button {
   margin-top: 10px;
   justify-content: right;
 }
 #popup #Todo {
   color: var(--color-font);
-  width: 700px;
   cursor: default;
+}
+@media screen and (min-width: 750px) {
+  #popup #Todo {
+    width: 700px;
+  }
 }/*# sourceMappingURL=index.css.map */

@@ -49,6 +49,7 @@ export default function Todo ({storageKey, config, setConfig, toggle}) {
 
   return (
     <form>
+      <h3>New Todo-List</h3>
       <label>
         <span className='span'>Title</span>
         <input
