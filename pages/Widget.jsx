@@ -36,7 +36,7 @@ const Box = ({type, userConfig, setUserConfig}) => {
   )
 }
 
-export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile}) {
+export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup}) {
   const newBlock = () => {
   }
   const removeBlock = () => {
@@ -50,6 +50,8 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
           storageKey={storageKey}
           userConfig={userConfig} 
           setUserConfig={setUserConfig}
+          TogglePopup={TogglePopup}
+          setTogglePopup={setTogglePopup}
           Login={Login}
           setLogin={setLogin}
           Mobile={Mobile}
