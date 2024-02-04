@@ -7,7 +7,6 @@ const TodoList = ({config, markDone}) => {
   // hint -> Less than 3 days from the deadline
   // warn -> Less than 1 day from the deadline
   const formatDead = (req) => {
-
     if (req > 2592) return 'safe'
     else if (req > 864) return 'hint'
     else return 'warn'
