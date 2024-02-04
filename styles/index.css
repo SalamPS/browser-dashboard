@@ -264,7 +264,7 @@ main {
   font-size: 1.5rem;
 }
 .list.add {
-  color: var(--color-font);
+  color: var(--color-font-fade);
   align-items: center;
   justify-content: center;
   background-color: transparent;
@@ -274,6 +274,7 @@ main {
 }
 .list.add:hover {
   background-color: var(--color-line-hove);
+  color: var(--color-font);
   border-style: solid;
   border-color: var(--color-main-semi);
 }
@@ -601,7 +602,7 @@ main {
   width: 100%;
 }
 .spotTask:hover {
-  background-color: var(--color-main-hove);
+  padding-left: 5px;
 }
 .spotTask .mark {
   width: 10px;
