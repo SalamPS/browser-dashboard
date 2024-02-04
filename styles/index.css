@@ -575,13 +575,18 @@ main {
   overflow: hidden;
   display: flex;
   position: absolute;
-  align-items: stretch;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
 }
 @media screen and (max-width: 750px) {
   #popup {
     height: 100vmax;
+  }
+}
+@media screen and (max-width: 750px) {
+  #popup {
+    align-items: stretch;
   }
 }
 #popup .holder {
@@ -595,6 +600,11 @@ main {
   #popup .holder {
     border-width: 2px 0 2px 0;
     padding: 30px;
+  }
+}
+@media screen and (min-width: 750px) {
+  #popup .holder {
+    width: 700px;
   }
 }
 #popup .button {
@@ -660,9 +670,4 @@ main {
 #popup #Todo {
   color: var(--color-font);
   cursor: default;
-}
-@media screen and (min-width: 750px) {
-  #popup #Todo {
-    width: 700px;
-  }
 }/*# sourceMappingURL=index.css.map */
