@@ -4,13 +4,30 @@
 import { Exo_2 } from 'next/font/google'
 const font = Exo_2({ subsets: ['latin'] })
 
+import Popup from './Popup';
 import Merge from "./Merge";
-import Welcome from "./Welcome";
 import Widget from "./Widget";
 import Todo from "./Todo";
 import { useState, useEffect } from "react";
 
 export default function Xcontainer () {
+  ///////////////////
+  // Popup Toggle
+  // 
+  // 
+  // This Popup served for the User's form input
+  // Popup variable will be set as the PopUp Name
+  // EG: "short", "login"
+  const [TogglePopup, setTogglePopup] = useState(false)
+  // 
+  // 
+  // Popup Toggle End
+  ///////////////////
+
+  ///////////////////
+  // Storage Setup
+  // 
+  //
   const base = {
     todo:[], 
     widget:[],
@@ -24,15 +41,11 @@ export default function Xcontainer () {
   const [Valid, setValid] = useState({todo:true, widget:true, short: true})
   const [userConfig, setUserConfig] = useState({...base})
   const [savedConfig, setSavedConfig] = useState({...base})
-
+  //
   useEffect(() => {
     if (Init) localStorage.setItem(storageKey, JSON.stringify(userConfig))
   }, [userConfig]);
-
-  ///////////////////
-  // Storage Setup
   // 
-  //
   // Set Client Configuration in Cache for offline usage and API Controls
   //
   // GET TodoList and Validate if the Online and Offline data are synced
@@ -44,8 +57,6 @@ export default function Xcontainer () {
     const logged = JSON.parse(localStorage.getItem('userAuth'))
     if (logged) setLogin(logged)
   }, []);
-  // 
-  // 
   // 
   // If user Logged in, fetch data from online database
   // 
@@ -101,36 +112,83 @@ export default function Xcontainer () {
     if (isMobile) setMobile(true)
   }, []);
   
-  
   return (<>
     {(!Valid.todo || !Valid.widget || !Valid.short) ? <Merge 
       storageKey={storageKey}
+
+      Login={Login} 
       Valid={Valid} 
-      setValid={setValid}
-      savedConfig={savedConfig} 
-      setSavedConfig={setSavedConfig} 
       userConfig={userConfig} 
-      setUserConfig={setUserConfig}  
+      savedConfig={savedConfig} 
+      TogglePopup={TogglePopup}
+
+      setLogin={setLogin}
+      setValid={setValid}
+      setUserConfig={setUserConfig}
+      setSavedConfig={setSavedConfig} 
+      setTogglePopup={setTogglePopup}
     /> : ''}
+    <div id="popup" style={{
+      zIndex: TogglePopup ? 3 : -1,
+      opacity: TogglePopup ? 1 : -1
+    }} className={font.className}>
+      <div className="holder" id={`${TogglePopup}`}
+        style={{
+          transition: TogglePopup ? '.1s' : '0s',
+          opacity: TogglePopup ? '1' : '0'
+        }}>
+        <Popup
+          storageKey={storageKey}
+
+          Login={Login} 
+          Valid={Valid} 
+          userConfig={userConfig} 
+          savedConfig={savedConfig} 
+          TogglePopup={TogglePopup}
+
+          setLogin={setLogin}
+          setValid={setValid}
+          setUserConfig={setUserConfig}
+          setSavedConfig={setSavedConfig} 
+          setTogglePopup={setTogglePopup}
+        />
+      </div>
+    </div>
     <main className={font.className}>
       <div className="container">
         <div className="shadowBox shadowTodo">
           <Todo 
             storageKey={storageKey}
+
+            Login={Login} 
+            Valid={Valid} 
             userConfig={userConfig} 
+            savedConfig={savedConfig} 
+            TogglePopup={TogglePopup}
+
+            setLogin={setLogin}
+            setValid={setValid}
             setUserConfig={setUserConfig}
+            setSavedConfig={setSavedConfig} 
+            setTogglePopup={setTogglePopup}
           />
         </div>
         <div className="blocks">
           <div className="box">
             <Widget
               storageKey={storageKey}
-              setValid={setValid}
-              setSavedConfig={setSavedConfig} 
+
+              Login={Login} 
+              Valid={Valid} 
               userConfig={userConfig} 
-              setUserConfig={setUserConfig}
-              Login={Login}
+              savedConfig={savedConfig} 
+              TogglePopup={TogglePopup}
+
               setLogin={setLogin}
+              setValid={setValid}
+              setUserConfig={setUserConfig}
+              setSavedConfig={setSavedConfig} 
+              setTogglePopup={setTogglePopup}
               Mobile={Mobile}
             />
           </div>
