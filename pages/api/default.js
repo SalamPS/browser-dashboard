@@ -74,9 +74,9 @@ export default async function handler(req, res) {
           }
           else if (dest == 'widget')
             if (type == 'merge') data.forEach(data => {
-              sql += `INSERT INTO widget (id_widget, type, id_ref, id_user) VALUES (${data.id_widget}, '${data.type}', '${data.id_ref}', '${ALLOW}'); `
+              sql += `INSERT INTO widget (id_widget, type, id_user) VALUES (${data.id_widget}, '${data.type}', '${ALLOW}'); `
             })
-            else sql = `INSERT INTO widget (id_widget, type, id_ref, id_user) VALUES (${data.id_widget}, '${data.type}', '${data.id_ref}', '${ALLOW}')`
+            else sql = `INSERT INTO widget (id_widget, type, id_user) VALUES (${data.id_widget}, '${data.type}', '${ALLOW}')`
         }
       break
 
