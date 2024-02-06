@@ -31,7 +31,6 @@ export default function Xcontainer () {
   const base = {
     todo:[], 
     widget:[],
-    widgets:[],
     short: [],
   }
   const storageKey = 'userConfig';
