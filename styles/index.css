@@ -417,6 +417,18 @@ main {
   justify-content: center;
   font-size: 3rem;
 }
+.block.empty h2 {
+  display: flex;
+  justify-content: space-between;
+}
+.block.empty .cancel {
+  opacity: 0.1;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.block.empty .cancel:hover {
+  opacity: 0.7;
+}
 
 .widget {
   overflow: hidden;

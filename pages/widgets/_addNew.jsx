@@ -30,7 +30,10 @@ export default function AddNew ({userConfig, setUserConfig, WidgetList}) {
       onClick={!Active ? () => {setActive(true)} : () => {}}>
       {!Active ? <span>+</span> : 
       <div className="add">
-        <h2>Add Widget</h2>
+        <h2>
+          <span>Add Widget</span>
+          <i class="bi bi-x-circle-fill cancel" onClick={() => {setActive(false)}}></i>
+        </h2>
         <div className="choices">
           {WidgetList.map((item, i) => {
           if (!userConfig.widget.find(w => w.type == item.type))
