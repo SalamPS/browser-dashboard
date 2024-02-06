@@ -22,7 +22,7 @@ export default function Welcome ({storageKey, userConfig, setUserConfig, Login, 
           </h1>
           {!Mobile ? <Time/> : ''}
         </div>
-        {!Mobile ? <Shortcut userConfig={userConfig} setTogglePopup={setTogglePopup}/> : ''}
+        {!Mobile ? <Shortcut userConfig={userConfig} setUserConfig={setUserConfig} setTogglePopup={setTogglePopup}/> : ''}
       </div>
     </div>
   </div>
