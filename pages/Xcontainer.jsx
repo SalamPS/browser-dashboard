@@ -92,13 +92,13 @@ export default function Xcontainer () {
     };
     if (Login != false && Login != "guest") {
       (async () => {
-        // fetchValid('todo').then(
-        //   fetchValid('short')
-        // ).then(
-        //   fetchValid('widget')
-        // ).then(
-        //   setInit(true)
-        // )
+        fetchValid('todo').then(
+          fetchValid('short')
+        ).then(
+          fetchValid('widget')
+        ).then(
+          setInit(true)
+        )
       })();
     }
   }, [Login])

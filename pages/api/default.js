@@ -84,7 +84,7 @@ export default function handler(req, res) {
   }
   if (sql.length) {
     const HOST = process.env.SQL_HOST || 'localhost'
-    const USER = process.env.SQL_USER || 'localhost'
+    const USER = process.env.SQL_USER || 'user'
     const PASSWORD = process.env.SQL_PASSWORD || 'password'
     const DATABASE = process.env.SQL_DATABASE || 'database'
     const db = mysql.createConnection({

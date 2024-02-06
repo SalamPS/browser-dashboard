@@ -13,7 +13,7 @@ export default function SpotTask ({fetchWidget, type}) {
       localStorage.setItem(dest, JSON.stringify([]))
       setData([])
     }
-    fetchWidget(dest)
+    fetchWidget(dest, setData)
   }, [])
 
   const formatDate = (date) => {
