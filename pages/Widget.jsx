@@ -20,7 +20,6 @@ const Box = ({fetchWidget,type,remove,id}) => {
       break
       case 'jokes' : setContent(<Jokes id={id} remove={remove}/>)
       break
-      break
     }
   }, [])
 

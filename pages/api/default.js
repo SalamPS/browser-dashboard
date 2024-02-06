@@ -13,14 +13,24 @@ export default async function handler(req, res) {
     switch(req.method) {
       case 'GET' : 
         if (ALLOW) {
-          if (dest == 'todo') sql = `SELECT \`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`Index\`, \`clear\``
-          else if (dest == 'short') sql = `SELECT \`id_short\`, \`name\`, \`url\`, \`favicon\``
-          else if (dest == 'widget') sql = `SELECT \`id_widget\`, \`type\`, \`id_ref\``
-          else if (dest == 'widget_spotTask') sql = `SELECT \`id_widget_spotTask\`, \`name\`, \`matkul\`, \`part\`, \`url\`, \`dead\``
+          sql = `SELECT \`id_${dest}\`, `
+          
+          const coll = ['todo', 'short', 'widget']
+          switch (dest) {
+            case 'todo' : sql +='`title`, `Desc`, `dead`, `Index`, `clear`'
+            break
+            case 'short' : sql +='`name`, `url`, `favicon`'
+            break
+            case 'widget' : sql +='`type`, `id_ref`'
+            break
 
-          sql += ` FROM ${dest} WHERE id_user = '${ALLOW}'`
+            case 'user' : sql +=`\`nama\`, \`token\` FROM ${dest} WHERE id_user = '${id}`
+            break
+            case 'widget_spotTask' : sql +=`\`name\`, \`matkul\`, \`part\`, \`url\`, \`dead\` FROM ${dest} WHERE NIM = ${cookie.NIM}`
+            break
+          }
+          if (coll.find(item => item == dest)) sql += ` FROM ${dest} WHERE id_user = '${ALLOW}'`
         }
-        else if (dest == 'user') sql = `SELECT \`id_user\`, \`nama\`, \`token\` from user WHERE id_user='${id}'`
         else res.status(200).send({guest: true})
       break
 

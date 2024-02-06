@@ -22,11 +22,14 @@ export default function SpotTask ({fetchWidget, type, remove, id}) {
     return date.toLocaleString('id-ID', options).replace('pukul', '|');
   };
 
-
   const formatDead = (req) => {
     if (req > 259200) return 'safe'
     else if (req > 86400) return 'hint'
     else return 'warn'
+  }
+
+  const importList = () => {
+    
   }
 
   return ( <>
