@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
   let sql = ''
   const USER = cookie.id_user || false
-  const ALLOW = cookie.token
+  const ALLOW = cookie.id_user
   
   try {
     switch(req.method) {

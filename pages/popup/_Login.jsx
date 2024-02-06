@@ -17,7 +17,6 @@ export default function Login ({toggle, setLogin}) {
             else {
               setLogin({nama: data[0].nama})
               Cookies.set('token', data[0].token);
-              Cookies.set('id_user', data[0].id_user);
               localStorage.setItem('userAuth', JSON.stringify({nama: data[0].nama}));
               return true;
             }
