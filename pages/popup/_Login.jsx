@@ -9,19 +9,24 @@ export default function Login ({toggle, setLogin}) {
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch(`/api/default?dest=user&id=${LoginData.uname}&token=${LoginData.token}`);
-      if (response.ok) {
-        response.json().then(data => {
-          if (data == []) setLogin('guest')
-          else {
-            setLogin({nama: data[0].nama})
-            Cookies.set('token', data[0].token);
-            Cookies.set('id_user', data[0].id_user);
-            localStorage.setItem('userAuth', JSON.stringify({nama: data[0].nama}))
-          }
-        })
-      }
-      else {console.error(`Failed to fetch ${dest} data`)}
+      fetch(`/api/default?dest=user&id=${LoginData.uname}&token=${LoginData.token}`)
+      .then(response => {
+        if (response.ok) {
+          response.json().then(data => {
+            if (data == []) {setLogin('guest'); return false}
+            else {
+              setLogin({nama: data[0].nama})
+              Cookies.set('token', data[0].token);
+              Cookies.set('id_user', data[0].id_user);
+              localStorage.setItem('userAuth', JSON.stringify({nama: data[0].nama}));
+              return true;
+            }
+          })
+        }
+        else {console.error(`Failed to fetch ${dest} data`); return false}
+      }).then(auth =>{
+        if (auth) location.reload()
+      })
     } catch (err) {}
     toggle(false)
   }

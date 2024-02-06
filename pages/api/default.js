@@ -1,14 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import mysql from 'mysql'
+import bcrypt from 'bcryptjs';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   const cookie = req.cookies;
   const { dest, id, type, list, token } = req.query;
 
   let sql = ''
   const USER = cookie.id_user || false
-  const valid = [process.env.AF || 'token_1', process.env.SP || 'token_2']
-  const ALLOW = valid.includes(cookie.token)
+  const ALLOW = cookie.token
   
   try {
     switch(req.method) {
@@ -21,7 +21,7 @@ export default function handler(req, res) {
 
           sql += ` FROM ${dest} WHERE id_user = '${USER}'`
         }
-        else if (dest == 'user') sql = `SELECT \`id_user\`, \`nama\`, \`token\` from user WHERE id_user='${id}' AND token='${token}'`
+        else if (dest == 'user') sql = `SELECT \`id_user\`, \`nama\`, \`token\` from user WHERE id_user='${id}'`
         else res.status(200).send({guest: true})
       break
 
@@ -100,13 +100,21 @@ export default function handler(req, res) {
       }
       console.log('Terhubung ke database MySQL');
     });
-    db.query(sql, (err, results) => {
+    db.query(sql, async (err, results) => {
       if (err) {
         console.error('Error while Querying Data:', err);
         res.status(500).send('Error while Querying Data');
         return;
       }
-      if (req.method == 'GET') res.status(200).json(results)
+      if (req.method == 'GET' && dest != 'user') res.status(200).json(results)
+      else if (dest == 'user') {
+        const isMatch = await bcrypt.compare(token, results[0].token);
+        if (isMatch) {
+          res.status(200).json(results);
+        } else {
+          res.status(401).json([])
+        }
+      }
     });
     switch(req.method) {
       case 'PUT' : res.status(200).send({put: true}); break;
