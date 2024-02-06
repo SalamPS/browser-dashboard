@@ -16,11 +16,11 @@ export default function AddNew ({userConfig, setUserConfig, WidgetList}) {
       ['widget']: copy
     }))
 
-    // fetch('/api/default?dest=widget', {
-    //   method: 'POST',
-    //   body: JSON.stringify(widget),
-    //   headers: {'Content-Type': 'application/json'}
-    // }).catch(err => console.error('Error: ', err))
+    fetch('/api/default?dest=widget', {
+      method: 'POST',
+      body: JSON.stringify(widget),
+      headers: {'Content-Type': 'application/json'}
+    }).catch(err => console.error('Error: ', err))
 
     setActive(false)
   }

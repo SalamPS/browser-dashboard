@@ -62,11 +62,11 @@ export default async function handler(req, res) {
             })
             else sql = `INSERT INTO short (id_short, name, url, favicon, id_user) VALUES (${data.id_short}, '${data.name}', '${data.url}', ${data.favicon}, '${ALLOW}')`
           }
-          else if (dest == 'widget') 
-          sql = `
-            -- INSERT INTO todo (id_todo, title, Desc, dead, Index, clear, id_user) 
-            -- VALUES (id_todo,'title','desc',dead,Index,Clear,${ALLOW})
-          `
+          else if (dest == 'widget')
+            if (type == 'merge') data.forEach(data => {
+              sql += `INSERT INTO widget (id_widget, type, id_ref, id_user) VALUES (${data.id_widget}, '${data.type}', '${data.id_ref}', '${ALLOW}'); `
+            })
+            else sql = `INSERT INTO widget (id_widget, type, id_ref, id_user) VALUES (${data.id_widget}, '${data.type}', '${data.id_ref}', '${ALLOW}')`
         }
       break
 
