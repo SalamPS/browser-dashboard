@@ -6,7 +6,6 @@ export default function AddNew ({userConfig, setUserConfig, WidgetList}) {
     const widget = {
       id_widget: Math.floor(new Date().getTime()/1000),
       type: type,
-      id_ref: 0,
     }
 
     const copy = [...userConfig.widget]
