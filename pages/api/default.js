@@ -7,7 +7,6 @@ export default async function handler(req, res) {
   const { dest, id, type, list, token } = req.query;
 
   let sql = ''
-  const USER = cookie.id_user || false
   const ALLOW = cookie.id_user
   
   try {
@@ -19,7 +18,7 @@ export default async function handler(req, res) {
           else if (dest == 'widget') sql = `SELECT \`id_widget\`, \`type\`, \`id_ref\``
           else if (dest == 'widget_spotTask') sql = `SELECT \`id_widget_spotTask\`, \`name\`, \`matkul\`, \`part\`, \`url\`, \`dead\``
 
-          sql += ` FROM ${dest} WHERE id_user = '${USER}'`
+          sql += ` FROM ${dest} WHERE id_user = '${ALLOW}'`
         }
         else if (dest == 'user') sql = `SELECT \`id_user\`, \`nama\`, \`token\` from user WHERE id_user='${id}'`
         else res.status(200).send({guest: true})
@@ -30,19 +29,19 @@ export default async function handler(req, res) {
           const data = req.body;
           if (dest == 'todo') {
             if (type == 'merge') data.forEach(data => {
-              sql += `UPDATE todo SET \`title\`='${data.title}', \`Desc\`='${data.Desc}', \`dead\`=${data.dead}, \`Index\`=${data.Index}, \`clear\`=${data.clear} WHERE id_todo=${data.id_todo} AND id_user='${USER}'; `
+              sql += `UPDATE todo SET \`title\`='${data.title}', \`Desc\`='${data.Desc}', \`dead\`=${data.dead}, \`Index\`=${data.Index}, \`clear\`=${data.clear} WHERE id_todo=${data.id_todo} AND id_user='${ALLOW}'; `
             })
-            else sql = `UPDATE todo SET clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${USER}'`;
+            else sql = `UPDATE todo SET clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${ALLOW}'`;
           } 
           else if (dest == 'short') {
             if (type == 'merge') data.forEach(data => {
-              sql += `(name, url, id_user) VALUES ('${data.name}', '${data.url}', '${USER}'); `
+              sql += `(name, url, id_user) VALUES ('${data.name}', '${data.url}', '${ALLOW}'); `
             })
-            else sql = `UPDATE todo SET clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${USER}'`;
+            else sql = `UPDATE todo SET clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${ALLOW}'`;
           } 
           else if (dest == 'widget') {
             sql = `
-              -- UPDATE todo SET title='title', Desc='desc', dead=dead, \`Index\`=Index, clear=Clear WHERE id_todo=id_todo AND id_user='${USER}'
+              -- UPDATE todo SET title='title', Desc='desc', dead=dead, \`Index\`=Index, clear=Clear WHERE id_todo=id_todo AND id_user='${ALLOW}'
             `;
           }
         }
@@ -53,20 +52,20 @@ export default async function handler(req, res) {
           const data = req.body;
           if (dest == 'todo') {
             if (type == 'merge') data.forEach(data => {
-              sql += `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.Index},${data.clear},'${USER}'); `
+              sql += `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.Index},${data.clear},'${ALLOW}'); `
             })
-            else sql = `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.Index},${data.clear},'${USER}')`
+            else sql = `INSERT INTO todo (\`id_todo\`, \`title\`, \`Desc\`, \`dead\`, \`Index\`, \`clear\`, \`id_user\`) VALUES (${data.id_todo},'${data.title}','${data.Desc}',${data.dead},${data.Index},${data.clear},'${ALLOW}')`
           }
           else if (dest == 'short') {
             if (type == 'merge') data.forEach(data => {
-              sql += `INSERT INTO short (id_short, name, url, favicon, id_user) VALUES (${data.id_short}, '${data.name}', '${data.url}', ${data.favicon}, '${USER}'); `
+              sql += `INSERT INTO short (id_short, name, url, favicon, id_user) VALUES (${data.id_short}, '${data.name}', '${data.url}', ${data.favicon}, '${ALLOW}'); `
             })
-            else sql = `INSERT INTO short (id_short, name, url, favicon, id_user) VALUES (${data.id_short}, '${data.name}', '${data.url}', ${data.favicon}, '${USER}')`
+            else sql = `INSERT INTO short (id_short, name, url, favicon, id_user) VALUES (${data.id_short}, '${data.name}', '${data.url}', ${data.favicon}, '${ALLOW}')`
           }
           else if (dest == 'widget') 
           sql = `
             -- INSERT INTO todo (id_todo, title, Desc, dead, Index, clear, id_user) 
-            -- VALUES (id_todo,'title','desc',dead,Index,Clear,${USER})
+            -- VALUES (id_todo,'title','desc',dead,Index,Clear,${ALLOW})
           `
         }
       break
