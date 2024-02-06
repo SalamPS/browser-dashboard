@@ -118,7 +118,7 @@ export default async function handler(req, res) {
     switch(req.method) {
       case 'PUT' : res.status(200).send({put: true}); break;
       case 'POST' : res.status(201).send({posted: true}); break;
-      case 'DELETE' : res.status(204); break;
+      case 'DELETE' : res.status(204).send(); break;
     }
     db.end((err) => {
       if (err) {console.error('Error saat menutup koneksi:', err);
