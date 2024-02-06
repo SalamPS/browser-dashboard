@@ -24,13 +24,12 @@ export default async function handler(req, res) {
             case 'widget' : sql +='`type`'
             break
 
-            case 'user' : sql +=`\`nama\`, \`token\` FROM ${dest} WHERE id_user = '${id}`
-            break
             case 'widget_spotTask' : sql +=`\`name\`, \`matkul\`, \`part\`, \`url\`, \`dead\` FROM ${dest} WHERE NIM = ${cookie.NIM}`
             break
           }
           if (coll.find(item => item == dest)) sql += ` FROM ${dest} WHERE id_user = '${ALLOW}'`
         }
+        else if (dest == 'user') sql =`SELECT \`id_${dest}\`, \`nama\`, \`token\` FROM ${dest} WHERE id_user = '${id}'`
         else res.status(200).send({guest: true})
       break
 

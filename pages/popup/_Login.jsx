@@ -13,7 +13,8 @@ export default function Login ({toggle, setLogin}) {
       .then(response => {
         if (response.ok) {
           response.json().then(data => {
-            if (data == []) {setLogin('guest'); return false}
+            console.log(data)
+            if (data == [] || data.guest) {setLogin('guest'); return false}
             else {
               setLogin({nama: data[0].nama})
               Cookies.set('id_user', data[0].id_user);
@@ -22,7 +23,7 @@ export default function Login ({toggle, setLogin}) {
             }
           })
         }
-        else {console.error(`Failed to fetch ${dest} data`); return false}
+        else {console.error(`Failed to fetch login data`); return false}
       }).then(auth =>{
         if (auth) location.reload()
       })
