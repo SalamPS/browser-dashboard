@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function Short ({toggle}) {  
+export default function Short ({toggle, userConfig, setUserConfig, storageKey}) {  
   const [shortFormData, setshortFormData] = useState({
     id_short: 0,
     name: '',
@@ -42,7 +42,7 @@ export default function Short ({toggle}) {
     catch (error) {
       console.error('Error during POST request:', error);
     }
-    setToggleShortcut(false)
+    toggle(false)
   }
   const handleChange = (name, value) => {
     setshortFormData((prevData) => ({
