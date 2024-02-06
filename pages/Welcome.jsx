@@ -22,6 +22,10 @@ export default function Welcome ({storageKey, userConfig, setUserConfig, Login, 
           </h1>
           {Mobile ? '' : <Time/>}
         </div>
+        <div className="quote">
+          
+        </div>
+        {Mobile ?  '' : 
         <div className="shortcut">
           {!userConfig ? <></> :
           userConfig.short.map((item) => {
@@ -47,7 +51,7 @@ export default function Welcome ({storageKey, userConfig, setUserConfig, Login, 
               setTogglePopup('Short')
             }}>+</button>
           </div>}
-        </div>
+        </div>}
       </div>
     </div>
   </div>
