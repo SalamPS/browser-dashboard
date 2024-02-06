@@ -1,21 +1,24 @@
+import { useEffect, useState } from "react"
+
 /* eslint-disable @next/next/no-img-element */
 export default function Shortcut ({ userConfig, setUserConfig, setTogglePopup }) {
+  const [empty, setEmpty] = useState(true)
+  useEffect(() => {
+    if (userConfig.short.length) setEmpty(false)
+    else setEmpty(true)
+  }, [userConfig])
+
   const Del = async (id) => {
-    try {
-      const copy = [...userConfig.short]
-      const newCopy = copy.filter(short => short.id_short != id)
-      setUserConfig(prev => ({
-        ...prev,
-        ['short']: newCopy
-      }))
-      const response = await fetch(`/api/default?dest=short&id=${id}`, {
-        method: 'DELETE',
-        headers: {'Content-Type': 'application/json'}
-      });
-      if (!response.ok) throw new Error('Network response was not ok');
-    } catch (error) {
-      console.error('Error during DELETE request:', error);
-    }
+    const copy = [...userConfig.short]
+    const newCopy = copy.filter(short => short.id_short != id)
+    setUserConfig(prev => ({
+      ...prev,
+      ['short']: newCopy
+    }))
+    fetch(`/api/default?dest=short&id=${id}`, {
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'}
+    }).catch(err => console.error('Error: ', err));
   }
 
   return (
@@ -38,8 +41,8 @@ export default function Shortcut ({ userConfig, setUserConfig, setTogglePopup })
         </div>
       )
     })}
-    {userConfig.short.length > 4 ? '' : 
-    <div className="short add">
+    {empty > 4 ? '' : 
+    <div className={`short add ${empty ? 'empty' : ''}`}>
       <button onClick={() => {
         setTogglePopup('Short')
       }}>+</button>

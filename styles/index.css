@@ -446,6 +446,10 @@ main {
     opacity: 1;
   }
 }
+.shortcut .short.empty {
+  width: 70px !important;
+  opacity: 1 !important;
+}
 .shortcut .short:hover .delete {
   opacity: 0.3;
 }
