@@ -5,6 +5,9 @@
 import { useEffect, useState } from "react";
 import Welcome from "./Welcome";
 import SpotTask from "./widgets/_spotTask"
+import AddNew from "./widgets/_addNew";
+import Quotes from "./widgets/_quote";
+import Jokes from "./widgets/_jokes";
 
 const Box = ({fetchWidget,type}) => {
   const [content, setContent] = useState(<></>)
@@ -12,6 +15,11 @@ const Box = ({fetchWidget,type}) => {
   useEffect(() => {
     switch(type) {
       case 'spotTask' : setContent(<SpotTask fetchWidget={fetchWidget} type={type}/>)
+      break
+      case 'quote' : setContent(<Quotes/>)
+      break
+      case 'jokes' : setContent(<Jokes/>)
+      break
       break
     }
   }, [])
@@ -26,10 +34,22 @@ const Box = ({fetchWidget,type}) => {
 }
 
 export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup}) {
-  const newBlock = () => {
-  }
   const removeBlock = () => {
   }
+  const WidgetList = [
+    {
+      name: 'List Tugas SPOT',
+      type: 'spotTask'
+    },
+    {
+      name: 'Daily Quote',
+      type: 'quote'
+    },
+    {
+      name: 'Dad Jokes',
+      type: 'jokes'
+    }
+  ]
   const fetchWidget = async (dest,setData) => {
     try {
       // Fetch Data and Save it to Temp
@@ -64,9 +84,7 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
         type={content.type}
       />)})}
       {Mobile ? '' : (userConfig.widget.length != 0) ? '' : 
-      <div className="block empty" onClick={() => {console.log(savedConfig)}}>
-        <span>+</span>
-      </div>}
+      <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig}/>}
     </div>
     {Mobile ? '' : 
     <div className="bot">
@@ -76,9 +94,7 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
         type={content.type} 
       />)})}
       {(userConfig.widget.length > 4 || userConfig.widget.length == 0) ? '' : 
-      <div className="block empty" onClick={() => {console.log(savedConfig)}}>
-        <span>+</span>
-      </div>}
+      <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig}/>}
     </div>}
   </>)
 }

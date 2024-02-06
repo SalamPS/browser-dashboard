@@ -337,7 +337,7 @@ main {
   background-color: var(--color-line);
   border-radius: 20px;
   color: var(--color-font);
-  transition: 0.2s;
+  transition: color 0.2s, border-style 0.2s;
   aspect-ratio: 1/1;
   border: dashed 2px rgba(76, 87, 96, 0);
 }
@@ -350,14 +350,72 @@ main {
   color: var(--color-main-semi);
   cursor: pointer;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
 }
 .block.empty:hover {
   color: var(--color-font);
   border-style: solid;
   background-color: var(--color-line-hove);
+}
+.block.empty .choices {
+  margin-top: 10px;
+}
+.block.empty .choice {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  background-color: var(--color-line-back);
+}
+.block.empty .choice:hover.addNew {
+  cursor: pointer;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.block.empty .choice:hover.addNew .left {
+  margin-left: 3px;
+}
+.block.empty .choice:hover.addNew .right {
+  opacity: 0.8;
+}
+.block.empty .choice.invalid {
+  color: var(--color-font-fade);
+}
+.block.empty .choice .bi {
+  margin-right: 5px;
+}
+.block.empty .choice .left {
+  transition: 0.3s;
+}
+.block.empty .choice .right {
+  opacity: 0;
+  transition: 0.3s;
+  margin-right: 5px;
+}
+@keyframes activeAddWidget {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.block.empty.active {
+  cursor: default;
+  color: var(--color-font);
+  align-items: stretch;
+  justify-content: stretch;
+  border-color: var(--color-line);
+  background-color: var(--color-line);
+  animation: activeAddWidget 0.3s;
+}
+.block.empty .add {
+  padding: 20px;
+  width: 100%;
+}
+.block.empty.plus {
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
 }
 
 .widget {
