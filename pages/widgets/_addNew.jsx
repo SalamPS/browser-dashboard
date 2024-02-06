@@ -32,7 +32,7 @@ export default function AddNew ({userConfig, setUserConfig, WidgetList}) {
       <div className="add">
         <h2>
           <span>Add Widget</span>
-          <i class="bi bi-x-circle-fill cancel" onClick={() => {setActive(false)}}></i>
+          <i className="bi bi-x-circle-fill cancel" onClick={() => {setActive(false)}}></i>
         </h2>
         <div className="choices">
           {WidgetList.map((item, i) => {
