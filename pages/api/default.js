@@ -21,7 +21,7 @@ export default async function handler(req, res) {
             break
             case 'short' : sql +='`name`, `url`, `favicon`'
             break
-            case 'widget' : sql +='`type`, `id_ref`'
+            case 'widget' : sql +='`type`'
             break
 
             case 'user' : sql +=`\`nama\`, \`token\` FROM ${dest} WHERE id_user = '${id}`
