@@ -9,16 +9,16 @@ import AddNew from "./widgets/_addNew";
 import Quotes from "./widgets/_quote";
 import Jokes from "./widgets/_jokes";
 
-const Box = ({fetchWidget,type}) => {
+const Box = ({fetchWidget,type,remove,id}) => {
   const [content, setContent] = useState(<></>)
 
   useEffect(() => {
     switch(type) {
-      case 'spotTask' : setContent(<SpotTask fetchWidget={fetchWidget} type={type}/>)
+      case 'spotTask' : setContent(<SpotTask id={id} fetchWidget={fetchWidget} type={type} remove={remove}/>)
       break
-      case 'quote' : setContent(<Quotes/>)
+      case 'quote' : setContent(<Quotes id={id} remove={remove}/>)
       break
-      case 'jokes' : setContent(<Jokes/>)
+      case 'jokes' : setContent(<Jokes id={id} remove={remove}/>)
       break
       break
     }
@@ -34,8 +34,19 @@ const Box = ({fetchWidget,type}) => {
 }
 
 export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup}) {
-  const removeBlock = () => {
+  const removeBlock = (id) => {
+    const copy = [...userConfig.widget]
+    const newCopy = copy.filter(widget => widget.id_widget != id)
+    setUserConfig(prev => ({
+      ...prev,
+      ['widget']: newCopy
+    }))
+    fetch(`/api/default?dest=widget&id=${id}`, {
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'}
+    }).catch(err => console.error('Error: ', err));
   }
+
   const WidgetList = [
     {
       name: 'List Tugas SPOT',
@@ -81,7 +92,9 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
       {Mobile ? '' : userConfig.widget.map((content, i) => {
         if (i == 0) return (<Box key={i} 
         fetchWidget={fetchWidget}
+        remove={removeBlock}
         type={content.type}
+        id={content.id_widget}
       />)})}
       {Mobile ? '' : (userConfig.widget.length != 0) ? '' : 
       <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig}/>}
@@ -91,7 +104,9 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
       {userConfig.widget.map((content, i) => {
         if (i > 0) return (<Box key={i}
         fetchWidget={fetchWidget}
+        remove={removeBlock}
         type={content.type} 
+        id={content.id_widget}
       />)})}
       {(userConfig.widget.length > 4 || userConfig.widget.length == 0) ? '' : 
       <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig}/>}

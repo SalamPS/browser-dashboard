@@ -196,6 +196,9 @@ main {
   border-radius: 20px;
   margin: 0 0 40px 40px;
   width: calc(33.3333333333% - 40px - 4px);
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
 }
 
 .todo {
@@ -341,6 +344,21 @@ main {
   aspect-ratio: 1/1;
   border: dashed 2px rgba(76, 87, 96, 0);
 }
+.block h2 {
+  display: flex;
+  justify-content: space-between;
+}
+.block .delete {
+  opacity: 0;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.block .delete:hover {
+  opacity: 0.7 !important;
+}
+.block:hover .delete {
+  opacity: 0.1;
+}
 .block.empty {
   padding: 0;
   width: calc(33.3333333333% - 40px - 4px);
@@ -402,8 +420,6 @@ main {
 .block.empty.active {
   cursor: default;
   color: var(--color-font);
-  align-items: stretch;
-  justify-content: stretch;
   border-color: var(--color-line);
   background-color: var(--color-line);
   animation: activeAddWidget 0.3s;

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-export default function SpotTask ({fetchWidget, type}) {
+export default function SpotTask ({fetchWidget, type, remove, id}) {
   const [data, setData] = useState([])
 
   useEffect(() => {
@@ -30,11 +30,14 @@ export default function SpotTask ({fetchWidget, type}) {
   }
 
   return ( <>
-    <h2>List Tugas SPOT</h2>
+    <h2>
+      <span>List Tugas SPOT</span>
+      <i className="bi bi-dash-circle-fill delete" onClick={() => {remove(id)}}></i>
+    </h2>
     {!data ? '' : data.map(task => {
       return ( 
         <Link key={task.id_widget_spotTask} className="spotTask" 
-          href={task.url.startsWith('http') ? task.url : `http://${task.url}`} 
+          href={task.url.startsWith('http') ? task.url : `http://${task.url}`}
           target="_blank">
           <div className={`mark ${formatDead((task.dead - Math.floor(new Date().getTime()/1000)))}`}></div>
           <div className="details">
