@@ -56,6 +56,8 @@ export default function Xcontainer () {
     const logged = JSON.parse(localStorage.getItem('userAuth'))
     if (logged) setLogin(logged)
     else localStorage.setItem(storageKey, JSON.stringify(userConfig))
+  
+    setInit(true)
   }, []);
   // 
   // If user Logged in, fetch data from online database
@@ -67,7 +69,6 @@ export default function Xcontainer () {
         // Fetch Data and Save it to Temp
         const response = await fetch(`api/default?dest=${dest}`)
         if (response.ok) {
-          setInit(true)
           const data = await response.json();
           if (data.guest) return data
 
