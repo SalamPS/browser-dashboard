@@ -35,6 +35,7 @@ const Box = ({fetchWidget,type,remove,id,setTogglePopup}) => {
 export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup, POST}) {
   const removeBlock = (id) => {
     const copy = [...userConfig.widget]
+    const type = copy.find(widget => widget.id_widget == id)
     const newCopy = copy.filter(widget => widget.id_widget != id)
     setUserConfig(prev => ({
       ...prev,
@@ -44,6 +45,7 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'}
     }).catch(err => console.error('Error: ', err));
+    localStorage.setItem(`widget_${type.type}`, JSON.stringify([]))
   }
 
   const WidgetList = [
