@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Shortcut from "./widgets/_shortcut";
 import Time from "./Time";
 
-export default function Welcome ({storageKey, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup }) {
+export default function Welcome ({storageKey, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup, DELETE }) {
   useEffect(() => {
     const auth = localStorage.getItem('userAuth')
     auth ? setLogin(JSON.parse(auth)) : ''
@@ -22,7 +22,7 @@ export default function Welcome ({storageKey, userConfig, setUserConfig, Login, 
           </h1>
           {!Mobile ? <Time/> : ''}
         </div>
-        {!Mobile ? <Shortcut userConfig={userConfig} setUserConfig={setUserConfig} setTogglePopup={setTogglePopup}/> : ''}
+        {!Mobile ? <Shortcut userConfig={userConfig} setUserConfig={setUserConfig} setTogglePopup={setTogglePopup} DELETE={DELETE}/> : ''}
       </div>
     </div>
   </div>

@@ -83,6 +83,8 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
           Login={Login}
           setLogin={setLogin}
           Mobile={Mobile}
+
+          DELETE={DELETE}
         />
       </div>
       {Mobile ? '' : userConfig.widget.map((content, i) => {

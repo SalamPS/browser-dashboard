@@ -1,25 +1,12 @@
 import { useEffect, useState } from "react"
 
 /* eslint-disable @next/next/no-img-element */
-export default function Shortcut ({ userConfig, setUserConfig, setTogglePopup }) {
+export default function Shortcut ({ userConfig, setUserConfig, setTogglePopup, DELETE }) {
   const [empty, setEmpty] = useState(true)
   useEffect(() => {
     if (userConfig.short.length) setEmpty(false)
     else setEmpty(true)
   }, [userConfig])
-
-  const Del = async (id) => {
-    const copy = [...userConfig.short]
-    const newCopy = copy.filter(short => short.id_short != id)
-    setUserConfig(prev => ({
-      ...prev,
-      ['short']: newCopy
-    }))
-    fetch(`/api/default?dest=short&id=${id}`, {
-      method: 'DELETE',
-      headers: {'Content-Type': 'application/json'}
-    }).catch(err => console.error('Error: ', err));
-  }
 
   return (
   <div className="shortcut">
@@ -28,7 +15,7 @@ export default function Shortcut ({ userConfig, setUserConfig, setTogglePopup })
       return (
         <div className="short cut" key={item.id_short}>
           <div className="delete">
-            <div className="x" onClick={() => {Del(item.id_short)}}>x</div>
+            <div className="x" onClick={() => {DELETE('shortcut',item.id_short)}}>x</div>
           </div>
           <a target="_blank" href={item.url.startsWith('http') ? item.url : `http://${item.url}`}>
             {!item.favicon ? <div className="alternate">{item.name[0]}</div> 
