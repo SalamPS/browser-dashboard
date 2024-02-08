@@ -743,7 +743,32 @@ main {
   flex-direction: column;
   display: flex;
 }
-#popup .input, #popup .react-datepicker__input-container > input {
+#popup .auth {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+#popup .auth .JSON {
+  flex-grow: 2;
+}
+#popup .auth .NIM {
+  flex-grow: 1;
+}
+#popup .auth .divider {
+  padding: 0 20px;
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+}
+#popup .upload {
+  color: var(--color-font-fade);
+  cursor: pointer;
+}
+#popup .upload:hover {
+  color: var(--color-font);
+}
+#popup .input, #popup .react-datepicker__input-container > input, #popup .upload {
   transition: 0.2s;
   border-radius: 10px;
   border: solid 1px var(--color-line-fade);
@@ -754,7 +779,7 @@ main {
   font-size: 1rem;
   background-color: rgba(0, 0, 0, 0.1);
 }
-#popup .input:active, #popup .input:focus, #popup .react-datepicker__input-container > input:active, #popup .react-datepicker__input-container > input:focus {
+#popup .input:active, #popup .input:focus, #popup .react-datepicker__input-container > input:active, #popup .react-datepicker__input-container > input:focus, #popup .upload:active, #popup .upload:focus {
   border-color: var(--color-line);
 }
 #popup .react-datepicker__input-container {

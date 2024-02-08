@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useFile } from "./_SpotContext";
 
 export default function SpotAuth ({toggle}) {
-  const [SpotAuth, setSpotAuth] = useState([])
+  const [SpotJSON, setSpotJSON] = useState([])
+  const [SpotAuth, setSpotAuth] = useState('')
   const {SpotData, setSpotData} = useFile()
 
   const handleUpload = (e) => {
@@ -10,26 +11,60 @@ export default function SpotAuth ({toggle}) {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setSpotAuth(JSON.parse(reader.result))
+        setSpotJSON(JSON.parse(reader.result))
       };
       reader.readAsText(file)
     }
   };
 
-  const setAuth = (data) => {
-    localStorage.setItem('widget_spotTask', JSON.stringify(data))
-    setSpotData(data)
-    setSpotAuth(data)
+  const saveAuth = () => {
+    if (SpotJSON.length) {
+      setSpotAuth('')
+      setSpotData(SpotJSON)
+      localStorage.setItem('widget_spotTask', JSON.stringify(SpotJSON))
+    }
+    else if (SpotAuth.length == 7 && SpotAuth !== NaN) {
+      localStorage.setItem('NIM', SpotAuth)
+    }
+    location.reload()
+  }
+  const resetAuth = () => {
+    localStorage.setItem('widget_spotTask', JSON.stringify([]))
+    setSpotData([])
+    setSpotAuth([])
+    setSpotJSON([])
     location.reload()
   }
 
   return (<>
-    <input className="upload" type="file" name="SpotAuth" onChange={handleUpload} />
     
-    <div className="button">
-      <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); toggle(false)}}>Cancel</button>
-      <button id="submit" type="reset" title="Reset SPOT List" onClick={(e) => {setAuth([])}}>Reset</button>
-      <button id="submit" type="submit" title="Save SPOT List" onClick={(e) => {setAuth(SpotAuth)}}>Submit</button>
-    </div>
+    <form>
+      <div className="auth">
+        <label htmlFor="NIM" className="NIM">
+          <span className='span'>Sync Task by NIM</span>
+          <input
+            className="input"
+            type="text"
+            value={SpotAuth}
+            onChange={(e) => setSpotAuth(e.target.value)}
+          />
+        </label>
+        <div className="divider">
+          or
+        </div>
+        <div className="JSON">
+          <span className='span'>Sync Task by JSON</span>
+          <label htmlFor="JSON" className="upload">
+            <span><i className="bi bi-file-earmark-plus-fill edit">{' '}</i>Upload</span>
+            <input type="file" id="JSON" name="SpotAuth" onChange={handleUpload} style={{display: 'none'}}/>
+          </label>
+        </div>
+      </div>
+      <div className="button">
+        <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); toggle(false)}}>Cancel</button>
+        <button id="submit" type="reset" title="Reset SPOT List" onClick={(e) => {resetAuth([])}}>Reset</button>
+        <button id="submit" type="submit" title="Save SPOT List" onClick={(e) => {saveAuth()}}>Submit</button>
+      </div>
+    </form>
   </>);
 }
