@@ -18,7 +18,7 @@ export default function SpotWidget ({fetchWidget, type, remove, id, setTogglePop
       setSpotData([])
       console.log('fail')
     }
-    // fetchWidget(dest, setSpotData)
+    fetchWidget(dest, setSpotData)
   }, [])
 
   const formatDate = (date) => {

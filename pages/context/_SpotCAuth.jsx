@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useFile } from "./_SpotContext";
+import Cookies from "js-cookie";
 
 export default function SpotAuth ({toggle}) {
   const [SpotJSON, setSpotJSON] = useState([])
@@ -24,7 +25,7 @@ export default function SpotAuth ({toggle}) {
       localStorage.setItem('widget_spotTask', JSON.stringify(SpotJSON))
     }
     else if (SpotAuth.length == 7 && SpotAuth !== NaN) {
-      localStorage.setItem('NIM', SpotAuth)
+      Cookies.set('NIM', 2202747)
     }
     location.reload()
   }
