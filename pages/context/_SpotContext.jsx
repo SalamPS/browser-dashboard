@@ -5,10 +5,6 @@ const SpotContext = createContext({});
 const SpotProvider = ({ children }) => {
   const [SpotData, setSpotData] = useState([])
 
-  useEffect(() => {
-    console.log('SpotContext: ',SpotData)
-  }, [SpotData])
-
   return (
     <SpotContext.Provider value={{ SpotData, setSpotData }}>
       {children}
