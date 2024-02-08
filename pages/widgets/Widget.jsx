@@ -4,29 +4,21 @@
 
 import { useEffect, useState } from "react";
 import Welcome from "../Welcome";
-import SpotWidget from "./_SpotWidget";
+import SpotWidget from "./_SpotWidget"
 import AddNew from "./_addNew";
 import Quotes from "./_quote";
 import Jokes from "./_jokes";
 
-const Box = ({fetchWidget,type,remove,id,setTogglePopup,SpotData,setSpotData}) => {
+const Box = ({fetchWidget,type,remove,id,setTogglePopup}) => {
   const [content, setContent] = useState(<></>)
 
   useEffect(() => {
     switch(type) {
-      case 'jokes' : setContent(<Jokes id={id} remove={remove}/>)
+      case 'spotTask' : setContent(<SpotWidget id={id} fetchWidget={fetchWidget} type={type} remove={remove} setTogglePopup={setTogglePopup}/>)
       break
       case 'quote' : setContent(<Quotes id={id} remove={remove}/>)
       break
-      case 'spotTask' : setContent(<SpotWidget 
-        setTogglePopup={setTogglePopup} 
-        fetchWidget={fetchWidget} 
-        setSpotData={setSpotData}
-        SpotData={SpotData}
-        remove={remove} 
-        type={type} 
-        id={id} 
-        />)
+      case 'jokes' : setContent(<Jokes id={id} remove={remove}/>)
       break
     }
   }, [])
@@ -40,7 +32,7 @@ const Box = ({fetchWidget,type,remove,id,setTogglePopup,SpotData,setSpotData}) =
   )
 }
 
-export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup, SpotData, setSpotData}) {
+export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup}) {
   const removeBlock = (id) => {
     const copy = [...userConfig.widget]
     const newCopy = copy.filter(widget => widget.id_widget != id)
@@ -107,9 +99,6 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
         remove={removeBlock}
         type={content.type}
         id={content.id_widget}
-
-        SpotData={SpotData}
-        setSpotData={setSpotData}
       />)})}
       {Mobile ? '' : (userConfig.widget.length != 0) ? '' : 
       <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig}/>}
@@ -123,9 +112,6 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
         remove={removeBlock}
         type={content.type} 
         id={content.id_widget}
-
-        SpotData={SpotData}
-        setSpotData={setSpotData}
       />)})}
       {(userConfig.widget.length > 4 || userConfig.widget.length == 0) ? '' : 
       <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig}/>}

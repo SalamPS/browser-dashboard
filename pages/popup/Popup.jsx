@@ -17,7 +17,7 @@ export default function Popup ({storageKey, Valid, setValid, savedConfig, setSav
       break
       case 'Short' : setContent(<Short toggle={setTogglePopup} storageKey={storageKey} userConfig={userConfig} setUserConfig={setUserConfig}/>)
       break
-      case 'SpotAuth' : setContent(<SpotAuth toggle={setTogglePopup} setSpotData={setSpotData}/>)
+      case 'SpotAuth' : setContent(<SpotAuth toggle={setTogglePopup}/>)
       break
     }
   }, [TogglePopup])
