@@ -9,12 +9,12 @@ import AddNew from "./widgets/_addNew";
 import Quotes from "./widgets/_quote";
 import Jokes from "./widgets/_jokes";
 
-const Box = ({fetchWidget,type,remove,id}) => {
+const Box = ({fetchWidget,type,remove,id,setTogglePopup}) => {
   const [content, setContent] = useState(<></>)
 
   useEffect(() => {
     switch(type) {
-      case 'spotTask' : setContent(<SpotTask id={id} fetchWidget={fetchWidget} type={type} remove={remove}/>)
+      case 'spotTask' : setContent(<SpotTask id={id} fetchWidget={fetchWidget} type={type} remove={remove} setTogglePopup={setTogglePopup}/>)
       break
       case 'quote' : setContent(<Quotes id={id} remove={remove}/>)
       break
@@ -61,18 +61,20 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
     }
   ]
   const fetchWidget = async (dest,setData) => {
-    try {
-      // Fetch Data and Save it to Temp
-      const response = await fetch(`api/default?dest=${dest}`)
-      if (response.ok) {
-        const data = await response.json();
-        if (!data.guest) {
-          localStorage.setItem(dest, JSON.stringify(data))
-          setData(data)
+    if (Login != false && Login != "guest") {
+      try {
+        // Fetch Data and Save it to Temp
+        const response = await fetch(`api/default?dest=${dest}`)
+        if (response.ok) {
+          const data = await response.json();
+          if (!data.guest) {
+            localStorage.setItem(dest, JSON.stringify(data))
+            setData(data)
+          }
         }
-      }
-      else {console.error(`Failed to fetch ${dest}`)}
-    } catch (error) {console.error(`Error fetching ${dest}:`, error)}
+        else {console.error(`Failed to fetch ${dest}`)}
+      } catch (error) {console.error(`Error fetching ${dest}:`, error)}
+    }
   };
 
   return (!userConfig ? '' 
@@ -92,6 +94,7 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
       </div>
       {Mobile ? '' : userConfig.widget.map((content, i) => {
         if (i == 0) return (<Box key={i} 
+        setTogglePopup={setTogglePopup}
         fetchWidget={fetchWidget}
         remove={removeBlock}
         type={content.type}
@@ -104,6 +107,7 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
     <div className="bot">
       {userConfig.widget.map((content, i) => {
         if (i > 0) return (<Box key={i}
+        setTogglePopup={setTogglePopup}
         fetchWidget={fetchWidget}
         remove={removeBlock}
         type={content.type} 

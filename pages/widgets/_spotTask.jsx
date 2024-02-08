@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-export default function SpotTask ({fetchWidget, type, remove, id}) {
+export default function SpotTask ({fetchWidget, type, remove, id, setTogglePopup}) {
   const [data, setData] = useState([])
 
   useEffect(() => {
@@ -34,9 +34,13 @@ export default function SpotTask ({fetchWidget, type, remove, id}) {
 
   return ( <>
     <h2>
-      <span>List Tugas SPOT</span>
+      <span>
+        Tugas SPOT
+        <i className="bi bi-file-earmark-plus-fill edit" onClick={() => {setTogglePopup('SpotAuth')}}></i>
+      </span>
       <i className="bi bi-dash-circle-fill delete" onClick={() => {remove(id)}}></i>
     </h2>
+    <div className="taskList">
     {!data ? '' : data.map(task => {
       return ( 
         <Link key={task.id_widget_spotTask} className="spotTask" 
@@ -50,5 +54,6 @@ export default function SpotTask ({fetchWidget, type, remove, id}) {
         </Link>
       )}
     )}
+    </div>
   </>)
 }

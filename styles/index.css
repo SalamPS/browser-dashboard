@@ -340,23 +340,34 @@ main {
   background-color: var(--color-line);
   border-radius: 20px;
   color: var(--color-font);
+  display: flex;
+  flex-direction: column;
   transition: color 0.2s, border-style 0.2s;
   aspect-ratio: 1/1;
   border: dashed 2px rgba(76, 87, 96, 0);
+}
+.block .taskList {
+  margin-top: 20px;
+  overflow: scroll;
+  height: calc(100% - 20px);
 }
 .block h2 {
   display: flex;
   justify-content: space-between;
 }
-.block .delete {
+.block .edit {
+  margin-left: 8px;
+  font-size: 1.2rem;
+}
+.block .delete, .block .edit {
   opacity: 0;
   transition: 0.2s;
   cursor: pointer;
 }
-.block .delete:hover {
+.block .delete:hover, .block .edit:hover {
   opacity: 0.7 !important;
 }
-.block:hover .delete {
+.block:hover .delete, .block:hover .edit {
   opacity: 0.1;
 }
 .block.empty {
@@ -606,7 +617,7 @@ main {
 }
 
 .spotTask {
-  margin-top: 10px;
+  margin-bottom: 10px;
   display: flex;
   transition: 0.2s;
   align-items: center;

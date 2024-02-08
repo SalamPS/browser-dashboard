@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Login from "./_Login";
 import Short from "./_Short";
 import Todo from "./_Todo";
+import SpotAuth from "./_SpotAuth";
 
 export default function Popup ({storageKey, Valid, setValid, savedConfig, setSavedConfig, userConfig, setUserConfig, setLogin, TogglePopup, setTogglePopup, fetchValid}) {
   const [content, setContent] = useState(<><h1>a</h1></>)
@@ -15,6 +16,8 @@ export default function Popup ({storageKey, Valid, setValid, savedConfig, setSav
       case 'Login' : setContent(<Login toggle={setTogglePopup} setLogin={setLogin}/>)
       break
       case 'Short' : setContent(<Short toggle={setTogglePopup} storageKey={storageKey} userConfig={userConfig} setUserConfig={setUserConfig}/>)
+      break
+      case 'SpotAuth' : setContent(<SpotAuth toggle={setTogglePopup}/>)
       break
     }
   }, [TogglePopup])
