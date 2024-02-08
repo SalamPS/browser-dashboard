@@ -18,7 +18,8 @@ export default function SpotAuth ({toggle}) {
     }
   };
 
-  const saveAuth = () => {
+  const saveAuth = (e) => {
+    e.preventDefault()
     if (SpotJSON.length) {
       setSpotAuth('')
       setSpotData(SpotJSON)
@@ -29,7 +30,8 @@ export default function SpotAuth ({toggle}) {
     }
     location.reload()
   }
-  const resetAuth = () => {
+  const resetAuth = (e) => {
+    e.preventDefault()
     localStorage.setItem('widget_spotTask', JSON.stringify([]))
     setSpotData([])
     setSpotAuth([])
@@ -63,8 +65,8 @@ export default function SpotAuth ({toggle}) {
       </div>
       <div className="button">
         <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); toggle(false)}}>Cancel</button>
-        <button id="submit" type="reset" title="Reset SPOT List" onClick={(e) => {resetAuth([])}}>Reset</button>
-        <button id="submit" type="submit" title="Save SPOT List" onClick={(e) => {saveAuth()}}>Submit</button>
+        <button id="submit" type="reset" title="Reset SPOT List" onClick={(e) => {resetAuth(e)}}>Reset</button>
+        <button id="submit" type="submit" title="Save SPOT List" onClick={(e) => {saveAuth(e)}}>Submit</button>
       </div>
     </form>
   </>);
