@@ -9,14 +9,10 @@ export default function SpotWidget ({fetchWidget, type, remove, id, setTogglePop
   useEffect(() => {
     const dest = `widget_${type}`
     const old = localStorage.getItem(dest)
-    if (old) {
-      console.log('pass:', JSON.parse(old))
-      setSpotData(JSON.parse(old))
-    }
+    if (old) setSpotData(JSON.parse(old))
     else {
       localStorage.setItem(dest, JSON.stringify([]))
       setSpotData([])
-      console.log('fail')
     }
     fetchWidget(dest, setSpotData)
   }, [])
