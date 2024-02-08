@@ -1,19 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import {useFile} from "./_SpotContext";
 
-export default function SpotTask ({fetchWidget, type, remove, id, setTogglePopup}) {
-  const [data, setData] = useState([])
+export default function SpotCWidget ({fetchWidget, type, remove, id, setTogglePopup}) {
+  const {SpotData, setSpotData} = useFile()
 
   useEffect(() => {
     const dest = `widget_${type}`
     const old = localStorage.getItem(dest)
-    if (old) setData(JSON.parse(old))
+    if (old) setSpotData(JSON.parse(old))
     else {
       localStorage.setItem(dest, JSON.stringify([]))
-      setData([])
+      setSpotData([])
     }
-    fetchWidget(dest, setData)
+    fetchWidget(dest, setSpotData)
   }, [])
 
   const formatDate = (date) => {
@@ -32,7 +33,7 @@ export default function SpotTask ({fetchWidget, type, remove, id, setTogglePopup
     
   }
 
-  return ( <>
+  return (<>
     <h2>
       <span>
         Tugas SPOT
@@ -41,7 +42,7 @@ export default function SpotTask ({fetchWidget, type, remove, id, setTogglePopup
       <i className="bi bi-dash-circle-fill delete" onClick={() => {remove(id)}}></i>
     </h2>
     <div className="taskList">
-    {!data ? '' : data.map(task => {
+    {!SpotData ? '' : SpotData.map(task => {
       return ( 
         <Link key={task.id_widget_spotTask} className="spotTask" 
           href={task.url.startsWith('http') ? task.url : `http://${task.url}`}

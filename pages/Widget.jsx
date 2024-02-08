@@ -4,7 +4,7 @@
 
 import { useEffect, useState } from "react";
 import Welcome from "./Welcome";
-import SpotTask from "./widgets/_spotTask"
+import SpotWidget from "./widgets/_SpotWidget"
 import AddNew from "./widgets/_addNew";
 import Quotes from "./widgets/_quote";
 import Jokes from "./widgets/_jokes";
@@ -14,7 +14,7 @@ const Box = ({fetchWidget,type,remove,id,setTogglePopup}) => {
 
   useEffect(() => {
     switch(type) {
-      case 'spotTask' : setContent(<SpotTask id={id} fetchWidget={fetchWidget} type={type} remove={remove} setTogglePopup={setTogglePopup}/>)
+      case 'spotTask' : setContent(<SpotWidget id={id} fetchWidget={fetchWidget} type={type} remove={remove} setTogglePopup={setTogglePopup}/>)
       break
       case 'quote' : setContent(<Quotes id={id} remove={remove}/>)
       break
