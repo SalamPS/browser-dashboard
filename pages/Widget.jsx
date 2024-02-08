@@ -66,8 +66,10 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
       const response = await fetch(`api/default?dest=${dest}`)
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem(dest, JSON.stringify(data))
-        setData(data)
+        if (!data.guest) {
+          localStorage.setItem(dest, JSON.stringify(data))
+          setData(data)
+        }
       }
       else {console.error(`Failed to fetch ${dest}`)}
     } catch (error) {console.error(`Error fetching ${dest}:`, error)}
