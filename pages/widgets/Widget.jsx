@@ -3,22 +3,30 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import Welcome from "./Welcome";
-import SpotWidget from "./widgets/_SpotWidget"
-import AddNew from "./widgets/_addNew";
-import Quotes from "./widgets/_quote";
-import Jokes from "./widgets/_jokes";
+import Welcome from "../Welcome";
+import SpotWidget from "./_SpotWidget";
+import AddNew from "./_addNew";
+import Quotes from "./_quote";
+import Jokes from "./_jokes";
 
-const Box = ({fetchWidget,type,remove,id,setTogglePopup}) => {
+const Box = ({fetchWidget,type,remove,id,setTogglePopup,SpotData,setSpotData}) => {
   const [content, setContent] = useState(<></>)
 
   useEffect(() => {
     switch(type) {
-      case 'spotTask' : setContent(<SpotWidget id={id} fetchWidget={fetchWidget} type={type} remove={remove} setTogglePopup={setTogglePopup}/>)
+      case 'jokes' : setContent(<Jokes id={id} remove={remove}/>)
       break
       case 'quote' : setContent(<Quotes id={id} remove={remove}/>)
       break
-      case 'jokes' : setContent(<Jokes id={id} remove={remove}/>)
+      case 'spotTask' : setContent(<SpotWidget 
+        setTogglePopup={setTogglePopup} 
+        fetchWidget={fetchWidget} 
+        setSpotData={setSpotData}
+        SpotData={SpotData}
+        remove={remove} 
+        type={type} 
+        id={id} 
+        />)
       break
     }
   }, [])
@@ -32,7 +40,7 @@ const Box = ({fetchWidget,type,remove,id,setTogglePopup}) => {
   )
 }
 
-export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup}) {
+export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup, SpotData, setSpotData}) {
   const removeBlock = (id) => {
     const copy = [...userConfig.widget]
     const newCopy = copy.filter(widget => widget.id_widget != id)
@@ -99,6 +107,9 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
         remove={removeBlock}
         type={content.type}
         id={content.id_widget}
+
+        SpotData={SpotData}
+        setSpotData={setSpotData}
       />)})}
       {Mobile ? '' : (userConfig.widget.length != 0) ? '' : 
       <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig}/>}
@@ -112,6 +123,9 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
         remove={removeBlock}
         type={content.type} 
         id={content.id_widget}
+
+        SpotData={SpotData}
+        setSpotData={setSpotData}
       />)})}
       {(userConfig.widget.length > 4 || userConfig.widget.length == 0) ? '' : 
       <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig}/>}

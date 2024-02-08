@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useFile } from "./_SpotContext";
 
-export default function SpotCAuth ({toggle}) {
+export default function SpotAuth ({toggle}) {
   const [SpotAuth, setSpotAuth] = useState([])
+  const {SpotData, setSpotData} = useFile()
 
   const handleUpload = (e) => {
     const file = e.target.files[0];
@@ -14,13 +16,11 @@ export default function SpotCAuth ({toggle}) {
     }
   };
 
-  const resetAuth = () => {
-    setSpotAuth([])
-    localStorage.setItem('widget_spotTask', [])
-  }
-
-  const saveAuth = () => {
-    localStorage.setItem('widget_spotTask', JSON.stringify(SpotAuth))
+  const setAuth = (data) => {
+    localStorage.setItem('widget_spotTask', JSON.stringify(data))
+    setSpotData(data)
+    setSpotAuth(data)
+    location.reload()
   }
 
   return (<>
@@ -28,8 +28,8 @@ export default function SpotCAuth ({toggle}) {
     
     <div className="button">
       <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); toggle(false)}}>Cancel</button>
-      <button id="submit" type="reset" title="Reset SPOT List" onClick={(e) => {resetAuth(e)}}>Reset</button>
-      <button id="submit" type="submit" title="Save SPOT List" onClick={(e) => {saveAuth(e)}}>Submit</button>
+      <button id="submit" type="reset" title="Reset SPOT List" onClick={(e) => {setAuth([])}}>Reset</button>
+      <button id="submit" type="submit" title="Save SPOT List" onClick={(e) => {setAuth(SpotAuth)}}>Submit</button>
     </div>
   </>);
 }

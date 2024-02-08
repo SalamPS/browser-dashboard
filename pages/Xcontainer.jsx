@@ -6,7 +6,7 @@ const font = Exo_2({ subsets: ['latin'] })
 
 import Popup from './popup/Popup';
 import Merge from "./Merge";
-import Widget from "./Widget";
+import Widget from "./widgets/Widget";
 import Todo from "./Todo";
 import { useState, useEffect } from "react";
 

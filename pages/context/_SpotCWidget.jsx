@@ -1,20 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
+import { useFile } from "./_SpotContext";
 import Link from "next/link";
-import {useFile} from "./_SpotContext";
 
-export default function SpotCWidget ({fetchWidget, type, remove, id, setTogglePopup}) {
+export default function SpotWidget ({fetchWidget, type, remove, id, setTogglePopup}) {
   const {SpotData, setSpotData} = useFile()
 
   useEffect(() => {
     const dest = `widget_${type}`
     const old = localStorage.getItem(dest)
-    if (old) setSpotData(JSON.parse(old))
+    if (old) {
+      console.log('pass:', JSON.parse(old))
+      setSpotData(JSON.parse(old))
+    }
     else {
       localStorage.setItem(dest, JSON.stringify([]))
       setSpotData([])
+      console.log('fail')
     }
-    fetchWidget(dest, setSpotData)
+    // fetchWidget(dest, setSpotData)
   }, [])
 
   const formatDate = (date) => {
@@ -42,9 +46,9 @@ export default function SpotCWidget ({fetchWidget, type, remove, id, setTogglePo
       <i className="bi bi-dash-circle-fill delete" onClick={() => {remove(id)}}></i>
     </h2>
     <div className="taskList">
-    {!SpotData ? '' : SpotData.map(task => {
+    {SpotData.map((task,i) => {
       return ( 
-        <Link key={task.id_widget_spotTask} className="spotTask" 
+        <Link className="spotTask" key={i}
           href={task.url.startsWith('http') ? task.url : `http://${task.url}`}
           target="_blank">
           <div className={`mark ${formatDead((task.dead - Math.floor(new Date().getTime()/1000)))}`}></div>
