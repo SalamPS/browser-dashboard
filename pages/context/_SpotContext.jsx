@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, } from 'react';
 
-const SpotContext = createContext();
+const SpotContext = createContext({});
 
 const SpotProvider = ({ children }) => {
   const [SpotData, setSpotData] = useState([])

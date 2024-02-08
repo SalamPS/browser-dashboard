@@ -46,7 +46,7 @@ export default function SpotWidget ({fetchWidget, type, remove, id, setTogglePop
       <i className="bi bi-dash-circle-fill delete" onClick={() => {remove(id)}}></i>
     </h2>
     <div className="taskList">
-    {SpotData.map((task,i) => {
+    {!SpotData ? '' : SpotData.map((task,i) => {
       return ( 
         <Link className="spotTask" key={i}
           href={task.url.startsWith('http') ? task.url : `http://${task.url}`}
