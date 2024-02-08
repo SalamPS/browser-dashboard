@@ -506,7 +506,12 @@ main {
   cursor: pointer;
   display: inline-block;
   margin-left: 5px;
+  transition: 0.2s;
   font-size: 1.5rem;
+  opacity: 0.3;
+}
+.welcome .bi:hover {
+  opacity: 1;
 }
 
 .time {

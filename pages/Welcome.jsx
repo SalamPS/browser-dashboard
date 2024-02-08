@@ -18,7 +18,7 @@ export default function Welcome ({storageKey, userConfig, setUserConfig, Login, 
           <h1>
             Welcome, {Login ? Login.nama : 'Master'}
             {' '}
-            <i className="login bi bi-person-circle" onClick={() => {setTogglePopup('Login')}}></i>
+            <i className="login bi bi-sliders" onClick={() => {setTogglePopup('Login')}}></i>
           </h1>
           {!Mobile ? <Time/> : ''}
         </div>
