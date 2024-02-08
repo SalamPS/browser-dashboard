@@ -1,26 +1,13 @@
 import { useState } from "react"
 
-export default function AddNew ({userConfig, setUserConfig, WidgetList}) {
+export default function AddNew ({userConfig, setUserConfig, WidgetList, POST}) {
   const [Active, setActive] = useState(false)
   const AddNew = (type) => {
     const widget = {
       id_widget: Math.floor(new Date().getTime()/1000),
       type: type,
     }
-
-    const copy = [...userConfig.widget]
-    copy.push(widget)
-    setUserConfig(prev => ({
-      ...prev,
-      ['widget']: copy
-    }))
-
-    fetch('/api/default?dest=widget', {
-      method: 'POST',
-      body: JSON.stringify(widget),
-      headers: {'Content-Type': 'application/json'}
-    }).catch(err => console.error('Error: ', err))
-
+    POST('widget',widget)
     setActive(false)
   }
 

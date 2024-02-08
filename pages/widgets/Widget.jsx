@@ -32,7 +32,7 @@ const Box = ({fetchWidget,type,remove,id,setTogglePopup}) => {
   )
 }
 
-export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup}) {
+export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup, POST}) {
   const removeBlock = (id) => {
     const copy = [...userConfig.widget]
     const newCopy = copy.filter(widget => widget.id_widget != id)
@@ -101,7 +101,7 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
         id={content.id_widget}
       />)})}
       {Mobile ? '' : (userConfig.widget.length != 0) ? '' : 
-      <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig}/>}
+      <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig} POST={POST}/>}
     </div>
     {Mobile ? '' : 
     <div className="bot">
@@ -114,7 +114,7 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
         id={content.id_widget}
       />)})}
       {(userConfig.widget.length > 4 || userConfig.widget.length == 0) ? '' : 
-      <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig}/>}
+      <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig} POST={POST}/>}
     </div>}
   </>)
 }
