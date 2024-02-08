@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function Short ({toggle, userConfig, setUserConfig, storageKey}) {  
+export default function Short ({toggle, userConfig, setUserConfig, POST}) {  
   const [shortFormData, setshortFormData] = useState({
     id_short: 0,
     name: '',
@@ -17,18 +17,7 @@ export default function Short ({toggle, userConfig, setUserConfig, storageKey}) 
       const validated = {...shortFormData}
       validated.favicon = isValid;
       
-      const copy = [...userConfig.short]
-      copy.push(validated)
-      setUserConfig(prev => ({
-        ...prev,
-        ['short']: copy
-      }))
-
-      fetch('/api/default?dest=short', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify(validated),
-      }).catch(err => console.error('Error: ', err))
+      POST('short', validated)
     }
     try {
       (async () => {

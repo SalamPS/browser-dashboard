@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ReactDatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default function Todo ({storageKey, config, setConfig, toggle}) {
+export default function Todo ({storageKey, config, setConfig, toggle, POST}) {
   const [formData, setFormData] = useState({
     id_todo: new Date().getTime(),
     title: '',
@@ -11,23 +11,6 @@ export default function Todo ({storageKey, config, setConfig, toggle}) {
     Index: 0,
     clear: 0,
   })
-  
-  const postData = async (data) => {
-    try {
-      const response = await fetch('/api/default?dest=todo', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-    } catch (error) {
-      console.error('Error during POST request:', error);
-    }
-  };
 
   const handleChange = (name, value) => {
     setFormData((prevData) => ({
@@ -37,13 +20,10 @@ export default function Todo ({storageKey, config, setConfig, toggle}) {
   }
 
   const handleSubmit = () => {
-    const newConfig = {...config}
-    newConfig.todo.push(formData)
-    newConfig.todo[newConfig.todo.length - 1].dead = Math.floor((new Date(newConfig.todo[newConfig.todo.length - 1].dead).getTime())/1000);
-    newConfig.todo[newConfig.todo.length - 1].id_todo = Math.floor((newConfig.todo[newConfig.todo.length - 1].id_todo)/1000);
-    localStorage.setItem(storageKey, JSON.stringify(newConfig))
-    setConfig(newConfig)
-    postData(formData)
+    const newConfig = {...formData}
+    newConfig.dead = Math.floor((new Date(newConfig.dead).getTime())/1000);
+    newConfig.id_todo = Math.floor((newConfig.id_todo)/1000);
+    POST('todo', newConfig)
     toggle(false)
   }
 
