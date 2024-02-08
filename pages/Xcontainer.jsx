@@ -115,6 +115,7 @@ export default function Xcontainer () {
       [dest]: copy
     }))
 
+    if (Login != false && Login != "guest")
     fetch(`/api/default?dest=${dest}`, {
       method: 'POST',
       body: JSON.stringify(data),
