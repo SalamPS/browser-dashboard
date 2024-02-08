@@ -16,21 +16,19 @@ export default function Short ({toggle, userConfig, setUserConfig, storageKey}) 
     const pushShort = async (isValid) => {
       const validated = {...shortFormData}
       validated.favicon = isValid;
-      const response = await fetch('/api/default?dest=short', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(validated),
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+      
+      const copy = [...userConfig.short]
+      copy.push(validated)
+      setUserConfig(prev => ({
+        ...prev,
+        ['short']: copy
+      }))
 
-      const temp = {...userConfig}
-      temp.short.push(validated)
-      setUserConfig(temp)
-      localStorage.setItem(storageKey, JSON.stringify(temp))
+      fetch('/api/default?dest=short', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify(validated),
+      }).catch(err => console.error('Error: ', err))
     }
     try {
       (async () => {
