@@ -32,20 +32,11 @@ const Box = ({fetchWidget,type,remove,id,setTogglePopup}) => {
   )
 }
 
-export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup, POST}) {
+export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup, POST, DELETE}) {
   const removeBlock = (id) => {
-    const copy = [...userConfig.widget]
-    const type = copy.find(widget => widget.id_widget == id)
-    const newCopy = copy.filter(widget => widget.id_widget != id)
-    setUserConfig(prev => ({
-      ...prev,
-      ['widget']: newCopy
-    }))
-    fetch(`/api/default?dest=widget&id=${id}`, {
-      method: 'DELETE',
-      headers: {'Content-Type': 'application/json'}
-    }).catch(err => console.error('Error: ', err));
-    localStorage.setItem(`widget_${type.type}`, JSON.stringify([]))
+    const copy = userConfig.widget.find(widget => widget.id_widget == id)
+    localStorage.setItem(`widget_${copy.type}`, JSON.stringify([]))
+    DELETE('widget', id)
   }
 
   const WidgetList = [

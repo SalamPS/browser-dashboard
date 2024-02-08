@@ -123,6 +123,21 @@ export default function Xcontainer () {
     }).catch(err => console.error(`Error fetching ${dest}: `, err))
   }
   // 
+  // DELETE
+  const DELETE = (dest,id) => {
+    const copy = [...userConfig[dest]].filter(copy => copy[`id_${dest}`] != id)
+    setUserConfig(prev => ({
+      ...prev,
+      [dest]: copy
+    }))
+
+    if (Login != false && Login != "guest")
+    fetch(`/api/default?dest=widget&id=${id}`, {
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'}
+    }).catch(err => console.error('Error: ', err));
+  }
+  // 
   //
   // Storage Setup End
   /////////////////// 
@@ -214,6 +229,7 @@ export default function Xcontainer () {
               Mobile={Mobile}
 
               POST={POST}
+              DELETE={DELETE}
             />
           </div>
           {Mobile ? '' : 
