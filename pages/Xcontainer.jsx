@@ -55,6 +55,7 @@ export default function Xcontainer () {
 
     const logged = JSON.parse(localStorage.getItem('userAuth'))
     if (logged) setLogin(logged)
+    else localStorage.setItem(storageKey, JSON.stringify(userConfig))
   }, []);
   // 
   // If user Logged in, fetch data from online database
