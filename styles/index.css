@@ -340,8 +340,6 @@ main {
   background-color: var(--color-line);
   border-radius: 20px;
   color: var(--color-font);
-  display: flex;
-  flex-direction: column;
   transition: color 0.2s, border-style 0.2s;
   aspect-ratio: 1/1;
   border: dashed 2px rgba(76, 87, 96, 0);
@@ -349,7 +347,7 @@ main {
 .block .taskList {
   margin-top: 20px;
   overflow: scroll;
-  height: calc(100% - 20px);
+  height: calc(100% - 40px);
 }
 .block h2 {
   display: flex;
