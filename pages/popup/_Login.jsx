@@ -37,32 +37,33 @@ export default function Login ({toggle, setLogin}) {
     }))
   }
 
-  return (
-  <form>
+  return (<>
     <h3>LamP OAuth | Portal</h3>
-    <label>
-      <span className='span'>Username</span>
-      <input
-        className="input"
-        type="text"
-        name="uname"
-        value={LoginData.uname}
-        onChange={(e) => handleInput(e.target.name, e.target.value)}
-      />
-    </label>
-    <label>
-      <span className='span'>Password</span>
-      <input
-        className="input"
-        type="text"
-        name="token"
-        value={LoginData.token}
-        onChange={(e) => handleInput(e.target.name, e.target.value)}
-      />
-    </label>
-    <div className="button">
-      <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); toggle(false)}}>Cancel</button>
-      <button id="submit" type="submit" title="Login" onClick={(e) => {handleLogin(e)}}>Submit</button>
-    </div>
-  </form>)
+    <form>
+      <label>
+        <span className='span'>Username</span>
+        <input
+          className="input"
+          type="text"
+          name="uname"
+          value={LoginData.uname}
+          onChange={(e) => handleInput(e.target.name, e.target.value)}
+        />
+      </label>
+      <label>
+        <span className='span'>Password</span>
+        <input
+          className="input"
+          type="text"
+          name="token"
+          value={LoginData.token}
+          onChange={(e) => handleInput(e.target.name, e.target.value)}
+        />
+      </label>
+      <div className="button">
+        <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); toggle(false)}}>Cancel</button>
+        <button id="submit" type="submit" title="Login" onClick={(e) => {handleLogin(e)}}>Submit</button>
+      </div>
+    </form>
+  </>)
 }
