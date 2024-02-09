@@ -36,10 +36,11 @@ const TodoList = ({markDone}) => {
         // If the clear property's value != 2, then show
         // It handle clear event which will set clear value to 1, then 2
         <div key={i}
-          className={`list${list.clear != 0 ? ` clear${list.clear}` : ''}`}
-          onClick={() => {setTogglePopup('TodoEdit'); setTodoEdit(list.id_todo)}}>
+          className={`list${list.clear != 0 ? ` clear${list.clear}` : ''}`}>
           <div className={`mark ${isDead}`}/>
-          <div className="info">
+          <div className="info"
+            onClick={() => {setTogglePopup('TodoEdit'); setTodoEdit(list.id_todo)}}
+            >
             <h2>{list.title}</h2>
             <p>{formatDate(list.dead)}</p>
           </div>
