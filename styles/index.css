@@ -785,9 +785,6 @@ main {
 #popup .input:active, #popup .input:focus, #popup .react-datepicker__input-container > input:active, #popup .react-datepicker__input-container > input:focus, #popup .upload:active, #popup .upload:focus {
   border-color: var(--color-line);
 }
-#popup .react-datepicker__input-container {
-  width: auto;
-}
 #popup .span {
   margin-left: 15px;
   display: block;
@@ -846,6 +843,29 @@ main {
 }
 #popup #Short .userInput label:nth-of-type(2), #popup #Login .userInput label:nth-of-type(2) {
   flex-grow: 5;
+}
+#popup #TodoEdit .react-datepicker__input-container, #popup #TodoNew .react-datepicker__input-container {
+  flex-grow: 1;
+  display: flex;
+}
+#popup #TodoEdit .react-datepicker__input-container > input, #popup #TodoNew .react-datepicker__input-container > input {
+  flex-grow: 1;
+}
+#popup #TodoEdit .userInput, #popup #TodoNew .userInput {
+  display: flex;
+  flex-direction: row;
+}
+#popup #TodoEdit .userInput label:nth-of-type(1), #popup #TodoNew .userInput label:nth-of-type(1) {
+  flex-grow: 1;
+  margin-right: 30px;
+}
+#popup #TodoEdit .userInput label:nth-of-type(2), #popup #TodoNew .userInput label:nth-of-type(2) {
+  flex-grow: 1;
+}
+#popup #TodoEdit .userInput label:nth-of-type(2) > div, #popup #TodoNew .userInput label:nth-of-type(2) > div {
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
 }
 #popup .userInput label {
   flex-grow: 1;
