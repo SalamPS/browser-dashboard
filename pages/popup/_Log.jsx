@@ -4,7 +4,7 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 
 export default function LogIn () {
-  const {setLogin, setTogglePopup} = Global()
+  const {setUserConfig, Login, setLogin, setTogglePopup} = Global()
   const [LoginData, setLoginData] = useState({
     uname: '',
     token: '',
@@ -12,7 +12,8 @@ export default function LogIn () {
   // Client Login
   const handleLogin = async (e) => {
     e.preventDefault()
-    try {
+    
+    if (!Login) {
       fetch(`/api/default?dest=user&id=${LoginData.uname}&token=${LoginData.token}`)
       .then(response => {
         if (response.ok) {
@@ -30,9 +31,21 @@ export default function LogIn () {
         else {console.error(`Failed to fetch login data`); return false}
       }).then(auth =>{
         if (auth) location.reload()
-      })
-    } catch (err) {}
-    setTogglePopup(false)
+      }).catch(err => console.error('Error:', err))
+      setTogglePopup(false)
+    }
+    else {
+      (async () => {
+        await setUserConfig({
+          todo:[], 
+          widget:[],
+          short: [],
+        })
+        await setLogin(false)
+        localStorage.clear();
+        setTogglePopup(false)
+      })()
+    }
   }
 
   const handleInput = (name, value) => {
@@ -67,7 +80,7 @@ export default function LogIn () {
         </label>
       </div>
       <Button action={[
-        {text: 'Login', action: handleLogin}
+        {text: Login ? 'Logout' : 'Login', action: handleLogin}
       ]}/>
     </form>
   )

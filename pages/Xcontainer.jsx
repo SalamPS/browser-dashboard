@@ -161,6 +161,7 @@ export default function Xcontainer () {
   
   return (<GlobalContext.Provider
     value={{
+      base,
       storageKey,
 
       Login,

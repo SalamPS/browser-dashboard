@@ -13,18 +13,18 @@ export default async function handler(req, res) {
     switch(req.method) {
       case 'GET' : 
         if (ALLOW) {
-          sql = `SELECT \`id_${dest}\`, `
+          sql = `SELECT \`id_${dest}\``
           
           const coll = ['todo', 'short', 'widget']
           switch (dest) {
-            case 'todo' : sql +='`title`, `Desc`, `dead`, `Index`, `clear`'
+            case 'todo' : sql +=', `title`, `Desc`, `dead`, `Index`, `clear`'
             break
-            case 'short' : sql +='`name`, `url`, `favicon`'
+            case 'short' : sql +=', `name`, `url`, `favicon`'
             break
-            case 'widget' : sql +='`type`'
+            case 'widget' : sql +=', `type`'
             break
 
-            case 'widget_spotTask' : sql +=`\`name\`, \`matkul\`, \`part\`, \`url\`, \`dead\` FROM ${dest} WHERE NIM = ${cookie.NIM}`
+            case 'widget_spotTask' : sql +=`, \`name\`, \`matkul\`, \`part\`, \`url\`, \`dead\` FROM ${dest} WHERE NIM = ${cookie.NIM}`
             break
           }
           if (coll.find(item => item == dest)) sql += ` FROM ${dest} WHERE id_user = '${ALLOW}'`
