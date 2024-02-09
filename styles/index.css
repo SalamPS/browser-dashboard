@@ -741,6 +741,8 @@ main {
 }
 #popup h3 {
   margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 #popup label {
   flex-direction: column;

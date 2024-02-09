@@ -3,11 +3,17 @@ import { useEffect, useState } from "react";
 import { Global } from "../Xcontainer"
 
 export default function Login () {
-  const { setLogin, setTogglePopup } = Global()
+  const { Login, setLogin, setTogglePopup } = Global()
   const [LoginData, setLoginData] = useState({
     uname: '',
     token: '',
   })
+  const [Show, setShow] = useState('OAuth')
+
+  useEffect(() => {
+    if (Login) setShow('Settings')
+  }, [])
+
   // Client Login
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -40,8 +46,20 @@ export default function Login () {
     }))
   }
 
+  const saveSettings = (e) => {
+    e.preventDefault()
+    setTogglePopup(false)
+  }
+
   return (<>
-    <h3>LamP OAuth | Portal</h3>
+    <h3>
+      <span className="title">LamP Portal | {Show}</span>
+      <span className="nav">
+        <i className={`bi bi-${Show == 'OAuth' ? 'gear' : 'door-open'}`}></i>{' '}
+        {Show == 'OAuth' ? 'Settings' : 'OAuth'}
+      </span>
+    </h3>
+    {Show == 'OAuth' ? 
     <form>
       <label>
         <span className='span'>Username</span>
@@ -67,6 +85,14 @@ export default function Login () {
         <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); setTogglePopup(false)}}>Cancel</button>
         <button id="submit" type="submit" title="Login" onClick={(e) => {handleLogin(e)}}>Submit</button>
       </div>
-    </form>
+    </form> : ''}
+
+    {Show == 'Settings' ? 
+    <form>
+      <div className="button">
+        <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); setTogglePopup(false)}}>Exit</button>
+        <button id="submit" type="submit" title="Login" onClick={(e) => {saveSettings(e)}}>Save</button>
+      </div>
+    </form> : ''}
   </>)
 }
