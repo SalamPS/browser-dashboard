@@ -19,7 +19,7 @@ export default function TodoEdit () {
 
   useEffect(() => {
     const known = userConfig.todo.find(todo => todo.id_todo == TodoEdit)
-    known.dead = new Date(TodoEdit)
+    known.dead = new Date(known.dead)
 
     setFormData(known)
   }, [])
