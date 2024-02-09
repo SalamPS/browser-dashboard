@@ -45,10 +45,16 @@ export default function Xcontainer () {
   const [Valid, setValid] = useState({todo:true, widget:true, short: true})
   const [userConfig, setUserConfig] = useState({...base})
   const [savedConfig, setSavedConfig] = useState({...base})
+  // 
+  // 
   const [SettingData, setSettingData] = useState({
     minimalist: false,
     automerge: false
   })
+  // 
+  // 
+  const [TodoEdit, setTodoEdit] = useState(0)
+  // 
   //
   useEffect(() => {
     if (Init) localStorage.setItem(storageKey, JSON.stringify(userConfig))
@@ -164,12 +170,16 @@ export default function Xcontainer () {
       base,
       storageKey,
 
+      TodoEdit,
+      setTodoEdit,
+      SettingData,
+      setSettingData,
+
       Login,
       Valid,
       userConfig,
       savedConfig,
       TogglePopup,
-      SettingData,
 
       setLogin,
       setValid,
@@ -177,7 +187,6 @@ export default function Xcontainer () {
       setSavedConfig,
       setTogglePopup,
       Mobile,
-      setSettingData,
 
       POST,
       DELETE

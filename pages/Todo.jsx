@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Global } from "./Xcontainer";
 
 const TodoList = ({markDone}) => {
-  const { userConfig } = Global()
+  const { userConfig, setTogglePopup, setTodoEdit } = Global()
   // Format Deadline into an usable string
   // safe -> More than 3 days from the deadline
   // hint -> Less than 3 days from the deadline
@@ -36,7 +36,8 @@ const TodoList = ({markDone}) => {
         // If the clear property's value != 2, then show
         // It handle clear event which will set clear value to 1, then 2
         <div key={i}
-          className={`list${list.clear != 0 ? ` clear${list.clear}` : ''}`}>
+          className={`list${list.clear != 0 ? ` clear${list.clear}` : ''}`}
+          onClick={() => {setTogglePopup('TodoEdit'); setTodoEdit(list.id_todo)}}>
           <div className={`mark ${isDead}`}/>
           <div className="info">
             <h2>{list.title}</h2>
@@ -94,7 +95,7 @@ export default function Todo () {
         {/* Render Client's todo list */}
         <TodoList markDone={markDone}/>
         {/* Add New todo list */}
-        <div className="list add" onClick={() => {setTogglePopup('Todo')}}>
+        <div className="list add" onClick={() => {setTogglePopup('TodoNew')}}>
           +
         </div>
       </div>
