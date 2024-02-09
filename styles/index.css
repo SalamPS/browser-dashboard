@@ -836,14 +836,17 @@ main {
   margin-left: calc(100% - 1rem - 0.2rem);
   background-color: var(--color-line);
 }
-#popup #Short .userInput {
+#popup #Short .userInput, #popup #Login .userInput {
   display: flex;
   flex-direction: row;
 }
-#popup #Short .userInput label:nth-of-type(1) {
+#popup #Short .userInput label:nth-of-type(1), #popup #Login .userInput label:nth-of-type(1) {
   flex-grow: 1;
   margin-right: 30px;
 }
-#popup #Short .userInput label:nth-of-type(2) {
+#popup #Short .userInput label:nth-of-type(2), #popup #Login .userInput label:nth-of-type(2) {
   flex-grow: 5;
+}
+#popup #Login label {
+  flex-grow: 1 !important;
 }/*# sourceMappingURL=index.css.map */

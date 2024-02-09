@@ -43,26 +43,28 @@ export default function LogIn () {
 
   return (
     <form>
-      <label>
-        <span className='span'>Username</span>
-        <input
-          className="input"
-          type="text"
-          name="uname"
-          value={LoginData.uname}
-          onChange={(e) => handleInput(e.target.name, e.target.value)}
-        />
-      </label>
-      <label>
-        <span className='span'>Password</span>
-        <input
-          className="input"
-          type="text"
-          name="token"
-          value={LoginData.token}
-          onChange={(e) => handleInput(e.target.name, e.target.value)}
-        />
-      </label>
+      <div className="userInput">
+        <label>
+          <span className='span'>Username</span>
+          <input
+            className="input"
+            type="text"
+            name="uname"
+            value={LoginData.uname}
+            onChange={(e) => handleInput(e.target.name, e.target.value)}
+          />
+        </label>
+        <label>
+          <span className='span'>Password</span>
+          <input
+            className="input"
+            type="text"
+            name="token"
+            value={LoginData.token}
+            onChange={(e) => handleInput(e.target.name, e.target.value)}
+          />
+        </label>
+      </div>
       <Button action={[
         {text: 'Login', action: handleLogin}
       ]}/>
