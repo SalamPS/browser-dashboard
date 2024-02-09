@@ -13,7 +13,7 @@ const CheckLabel = ({children, name, action}) => {
         style={{display: 'none'}}
         onChange={(e) => {action(e.target.name,e.target.checked)}}
       />
-      <span class="checkmark">
+      <span className="checkmark">
         <div className="slide"></div>
       </span>
     </label>
