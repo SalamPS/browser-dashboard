@@ -32,16 +32,30 @@ export default function Todo () {
   return (
     <form>
       <h3>New Todo-List</h3>
-      <label>
-        <span className='span'>Title</span>
-        <input
-          className="input"
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={(e) => handleChange(e.target.name, e.target.value)}
-        />
-      </label>
+      <div className="userInput">
+        <label>
+          <span className='span'>Title</span>
+          <input
+            className="input"
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={(e) => handleChange(e.target.name, e.target.value)}
+          />
+        </label>
+        <label>
+          <span className='span'>Deadline</span>
+          <ReactDatePicker
+            selected={formData.dead}
+            onChange={(date) => handleChange('dead', date)}
+            showTimeSelect
+            withPortal
+            timeIntervals={1}
+            minDate={new Date()}
+            dateFormat="dd-MM-yyyy | HH:mm:ss"
+          />
+        </label>
+      </div>
       <label>
         <span className='span'>Description</span>
         <input
@@ -50,19 +64,6 @@ export default function Todo () {
           name="Desc"
           value={formData.Desc}
           onChange={(e) => handleChange(e.target.name, e.target.value)}
-        />
-      </label>
-      <label>
-        <span className='span'>Deadline</span>
-        <ReactDatePicker
-          selected={formData.dead}
-          onChange={(date) => handleChange('dead', date)}
-          showTimeSelect
-          isClearable
-          withPortal
-          timeIntervals={1}
-          minDate={new Date()}
-          dateFormat="dd-MM-yyyy | HH:mm:ss"
         />
       </label>
       <div className="button">

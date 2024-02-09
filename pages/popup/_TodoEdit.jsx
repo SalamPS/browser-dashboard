@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { Global } from "../Xcontainer"
 
@@ -14,6 +15,13 @@ export default function TodoEdit () {
     Index: 0,
     clear: 0,
   })
+
+  useEffect(() => {
+    const known = userConfig.todo.find(todo => todo.id_todo == TodoEdit)
+    known.dead = new Date(TodoEdit)
+
+    setFormData(known)
+  }, [])
 
   const handleChange = (name, value) => {
     setFormData((prevData) => ({
@@ -32,16 +40,30 @@ export default function TodoEdit () {
   return (
     <form>
       <h3>Edit Todo-List</h3>
-      <label>
-        <span className='span'>Title</span>
-        <input
-          className="input"
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={(e) => handleChange(e.target.name, e.target.value)}
-        />
-      </label>
+      <div className="userInput">
+        <label>
+          <span className='span'>Title</span>
+          <input
+            className="input"
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={(e) => handleChange(e.target.name, e.target.value)}
+          />
+        </label>
+        <label>
+          <span className='span'>Deadline</span>
+          <ReactDatePicker
+            selected={formData.dead}
+            onChange={(date) => handleChange('dead', date)}
+            showTimeSelect
+            withPortal
+            timeIntervals={1}
+            minDate={new Date(TodoEdit)}
+            dateFormat="dd-MM-yyyy | HH:mm:ss"
+          />
+        </label>
+      </div>
       <label>
         <span className='span'>Description</span>
         <input
@@ -50,19 +72,6 @@ export default function TodoEdit () {
           name="Desc"
           value={formData.Desc}
           onChange={(e) => handleChange(e.target.name, e.target.value)}
-        />
-      </label>
-      <label>
-        <span className='span'>Deadline</span>
-        <ReactDatePicker
-          selected={formData.dead}
-          onChange={(date) => handleChange('dead', date)}
-          showTimeSelect
-          isClearable
-          withPortal
-          timeIntervals={1}
-          minDate={new Date()}
-          dateFormat="dd-MM-yyyy | HH:mm:ss"
         />
       </label>
       <div className="button">
