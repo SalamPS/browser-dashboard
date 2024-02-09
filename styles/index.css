@@ -794,6 +794,53 @@ main {
   margin-left: 15px;
   display: block;
 }
+#popup label {
+  display: inline-block;
+  cursor: pointer;
+}
+#popup .setting {
+  padding: 10px 0;
+}
+#popup .setting .button {
+  justify-content: left !important;
+}
+#popup .setting label {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-bottom: 15px;
+}
+#popup .setting .checkmark {
+  transition: 0.2s;
+  width: 3rem;
+  height: 1.3rem;
+  border: 1px solid var(--color-font);
+  border-radius: 1.3rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+}
+#popup .setting .slide {
+  transition: 0.3s;
+  height: 1rem;
+  margin-left: 0.2rem;
+  aspect-ratio: 1/1;
+  border-radius: 1.3rem;
+  background-color: var(--color-font);
+}
+#popup .setting input ~ .checkmark {
+  background-color: var(--color-line-back);
+}
+#popup .setting input:checked ~ .checkmark {
+  background-color: var(--color-font);
+}
+#popup .setting input:checked ~ .checkmark .slide {
+  margin-left: calc(100% - 1rem - 0.2rem);
+  background-color: var(--color-line);
+}
 #popup #Login .button, #popup #Short .button {
   margin-top: 10px;
   justify-content: right;
