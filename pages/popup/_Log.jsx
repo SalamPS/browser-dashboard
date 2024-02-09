@@ -1,6 +1,7 @@
 import Button from "./_Button"
 import { Global } from "../Xcontainer";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 export default function LogIn () {
   const {setLogin, setTogglePopup} = Global()
