@@ -51,7 +51,7 @@ export default function Login ({toggle, setLogin}) {
       />
     </label>
     <label>
-      <span className='span'>Token</span>
+      <span className='span'>Password</span>
       <input
         className="input"
         type="text"
