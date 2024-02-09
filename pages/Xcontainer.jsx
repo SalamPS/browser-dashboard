@@ -8,7 +8,12 @@ import Popup from './popup/Popup';
 import Merge from "./Merge";
 import Widget from "./widgets/Widget";
 import Todo from "./Todo";
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
+
+const GlobalContext = createContext({});
+export const Global = () => {
+  return useContext(GlobalContext);
+};
 
 export default function Xcontainer () {
   ///////////////////
@@ -43,7 +48,6 @@ export default function Xcontainer () {
   //
   useEffect(() => {
     if (Init) localStorage.setItem(storageKey, JSON.stringify(userConfig))
-    console.log(userConfig.widget)
   }, [userConfig]);
   // 
   // Set Client Configuration in Cache for offline usage and API Controls
@@ -129,8 +133,6 @@ export default function Xcontainer () {
   const DELETE = (dest,id) => {
     const copy = [...userConfig[dest]]
     const newCopy = copy.filter(copy => !(copy[`id_${dest}`] == id))
-    console.log('copy:',copy)
-    console.log('newCopy:',newCopy)
 
     setUserConfig(prev => ({
       ...prev,
@@ -153,22 +155,28 @@ export default function Xcontainer () {
     if (isMobile) setMobile(true)
   }, []);
   
-  return (<>
-    {(!Valid.todo || !Valid.widget || !Valid.short) ? <Merge 
-      storageKey={storageKey}
+  return (<GlobalContext.Provider
+    value={{
+      storageKey,
 
-      Login={Login} 
-      Valid={Valid} 
-      userConfig={userConfig} 
-      savedConfig={savedConfig} 
-      TogglePopup={TogglePopup}
+      Login,
+      Valid,
+      userConfig,
+      savedConfig,
+      TogglePopup,
 
-      setLogin={setLogin}
-      setValid={setValid}
-      setUserConfig={setUserConfig}
-      setSavedConfig={setSavedConfig} 
-      setTogglePopup={setTogglePopup}
-    /> : ''}
+      setLogin,
+      setValid,
+      setUserConfig,
+      setSavedConfig,
+      setTogglePopup,
+      Mobile,
+
+      POST,
+      DELETE
+    }}
+  >
+    {(!Valid.todo || !Valid.widget || !Valid.short) ? <Merge /> : ''}
     <div id="popup" style={{
       zIndex: TogglePopup ? 3 : -1,
       opacity: TogglePopup ? 1 : -1
@@ -178,65 +186,17 @@ export default function Xcontainer () {
           transition: TogglePopup ? '.1s' : '0s',
           opacity: TogglePopup ? '1' : '0'
         }}>
-        <Popup
-          storageKey={storageKey}
-
-          Login={Login} 
-          Valid={Valid} 
-          userConfig={userConfig} 
-          savedConfig={savedConfig} 
-          TogglePopup={TogglePopup}
-
-          setLogin={setLogin}
-          setValid={setValid}
-          setUserConfig={setUserConfig}
-          setSavedConfig={setSavedConfig} 
-          setTogglePopup={setTogglePopup}
-
-          POST={POST}
-        />
+        <Popup />
       </div>
     </div>
     <main className={font.className}>
       <div className="container">
         <div className="shadowBox shadowTodo">
-          <Todo 
-            storageKey={storageKey}
-
-            Login={Login} 
-            Valid={Valid} 
-            userConfig={userConfig} 
-            savedConfig={savedConfig} 
-            TogglePopup={TogglePopup}
-
-            setLogin={setLogin}
-            setValid={setValid}
-            setUserConfig={setUserConfig}
-            setSavedConfig={setSavedConfig} 
-            setTogglePopup={setTogglePopup}
-          />
+          <Todo />
         </div>
         <div className="blocks">
           <div className="box">
-            <Widget
-              storageKey={storageKey}
-
-              Login={Login} 
-              Valid={Valid} 
-              userConfig={userConfig} 
-              savedConfig={savedConfig} 
-              TogglePopup={TogglePopup}
-
-              setLogin={setLogin}
-              setValid={setValid}
-              setUserConfig={setUserConfig}
-              setSavedConfig={setSavedConfig} 
-              setTogglePopup={setTogglePopup}
-              Mobile={Mobile}
-
-              POST={POST}
-              DELETE={DELETE}
-            />
+            <Widget/>
           </div>
           {Mobile ? '' : 
           <div className="watermark">
@@ -251,5 +211,5 @@ export default function Xcontainer () {
         </div>}
       </div>
     </main>
-  </>)
+  </GlobalContext.Provider>)
 }

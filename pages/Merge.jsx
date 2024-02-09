@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Exo_2 } from 'next/font/google'
+import { Global } from './Xcontainer'
 const font = Exo_2({ subsets: ['latin'] })
 
-export default function Merge ({storageKey, savedConfig, setSavedConfig, userConfig, setUserConfig, Valid, setValid}) {
+export default function Merge () {
+  const { userConfig, setUserConfig } = Global()
   const revalidate = () => setValid({todo:true, widget: true, short: true})
   const pushData = async (dest) => {
     const newData = userConfig[dest].filter(unknown => !savedConfig[dest].find(known => known[`id_${dest}`] === unknown[`id_${dest}`]));

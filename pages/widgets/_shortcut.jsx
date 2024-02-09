@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
+import { Global } from "../Xcontainer"
 
 /* eslint-disable @next/next/no-img-element */
-export default function Shortcut ({ userConfig, setUserConfig, setTogglePopup, DELETE }) {
+export default function Shortcut () {
+  const { userConfig, setTogglePopup, DELETE } = Global()
   const [empty, setEmpty] = useState(true)
   useEffect(() => {
     if (userConfig.short.length) setEmpty(false)

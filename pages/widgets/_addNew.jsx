@@ -1,6 +1,8 @@
 import { useState } from "react"
+import { Global } from "../Xcontainer"
 
-export default function AddNew ({userConfig, setUserConfig, WidgetList, POST}) {
+export default function AddNew ({WidgetList}) {
+  const { userConfig,  POST } = Global()
   const [Active, setActive] = useState(false)
   const AddNew = (type) => {
     const widget = {

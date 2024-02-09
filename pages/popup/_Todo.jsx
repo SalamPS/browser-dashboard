@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
+import { Global } from "../Xcontainer"
+
 import ReactDatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default function Todo ({storageKey, config, setConfig, toggle, POST}) {
+export default function Todo () {
+  const { setTogglePopup, POST } = Global()
   const [formData, setFormData] = useState({
     id_todo: new Date().getTime(),
     title: '',
@@ -23,7 +26,7 @@ export default function Todo ({storageKey, config, setConfig, toggle, POST}) {
     const newConfig = {...formData}
     newConfig.dead = Math.floor((new Date(newConfig.dead).getTime()));
     POST('todo', newConfig)
-    toggle(false)
+    setTogglePopup(false)
   }
 
   return (
@@ -65,7 +68,7 @@ export default function Todo ({storageKey, config, setConfig, toggle, POST}) {
       <div className="button">
         <button id="cancel" title="Cancel" onClick={(e) => {
           e.preventDefault()
-          toggle(false)
+          setTogglePopup(false)
         }}>Cancel</button>
         <button id="submit" title="Save new List" onClick={(e) => {
           e.preventDefault()

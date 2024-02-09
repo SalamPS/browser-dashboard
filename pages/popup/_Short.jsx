@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { Global } from "../Xcontainer"
 
-export default function Short ({toggle, userConfig, setUserConfig, POST}) {  
+export default function Short () { 
+  const { setTogglePopup, POST } = Global() 
   const [shortFormData, setshortFormData] = useState({
     id_short: 0,
     name: '',
@@ -29,7 +31,7 @@ export default function Short ({toggle, userConfig, setUserConfig, POST}) {
     catch (error) {
       console.error('Error during POST request:', error);
     }
-    toggle(false)
+    setTogglePopup(false)
   }
   const handleChange = (name, value) => {
     setshortFormData((prevData) => ({
@@ -66,7 +68,7 @@ export default function Short ({toggle, userConfig, setUserConfig, POST}) {
       />
     </label>
     <div className="button">
-      <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); toggle(false)}}>Cancel</button>
+      <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); setTogglePopup(false)}}>Cancel</button>
       <button id="submit" type="submit" title="Save new Shortcut" onClick={(e) => {saveShort(e)}}>Submit</button>
     </div>
   </form>)

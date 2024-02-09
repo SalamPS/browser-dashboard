@@ -8,6 +8,7 @@ import SpotWidget from "./_SpotWidget"
 import AddNew from "./_addNew";
 import Quotes from "./_quote";
 import Jokes from "./_jokes";
+import { Global } from "../Xcontainer";
 
 const Box = ({children}) => {
   return (
@@ -19,7 +20,8 @@ const Box = ({children}) => {
   )
 }
 
-export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup, POST, DELETE}) {
+export default function Widget () {
+  const { userConfig, Login, Mobile, DELETE } = Global()
   const removeBlock = (id) => {
     const copy = userConfig.widget.find(widget => widget.id_widget == id)
     DELETE('widget', id)
@@ -57,22 +59,11 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
     }
   };
 
-  return (!userConfig ? '' 
+  return (!userConfig ? <></> 
   : <>
     <div className="top">
-      <div className="shadowBox shadowWelcome" onClick={() => {console.log(userConfig.widget)}}>
-        <Welcome
-          storageKey={storageKey}
-          userConfig={userConfig} 
-          setUserConfig={setUserConfig}
-          TogglePopup={TogglePopup}
-          setTogglePopup={setTogglePopup}
-          Login={Login}
-          setLogin={setLogin}
-          Mobile={Mobile}
-
-          DELETE={DELETE}
-        />
+      <div className="shadowBox shadowWelcome">
+        <Welcome />
       </div>
       {Mobile ? '' : 
       userConfig.widget.map((item, i) => {
@@ -82,14 +73,14 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
 
           return (
             <Box key={i}>
-              {item.type=='spotTask' ? <SpotWidget id={id} fetchWidget={fetchWidget} type={type} remove={removeBlock} setTogglePopup={setTogglePopup}/> : ''}
+              {item.type=='spotTask' ? <SpotWidget id={id} fetchWidget={fetchWidget} type={type} remove={removeBlock}/> : ''}
               {item.type=='quote' ? <Quotes id={id} remove={removeBlock}/> : ''}
               {item.type=='jokes' ? <Jokes id={id} remove={removeBlock}/> : ''}
             </Box>
           )
         }})}
       {Mobile ? '' : (userConfig.widget.length != 0) ? '' : 
-      <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig} POST={POST}/>}
+      <AddNew WidgetList={WidgetList} />}
     </div>
     {Mobile ? '' : 
     <div className="bot">
@@ -100,14 +91,14 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
 
           return (
             <Box key={i}>
-              {item.type=='spotTask' ? <SpotWidget id={id} fetchWidget={fetchWidget} type={type} remove={removeBlock} setTogglePopup={setTogglePopup}/> : ''}
+              {item.type=='spotTask' ? <SpotWidget id={id} fetchWidget={fetchWidget} type={type} remove={removeBlock}/> : ''}
               {item.type=='quote' ? <Quotes id={id} remove={removeBlock}/> : ''}
               {item.type=='jokes' ? <Jokes id={id} remove={removeBlock}/> : ''}
             </Box>
           )
         }})}
       {(userConfig.widget.length > 4 || userConfig.widget.length == 0) ? '' : 
-      <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig} POST={POST}/>}
+      <AddNew WidgetList={WidgetList} />}
     </div>}
   </>)
 }

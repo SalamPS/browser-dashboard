@@ -3,8 +3,11 @@
 import { useEffect, useState } from "react";
 import Shortcut from "./widgets/_shortcut";
 import Time from "./Time";
+import { Global } from "./Xcontainer";
 
-export default function Welcome ({storageKey, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup, DELETE }) {
+export default function Welcome () {
+  const {storageKey, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup, DELETE } = Global()
+
   useEffect(() => {
     const auth = localStorage.getItem('userAuth')
     auth ? setLogin(JSON.parse(auth)) : ''

@@ -1,6 +1,9 @@
 import Cookies from 'js-cookie';
 import { useEffect, useState } from "react";
-export default function Login ({toggle, setLogin}) {
+import { Global } from "../Xcontainer"
+
+export default function Login () {
+  const { setLogin, setTogglePopup } = Global()
   const [LoginData, setLoginData] = useState({
     uname: '',
     token: '',
@@ -28,7 +31,7 @@ export default function Login ({toggle, setLogin}) {
         if (auth) location.reload()
       })
     } catch (err) {}
-    toggle(false)
+    setTogglePopup(false)
   }
   const handleInput = (name, value) => {
     setLoginData((prevData) => ({
@@ -61,7 +64,7 @@ export default function Login ({toggle, setLogin}) {
         />
       </label>
       <div className="button">
-        <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); toggle(false)}}>Cancel</button>
+        <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); setTogglePopup(false)}}>Cancel</button>
         <button id="submit" type="submit" title="Login" onClick={(e) => {handleLogin(e)}}>Submit</button>
       </div>
     </form>

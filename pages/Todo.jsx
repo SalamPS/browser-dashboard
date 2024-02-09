@@ -1,7 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
+import { Global } from "./Xcontainer";
 
-const TodoList = ({config, markDone}) => {
+const TodoList = ({markDone}) => {
+  const { userConfig } = Global()
   // Format Deadline into an usable string
   // safe -> More than 3 days from the deadline
   // hint -> Less than 3 days from the deadline
@@ -21,13 +23,11 @@ const TodoList = ({config, markDone}) => {
   };
 
   return (<>
-    {!config ? '' : config.todo.map((list, i) => {
+    {!userConfig ? '' : userConfig.todo.map((list, i) => {
       // 
       // Initialize deadline marker
       // Changed it's color according to it's time delta
       const isDead = formatDead(list.dead - Math.floor(new Date().getTime()))
-      console.log(list.dead)
-      console.log(Math.floor(new Date().getTime()))
       return (
         // If the clear property's value == 2, then hide
         list.clear == 2 ? <div key={i} className="clear2"></div> 
@@ -53,7 +53,8 @@ const TodoList = ({config, markDone}) => {
   </>)
 }
 
-export default function Todo ({storageKey, userConfig, setUserConfig, setTogglePopup}) {
+export default function Todo () {
+  const {storageKey, userConfig, setUserConfig, setTogglePopup } = Global()
   const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
   // Data Todo is Done
@@ -91,7 +92,7 @@ export default function Todo ({storageKey, userConfig, setUserConfig, setToggleP
       <h1>ToDo</h1>
       <div className="todolist">
         {/* Render Client's todo list */}
-        <TodoList config={userConfig} markDone={markDone}/>
+        <TodoList markDone={markDone}/>
         {/* Add New todo list */}
         <div className="list add" onClick={() => {setTogglePopup('Todo')}}>
           +

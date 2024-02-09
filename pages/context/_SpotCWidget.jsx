@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useFile } from "./_SpotContext";
+import { Global } from "../Xcontainer";
 import Link from "next/link";
 
-export default function SpotWidget ({fetchWidget, type, remove, id, setTogglePopup}) {
+export default function SpotWidget ({fetchWidget, type, remove, id}) {
+  const { setTogglePopup } = Global()
   const {SpotData, setSpotData} = useFile()
 
   useEffect(() => {
