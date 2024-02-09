@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useFile } from "./_SpotContext";
+import { Global } from "../Xcontainer";
 import Cookies from "js-cookie";
 
 export default function SpotAuth ({toggle}) {
   const [SpotJSON, setSpotJSON] = useState([])
   const [SpotAuth, setSpotAuth] = useState('')
   const {SpotData, setSpotData} = useFile()
+  const {setTogglePopup} = Global()
 
   const handleUpload = (e) => {
     const file = e.target.files[0];
@@ -64,7 +66,7 @@ export default function SpotAuth ({toggle}) {
         </div>
       </div>
       <div className="button">
-        <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); toggle(false)}}>Cancel</button>
+        <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); setTogglePopup(false)}}>Cancel</button>
         <button id="submit" type="reset" title="Reset SPOT List" onClick={(e) => {resetAuth(e)}}>Reset</button>
         <button id="submit" type="submit" title="Save SPOT List" onClick={(e) => {saveAuth(e)}}>Submit</button>
       </div>

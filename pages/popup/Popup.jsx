@@ -24,7 +24,7 @@ export default function Popup () {
     }
   }, [TogglePopup])
 
-  return (<div>
+  return (<>
     {content}
-  </div>)
+  </>)
 }

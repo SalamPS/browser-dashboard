@@ -47,26 +47,28 @@ export default function Short () {
   return (
   <form>
     <h3>New Shortcut</h3>
-    <label>
-      <span className='span'>Name</span>
-      <input
-        className="input"
-        type="text"
-        name="name"
-        value={shortFormData.name}
-        onChange={(e) => handleChange(e.target.name, e.target.value)}
-      />
-    </label>
-    <label>
-      <span className='span'>Link</span>
-      <input
-        className="input"
-        type="text"
-        name="url"
-        value={shortFormData.url}
-        onChange={(e) => handleChange(e.target.name, e.target.value)}
-      />
-    </label>
+    <div className="userInput">
+      <label>
+        <span className='span'>Name</span>
+        <input
+          className="input"
+          type="text"
+          name="name"
+          value={shortFormData.name}
+          onChange={(e) => handleChange(e.target.name, e.target.value)}
+        />
+      </label>
+      <label>
+        <span className='span'>Link</span>
+        <input
+          className="input"
+          type="text"
+          name="url"
+          value={shortFormData.url}
+          onChange={(e) => handleChange(e.target.name, e.target.value)}
+        />
+      </label>
+    </div>
     <div className="button">
       <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); setTogglePopup(false)}}>Cancel</button>
       <button id="submit" type="submit" title="Save new Shortcut" onClick={(e) => {saveShort(e)}}>Submit</button>

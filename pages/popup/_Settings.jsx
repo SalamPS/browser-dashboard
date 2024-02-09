@@ -42,9 +42,9 @@ export default function Settings () {
       <CheckLabel name={'automerge'} action={handleInput}>
         Auto Merge
       </CheckLabel>
-      <Button action={[
-        {text: 'Save', action: saveSettings}
-      ]}/>
     </div>
+    <Button action={[
+      {text: 'Save', action: saveSettings}
+    ]}/>
   </form>)
 }
