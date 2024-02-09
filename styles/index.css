@@ -847,6 +847,6 @@ main {
 #popup #Short .userInput label:nth-of-type(2), #popup #Login .userInput label:nth-of-type(2) {
   flex-grow: 5;
 }
-#popup #Login label {
-  flex-grow: 1 !important;
+#popup .userInput label {
+  flex-grow: 1;
 }/*# sourceMappingURL=index.css.map */
