@@ -54,10 +54,13 @@ export default async function handler(req, res) {
             }
           } 
           else if (dest == 'short') {
-            if (type == 'merge') data.forEach(data => {
-              sql += `(name, url, id_user) VALUES ('${data.name}', '${data.url}', '${ALLOW}'); `
-            })
-            else sql = `clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${ALLOW}'`;
+            switch (type) {
+              case 'merge' : 
+              data.forEach(data => {
+                sql += `name='${data.name}', url='${data.url}', id_user='${ALLOW}' `
+              })
+              break
+            }
           } 
           else if (dest == 'widget') {
             sql = `
