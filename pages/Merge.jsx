@@ -4,7 +4,7 @@ import { Global } from './Xcontainer'
 const font = Exo_2({ subsets: ['latin'] })
 
 export default function Merge () {
-  const { userConfig, setUserConfig } = Global()
+  const { userConfig, setUserConfig, savedConfig, Valid, setValid } = Global()
   const revalidate = () => setValid({todo:true, widget: true, short: true})
   const pushData = async (dest) => {
     const newData = userConfig[dest].filter(unknown => !savedConfig[dest].find(known => known[`id_${dest}`] === unknown[`id_${dest}`]));

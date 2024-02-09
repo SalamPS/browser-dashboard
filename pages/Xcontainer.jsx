@@ -140,7 +140,7 @@ export default function Xcontainer () {
     }))
 
     if (Login != false && Login != "guest")
-    fetch(`/api/default?dest=widget&id=${id}`, {
+    fetch(`/api/default?dest=${dest}&id=${id}`, {
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'}
     }).catch(err => console.error('Error: ', err));
