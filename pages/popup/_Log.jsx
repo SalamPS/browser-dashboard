@@ -42,7 +42,9 @@ export default function LogIn () {
           short: [],
         })
         await setLogin(false)
-        localStorage.clear();
+        Cookies.remove('id_user')
+        Cookies.remove('NIM')
+        localStorage.clear()
         setTogglePopup(false)
       })()
     }
