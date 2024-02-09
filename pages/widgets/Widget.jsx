@@ -9,24 +9,11 @@ import AddNew from "./_addNew";
 import Quotes from "./_quote";
 import Jokes from "./_jokes";
 
-const Box = ({fetchWidget,type,remove,id,setTogglePopup}) => {
-  const [content, setContent] = useState(<></>)
-
-  useEffect(() => {
-    switch(type) {
-      case 'spotTask' : setContent(<SpotWidget id={id} fetchWidget={fetchWidget} type={type} remove={remove} setTogglePopup={setTogglePopup}/>)
-      break
-      case 'quote' : setContent(<Quotes id={id} remove={remove}/>)
-      break
-      case 'jokes' : setContent(<Jokes id={id} remove={remove}/>)
-      break
-    }
-  }, [])
-
+const Box = ({children}) => {
   return (
     <div className="shadowBox shadowWidget">
       <div className="block">
-        {content}
+        {children}
       </div>
     </div>
   )
@@ -35,8 +22,8 @@ const Box = ({fetchWidget,type,remove,id,setTogglePopup}) => {
 export default function Widget ({storageKey, setValid, savedConfig, userConfig, setUserConfig, Login, setLogin, Mobile, TogglePopup, setTogglePopup, POST, DELETE}) {
   const removeBlock = (id) => {
     const copy = userConfig.widget.find(widget => widget.id_widget == id)
-    localStorage.setItem(`widget_${copy.type}`, JSON.stringify([]))
     DELETE('widget', id)
+    localStorage.setItem(`widget_${copy.type}`, JSON.stringify([]))
   }
 
   const WidgetList = [
@@ -73,7 +60,7 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
   return (!userConfig ? '' 
   : <>
     <div className="top">
-      <div className="shadowBox shadowWelcome">
+      <div className="shadowBox shadowWelcome" onClick={() => {console.log(userConfig.widget)}}>
         <Welcome
           storageKey={storageKey}
           userConfig={userConfig} 
@@ -87,27 +74,38 @@ export default function Widget ({storageKey, setValid, savedConfig, userConfig, 
           DELETE={DELETE}
         />
       </div>
-      {Mobile ? '' : userConfig.widget.map((content, i) => {
-        if (i == 0) return (<Box key={i} 
-        setTogglePopup={setTogglePopup}
-        fetchWidget={fetchWidget}
-        remove={removeBlock}
-        type={content.type}
-        id={content.id_widget}
-      />)})}
+      {Mobile ? '' : 
+      userConfig.widget.map((item, i) => {
+        if (i == 0) {
+          const id = item.id_widget,
+              type = item.type
+
+          return (
+            <Box key={i}>
+              {item.type=='spotTask' ? <SpotWidget id={id} fetchWidget={fetchWidget} type={type} remove={removeBlock} setTogglePopup={setTogglePopup}/> : ''}
+              {item.type=='quote' ? <Quotes id={id} remove={removeBlock}/> : ''}
+              {item.type=='jokes' ? <Jokes id={id} remove={removeBlock}/> : ''}
+            </Box>
+          )
+        }})}
       {Mobile ? '' : (userConfig.widget.length != 0) ? '' : 
       <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig} POST={POST}/>}
     </div>
     {Mobile ? '' : 
     <div className="bot">
-      {userConfig.widget.map((content, i) => {
-        if (i > 0) return (<Box key={i}
-        setTogglePopup={setTogglePopup}
-        fetchWidget={fetchWidget}
-        remove={removeBlock}
-        type={content.type} 
-        id={content.id_widget}
-      />)})}
+      {userConfig.widget.map((item, i) => {
+        if (i > 0) {
+          const id = item.id_widget,
+              type = item.type
+
+          return (
+            <Box key={i}>
+              {item.type=='spotTask' ? <SpotWidget id={id} fetchWidget={fetchWidget} type={type} remove={removeBlock} setTogglePopup={setTogglePopup}/> : ''}
+              {item.type=='quote' ? <Quotes id={id} remove={removeBlock}/> : ''}
+              {item.type=='jokes' ? <Jokes id={id} remove={removeBlock}/> : ''}
+            </Box>
+          )
+        }})}
       {(userConfig.widget.length > 4 || userConfig.widget.length == 0) ? '' : 
       <AddNew userConfig={userConfig} WidgetList={WidgetList} setUserConfig={setUserConfig} POST={POST}/>}
     </div>}

@@ -7,15 +7,15 @@ const TodoList = ({config, markDone}) => {
   // hint -> Less than 3 days from the deadline
   // warn -> Less than 1 day from the deadline
   const formatDead = (req) => {
-    if (req > 2592) return 'safe'
-    else if (req > 864) return 'hint'
+    if (req > 25920000) return 'safe'
+    else if (req > 8640000) return 'hint'
     else return 'warn'
   }
 
   // Format date to be Readable
   // Output Example -> 20/01/24, 12:15:43
   const formatDate = (date) => {
-    date = new Date(date * 1000)
+    date = new Date(date);
     const options = { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
     return date.toLocaleString('en-GB', options);
   };
@@ -25,7 +25,9 @@ const TodoList = ({config, markDone}) => {
       // 
       // Initialize deadline marker
       // Changed it's color according to it's time delta
-      const isDead = formatDead(list.dead - Math.floor(new Date().getTime()/1000))
+      const isDead = formatDead(list.dead - Math.floor(new Date().getTime()))
+      console.log(list.dead)
+      console.log(Math.floor(new Date().getTime()))
       return (
         // If the clear property's value == 2, then hide
         list.clear == 2 ? <div key={i} className="clear2"></div> 

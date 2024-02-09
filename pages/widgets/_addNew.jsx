@@ -4,7 +4,7 @@ export default function AddNew ({userConfig, setUserConfig, WidgetList, POST}) {
   const [Active, setActive] = useState(false)
   const AddNew = (type) => {
     const widget = {
-      id_widget: Math.floor(new Date().getTime()/1000),
+      id_widget: Math.floor(new Date().getTime()),
       type: type,
     }
     POST('widget',widget)

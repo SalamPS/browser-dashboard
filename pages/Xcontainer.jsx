@@ -43,6 +43,7 @@ export default function Xcontainer () {
   //
   useEffect(() => {
     if (Init) localStorage.setItem(storageKey, JSON.stringify(userConfig))
+    console.log(userConfig.widget)
   }, [userConfig]);
   // 
   // Set Client Configuration in Cache for offline usage and API Controls
@@ -108,6 +109,7 @@ export default function Xcontainer () {
   // Fetch Shortcut
   // POST
   const POST = (dest,data) => {
+    data[`id_${dest}`] = Math.floor(new Date().getTime())
     const copy = [...userConfig[dest]]
     copy.push(data)
     setUserConfig(prev => ({
@@ -125,10 +127,14 @@ export default function Xcontainer () {
   // 
   // DELETE
   const DELETE = (dest,id) => {
-    const copy = [...userConfig[dest]].filter(copy => copy[`id_${dest}`] != id)
+    const copy = [...userConfig[dest]]
+    const newCopy = copy.filter(copy => !(copy[`id_${dest}`] == id))
+    console.log('copy:',copy)
+    console.log('newCopy:',newCopy)
+
     setUserConfig(prev => ({
       ...prev,
-      [dest]: copy
+      [dest]: newCopy
     }))
 
     if (Login != false && Login != "guest")

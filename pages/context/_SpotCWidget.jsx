@@ -18,14 +18,14 @@ export default function SpotWidget ({fetchWidget, type, remove, id, setTogglePop
   }, [])
 
   const formatDate = (date) => {
-    date = new Date(date * 1000); // Convert seconds to milliseconds
+    date = new Date(date);
     const options = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' };
     return date.toLocaleString('id-ID', options).replace('pukul', '|');
   };
 
   const formatDead = (req) => {
-    if (req > 259200) return 'safe'
-    else if (req > 86400) return 'hint'
+    if (req > 25920000) return 'safe'
+    else if (req > 8640000) return 'hint'
     else return 'warn'
   }
 
@@ -47,7 +47,7 @@ export default function SpotWidget ({fetchWidget, type, remove, id, setTogglePop
         <Link className="spotTask" key={i}
           href={task.url.startsWith('http') ? task.url : `http://${task.url}`}
           target="_blank">
-          <div className={`mark ${formatDead((task.dead - Math.floor(new Date().getTime()/1000)))}`}></div>
+          <div className={`mark ${formatDead((task.dead - Math.floor(new Date().getTime())))}`}></div>
           <div className="details">
             <p className="title">{task.matkul.split(' ').map(word => word != 'dan' ? word[0] : '')} - {task.name}</p>
             <p className="dead">{formatDate(task.dead)}</p>

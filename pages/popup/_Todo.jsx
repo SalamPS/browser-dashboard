@@ -21,8 +21,7 @@ export default function Todo ({storageKey, config, setConfig, toggle, POST}) {
 
   const handleSubmit = () => {
     const newConfig = {...formData}
-    newConfig.dead = Math.floor((new Date(newConfig.dead).getTime())/1000);
-    newConfig.id_todo = Math.floor((newConfig.id_todo)/1000);
+    newConfig.dead = Math.floor((new Date(newConfig.dead).getTime()));
     POST('todo', newConfig)
     toggle(false)
   }
