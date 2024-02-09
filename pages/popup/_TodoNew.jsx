@@ -3,6 +3,7 @@ import { Global } from "../Xcontainer"
 
 import ReactDatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
+import Button from "./_Button";
 
 export default function Todo () {
   const { setTogglePopup, POST } = Global()
@@ -66,16 +67,7 @@ export default function Todo () {
           onChange={(e) => handleChange(e.target.name, e.target.value)}
         />
       </label>
-      <div className="button">
-        <button id="cancel" title="Cancel" onClick={(e) => {
-          e.preventDefault()
-          setTogglePopup(false)
-        }}>Cancel</button>
-        <button id="submit" title="Save new List" onClick={(e) => {
-          e.preventDefault()
-          handleSubmit()
-        }}>Post</button>
-      </div>
+      <Button action={[{text: 'Save', action: handleSubmit}]}/>
     </form>
   )
 }

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Global } from "../Xcontainer"
 
+import Button from "./_Button";
 import ReactDatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -74,16 +75,7 @@ export default function TodoEdit () {
           onChange={(e) => handleChange(e.target.name, e.target.value)}
         />
       </label>
-      <div className="button">
-        <button id="cancel" title="Cancel" onClick={(e) => {
-          e.preventDefault()
-          setTogglePopup(false)
-        }}>Cancel</button>
-        <button id="submit" title="Save new List" onClick={(e) => {
-          e.preventDefault()
-          handleSubmit()
-        }}>Post</button>
-      </div>
+      <Button action={[{text: 'Save', action: handleSubmit}]}/>
     </form>
   )
 }
