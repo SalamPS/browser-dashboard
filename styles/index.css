@@ -813,6 +813,7 @@ main {
   border: 1px solid var(--color-font);
   border-radius: 1.3rem;
   overflow: hidden;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: stretch;
