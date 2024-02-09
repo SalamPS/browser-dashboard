@@ -139,6 +139,7 @@ export default function Xcontainer () {
     }).catch(err => console.error(`Error fetching ${dest}: `, err))
   }
   // 
+  // Fetch Shortcut
   // DELETE
   const DELETE = (dest,id) => {
     const copy = [...userConfig[dest]]
@@ -153,6 +154,26 @@ export default function Xcontainer () {
     fetch(`/api/default?dest=${dest}&id=${id}`, {
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'}
+    }).catch(err => console.error('Error: ', err));
+  }
+  // 
+  // Fetch Shortcut
+  // PUT
+  const PUT = (dest,id,data) => {
+    const copy = [...userConfig[dest]]
+    const newCopy = copy.find(copy => (copy[`id_${dest}`] == id))
+    copy[copy.indexOf(newCopy)] = data
+
+    setUserConfig(prev => ({
+      ...prev,
+      [dest]: copy
+    }))
+
+    if (Login != false && Login != "guest")
+    fetch(`/api/default?dest=${dest}&type=single`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
     }).catch(err => console.error('Error: ', err));
   }
   // 
@@ -188,6 +209,7 @@ export default function Xcontainer () {
       setTogglePopup,
       Mobile,
 
+      PUT,
       POST,
       DELETE
     }}

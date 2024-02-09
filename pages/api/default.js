@@ -40,6 +40,7 @@ export default async function handler(req, res) {
             if (type == 'merge') data.forEach(data => {
               sql += `UPDATE todo SET \`title\`='${data.title}', \`Desc\`='${data.Desc}', \`dead\`=${data.dead}, \`Index\`=${data.Index}, \`clear\`=${data.clear} WHERE id_todo=${data.id_todo} AND id_user='${ALLOW}'; `
             })
+            else if (type == 'single') sql = `UPDATE todo SET \`title\`='${data.title}', \`Desc\`='${data.Desc}', \`dead\`=${data.dead}, WHERE id_todo=${data.id_todo} AND id_user='${ALLOW}'; `;
             else sql = `UPDATE todo SET clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${ALLOW}'`;
           } 
           else if (dest == 'short') {

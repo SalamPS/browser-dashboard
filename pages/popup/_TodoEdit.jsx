@@ -7,7 +7,7 @@ import ReactDatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default function TodoEdit () {
-  const { TodoEdit, userConfig, setTogglePopup, POST } = Global()
+  const { TodoEdit, userConfig, setTogglePopup, PUT } = Global()
   const [formData, setFormData] = useState({
     id_todo: TodoEdit,
     title: '',
@@ -31,11 +31,13 @@ export default function TodoEdit () {
     }))
   }
 
-  const handleSubmit = () => {
-    // const newConfig = {...formData}
-    // newConfig.dead = Math.floor((new Date(newConfig.dead).getTime()));
-    // POST('todo', newConfig)
-    // setTogglePopup(false)
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const newConfig = {...formData}
+    newConfig.dead = Math.floor((new Date(newConfig.dead).getTime()));
+    PUT('todo',newConfig.id_todo, newConfig)
+
+    setTogglePopup(false)
   }
 
   return (
