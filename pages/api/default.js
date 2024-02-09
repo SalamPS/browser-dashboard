@@ -36,24 +36,36 @@ export default async function handler(req, res) {
       case 'PUT':
         if (ALLOW) {
           const data = req.body;
+          sql += `UPDATE ${dest} SET `
           if (dest == 'todo') {
-            if (type == 'merge') data.forEach(data => {
-              sql += `UPDATE todo SET \`title\`='${data.title}', \`Desc\`='${data.Desc}', \`dead\`=${data.dead}, \`Index\`=${data.Index}, \`clear\`=${data.clear} WHERE id_todo=${data.id_todo} AND id_user='${ALLOW}'; `
-            })
-            else if (type == 'single') sql = `UPDATE todo SET \`title\`='${data.title}', \`Desc\`='${data.Desc}', \`dead\`=${data.dead}, WHERE id_todo=${data.id_todo} AND id_user='${ALLOW}'; `;
-            else sql = `UPDATE todo SET clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${ALLOW}'`;
+            switch (type) {
+              case 'merge' : 
+              data.forEach(data => {
+                sql += `\`title\`='${data.title}', \`Desc\`='${data.Desc}', \`dead\`=${data.dead}, \`Index\`=${data.Index}, \`clear\`=${data.clear} WHERE id_todo=${data.id_todo} AND id_user='${ALLOW}'; `
+              })
+              break
+
+              case 'single' : 
+                sql += `\`title\`='${data.title}', \`Desc\`='${data.Desc}', \`dead\`=${data.dead}`
+              break
+
+              default:
+                sql += `clear=${2}`
+            }
           } 
           else if (dest == 'short') {
             if (type == 'merge') data.forEach(data => {
               sql += `(name, url, id_user) VALUES ('${data.name}', '${data.url}', '${ALLOW}'); `
             })
-            else sql = `UPDATE todo SET clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${ALLOW}'`;
+            else sql = `clear=${2} WHERE id_todo=${data.id_todo} AND id_user='${ALLOW}'`;
           } 
           else if (dest == 'widget') {
             sql = `
               -- UPDATE todo SET title='title', Desc='desc', dead=dead, \`Index\`=Index, clear=Clear WHERE id_todo=id_todo AND id_user='${ALLOW}'
             `;
           }
+
+          if (type != 'merge') sql += ` WHERE id_todo=${data[`id_${dest}`]} AND id_user='${ALLOW}'`
         }
       break
 
