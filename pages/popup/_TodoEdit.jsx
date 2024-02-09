@@ -31,8 +31,7 @@ export default function TodoEdit () {
     }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = () => {
     const newConfig = {...formData}
     newConfig.dead = Math.floor((new Date(newConfig.dead).getTime()));
     PUT('todo',newConfig.id_todo, newConfig)

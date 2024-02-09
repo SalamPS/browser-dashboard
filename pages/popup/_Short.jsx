@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Global } from "../Xcontainer"
+import Button from "./_Button";
 
 export default function Short () { 
   const { setTogglePopup, POST } = Global() 
@@ -13,8 +14,7 @@ export default function Short () {
   // 
   // Check if available in clearbit
   // 
-  const saveShort = async (e) => {
-    e.preventDefault()
+  const saveShort = async () => {
     const pushShort = async (isValid) => {
       const validated = {...shortFormData}
       validated.favicon = isValid;
@@ -69,9 +69,6 @@ export default function Short () {
         />
       </label>
     </div>
-    <div className="button">
-      <button id="cancel" title="Cancel" onClick={(e) => {e.preventDefault(); setTogglePopup(false)}}>Cancel</button>
-      <button id="submit" type="submit" title="Save new Shortcut" onClick={(e) => {saveShort(e)}}>Submit</button>
-    </div>
+    <Button action={[{text: 'Save', action:saveShort}]}/>
   </form>)
 }

@@ -14,7 +14,7 @@ export default function Button ({action,close}) {
       Exit
     </button>
     {!action ? '' : action.map((action, i) => (
-      <button key={i} id="submit" type="submit" title={action.text} onClick={(e) => {action.action(e)}}>{action.text}</button>
+      <button key={i} id="submit" type="submit" title={action.text} onClick={(e) => {e.preventDefault(); action.action()}}>{action.text}</button>
     ))}
   </div>)
 }

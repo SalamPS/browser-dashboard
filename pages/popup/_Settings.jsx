@@ -28,8 +28,7 @@ export default function Settings () {
       [input]: data
     }))
   }
-  const saveSettings = (e) => {
-    e.preventDefault()
+  const saveSettings = () => {
     setTogglePopup(false)
   }
 

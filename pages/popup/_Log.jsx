@@ -10,9 +10,7 @@ export default function LogIn () {
     token: '',
   })
   // Client Login
-  const handleLogin = async (e) => {
-    e.preventDefault()
-    
+  const handleLogin = async () => {
     if (!Login) {
       fetch(`/api/default?dest=user&id=${LoginData.uname}&token=${LoginData.token}`)
       .then(response => {
