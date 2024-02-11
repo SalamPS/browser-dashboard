@@ -21,7 +21,9 @@ export default function JadwalShalat ({remove, id}) {
     fetch(url)
     .then(async res => {
       const result = await res.json()
+      console.log(result)
       action(result.data)
+      return result.data
     })
     .catch(err => console.error('Error:', err))
   }
@@ -66,7 +68,7 @@ export default function JadwalShalat ({remove, id}) {
 
   const searchCity = () => {
     if (Search) {
-      fetcher(`https://api.myquran.com/v2/sholat/kota/cari/${Search}`,setCities)
+      fetcher(`https://api.myquran.com/v2/sholat/kota/cari/${Search.toLowerCase()}`,setCities)
     }
   }
 
@@ -76,7 +78,7 @@ export default function JadwalShalat ({remove, id}) {
       <i className="bi bi-dash-circle-fill delete" onClick={() => {remove(id)}}></i>
     </h2>
     {City ? 
-    <div className="taskList shalatList view">
+    <div className="shalatList view">
       <Shalat type={'subuh'}/>
       <Shalat type={'dzuhur'}/>
       <Shalat type={'ashar'}/>
@@ -84,7 +86,7 @@ export default function JadwalShalat ({remove, id}) {
       <Shalat type={'isya'}/>
     </div>
     : 
-    <div className="taskList shalatList select">
+    <div className="shalatSelect">
       <form>
         <span className="not">
           Cari lokasi:
@@ -94,11 +96,13 @@ export default function JadwalShalat ({remove, id}) {
             type="text" 
             onChange={(e) => setSearch(e.target.value)}
           />
-          <button onClick={(e) => {e.preventDefault(); searchCity()}}>O</button>
+          <button onClick={(e) => {e.preventDefault(); searchCity();}}>
+            <span className="bi bi-search"></span>
+          </button>
         </div>
       </form>
 
-      {!Search ? '' : <div className="cityList">
+      {!Search ? '' : <div className="shalatList">
         {Cities.map((city,i) => (
           <div key={i} onClick={() => {
             setCity(city.id)

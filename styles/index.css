@@ -658,6 +658,44 @@ main {
   padding: 5px;
 }
 
+.shalatSelect {
+  overflow: hidden;
+  width: 100%;
+  height: calc(100% - 40px);
+}
+.shalatSelect form {
+  overflow: hidden;
+  margin-top: 10px;
+  width: 100%;
+}
+.shalatSelect .search {
+  width: 100%;
+  margin-top: 5px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+}
+.shalatSelect button {
+  color: var(--color-font-flip);
+  margin: 0;
+  width: 20%;
+  cursor: pointer;
+  background-color: var(--color-font);
+}
+.shalatSelect input {
+  width: 80%;
+  transition: 0.2s;
+  border: solid 1px var(--color-line-fade);
+  outline: none;
+  padding: 10px;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.shalatSelect input:active, .shalatSelect input:focus {
+  border-color: var(--color-line);
+}
+
 .watermark {
   display: flex;
   justify-content: center;
