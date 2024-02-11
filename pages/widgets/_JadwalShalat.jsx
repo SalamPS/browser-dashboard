@@ -43,6 +43,16 @@ export default function JadwalShalat ({remove, id}) {
     }
   }, [])
 
+  useEffect(() => {
+    const date = new Date(Date.now())
+    const req = `https://api.myquran.com/v2/sholat/jadwal/${City}/`
+    + (date.getFullYear()) + '-'
+    + (date.getMonth()+1) + '-'
+    + (date.getDate())
+
+    fetcher(req,setData)
+  }, [City])
+
   const Shalat = ({type}) => {
     return (<div className={`shalat ${type}`}>
       <span className="name">
@@ -90,7 +100,9 @@ export default function JadwalShalat ({remove, id}) {
 
       {!Search ? '' : <div className="cityList">
         {Cities.map((city,i) => (
-          <div key={i}>
+          <div key={i} onClick={() => {
+            setCity(city.id)
+          }}>
             {city.lokasi}
           </div>
         ))}
