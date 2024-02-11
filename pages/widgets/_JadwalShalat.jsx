@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { useEffect, useState } from "react"
+import { Chivo_Mono } from "next/font/google";
+const font = Chivo_Mono({ subsets: ['latin'], weight:'400' })
 
 export default function JadwalShalat ({remove, id}) {
   const [City, setCity] = useState('1201')
@@ -35,7 +37,7 @@ export default function JadwalShalat ({remove, id}) {
       <span className="name">
         {type.charAt(0).toUpperCase() + type.slice(1)}
       </span>
-      <span className="time">
+      <span className={`time ${font.className}`}>
         {Data.jadwal[type]}
       </span>
     </div>)
@@ -47,15 +49,15 @@ export default function JadwalShalat ({remove, id}) {
       <i className="bi bi-dash-circle-fill delete" onClick={() => {remove(id)}}></i>
     </h2>
     {City ? 
-    <div className="view">
+    <div className="taskList shalatList view">
       <Shalat type={'subuh'}/>
       <Shalat type={'dzuhur'}/>
       <Shalat type={'ashar'}/>
       <Shalat type={'maghrib'}/>
       <Shalat type={'isya'}/>
-    </div> 
+    </div>
     : 
-    <div className="select">
+    <div className="taskList shalatList">
     </div>}
   </>)
 }

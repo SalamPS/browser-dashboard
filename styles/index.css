@@ -646,6 +646,18 @@ main {
   background-color: var(--color-warn);
 }
 
+.shalatList {
+  margin-top: 10px !important;
+  height: calc(100% - 40px);
+  overflow: scroll;
+}
+.shalatList .shalat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
+
 .watermark {
   display: flex;
   justify-content: center;
