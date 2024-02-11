@@ -23,10 +23,10 @@ const Box = ({children}) => {
 
 export default function Widget () {
   const { userConfig, Login, Mobile, DELETE } = Global()
-  const removeBlock = (id) => {
+  const removeBlock = (id,def) => {
     const copy = userConfig.widget.find(widget => widget.id_widget == id)
     DELETE('widget', id)
-    localStorage.setItem(`widget_${copy.type}`, JSON.stringify([]))
+    localStorage.setItem(`widget_${copy.type}`, JSON.stringify(def ? def : []))
   }
 
   const WidgetList = [

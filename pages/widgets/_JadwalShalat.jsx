@@ -5,9 +5,11 @@ import { Chivo_Mono } from "next/font/google";
 const font = Chivo_Mono({ subsets: ['latin'], weight:'400' })
 
 export default function JadwalShalat ({remove, id}) {
-  const [Cities, setCities] = useState([{id: "", lokasi: ""}])
+  const def = {id: "", lokasi: ""}
+
+  const [Cities, setCities] = useState([{...def}])
   const [Search, setSearch] = useState('')
-  const [City, setCity] = useState({id: "", lokasi: ""})
+  const [City, setCity] = useState({...def})
   const [Data, setData] = useState(
     {
       id:0,
@@ -37,7 +39,7 @@ export default function JadwalShalat ({remove, id}) {
   }
   
   useEffect(() => {
-    const known = JSON.parse(localStorage.getItem('location'))
+    const known = JSON.parse(localStorage.getItem('widget_JadwalShalat'))
     if (City.id || known) {
       setCity(known)
       fetcher(today(),setData)
@@ -68,7 +70,7 @@ export default function JadwalShalat ({remove, id}) {
   return ( <>
     <h2>
       <span>Jadwal Shalat</span>
-      <i className="bi bi-dash-circle-fill delete" onClick={() => {remove(id)}}></i>
+      <i className="bi bi-dash-circle-fill delete" onClick={() => {remove(id,{...def})}}></i>
     </h2>
     {City.id ? 
     <div className="shalatList view">
@@ -99,7 +101,7 @@ export default function JadwalShalat ({remove, id}) {
         {Cities.map((city,i) => (
           <div key={i} className="city" onClick={() => {
             setCity(city)
-            localStorage.setItem('location', JSON.stringify(city))
+            localStorage.setItem('widget_JadwalShalat', JSON.stringify(city))
           }}>
             {city.lokasi}
           </div>
