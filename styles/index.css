@@ -666,7 +666,17 @@ main {
 .shalatSelect form {
   overflow: hidden;
   margin-top: 10px;
+  margin-bottom: 5px;
   width: 100%;
+}
+.shalatSelect .city {
+  cursor: pointer;
+  transition: 0.2s;
+  padding-left: 5px;
+  padding-bottom: 5px;
+}
+.shalatSelect .city:hover {
+  padding-left: 10px;
 }
 .shalatSelect .search {
   width: 100%;
@@ -691,9 +701,10 @@ main {
   padding: 10px;
   font-size: 1rem;
   background-color: rgba(0, 0, 0, 0.1);
+  color: var(--color-font-fade);
 }
 .shalatSelect input:active, .shalatSelect input:focus {
-  border-color: var(--color-line);
+  color: var(--color-font);
 }
 
 .watermark {

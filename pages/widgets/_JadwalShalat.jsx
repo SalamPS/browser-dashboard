@@ -104,7 +104,7 @@ export default function JadwalShalat ({remove, id}) {
 
       {!Search ? '' : <div className="shalatList">
         {Cities.map((city,i) => (
-          <div key={i} onClick={() => {
+          <div key={i} className="city" onClick={() => {
             setCity(city.id)
           }}>
             {city.lokasi}
