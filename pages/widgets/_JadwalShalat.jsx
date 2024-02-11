@@ -5,7 +5,9 @@ import { Chivo_Mono } from "next/font/google";
 const font = Chivo_Mono({ subsets: ['latin'], weight:'400' })
 
 export default function JadwalShalat ({remove, id}) {
-  const [City, setCity] = useState('1201')
+  const [Search, setSearch] = useState('')
+  const [Cities, setCities] = useState([])
+  const [City, setCity] = useState('')
   const [Data, setData] = useState(
     {
       id:0,
@@ -57,7 +59,24 @@ export default function JadwalShalat ({remove, id}) {
       <Shalat type={'isya'}/>
     </div>
     : 
-    <div className="taskList shalatList">
+    <div className="taskList shalatList select">
+      <form>
+        <span className="not">
+          Cari lokasi:
+        </span>
+        <div className="search">
+          <input type="text" />
+          <button>O</button>
+        </div>
+      </form>
+
+      {!Search ? '' : <div className="cityList">
+        {Cities.map((city,i) => (
+          <div key={i}>
+
+          </div>
+        ))}
+      </div>}
     </div>}
   </>)
 }
