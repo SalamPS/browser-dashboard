@@ -176,6 +176,9 @@ main {
     order: 2;
   }
 }
+.shadowBox.shadowTodo:hover .add {
+  opacity: 1;
+}
 .shadowBox.shadowWelcome {
   overflow: hidden;
   position: relative;
@@ -279,6 +282,7 @@ main {
   font-size: 1.5rem;
 }
 .list.add {
+  opacity: 0.3;
   color: var(--color-font-fade);
   align-items: center;
   justify-content: center;
@@ -332,6 +336,9 @@ main {
 .box .top, .box .bot {
   display: flex;
 }
+.box:hover .empty {
+  opacity: 1;
+}
 
 .block {
   padding: 30px;
@@ -369,7 +376,9 @@ main {
   opacity: 0.1;
 }
 .block.empty {
+  opacity: 0.3;
   padding: 0;
+  transition: color 0.2s, border-style 0.2s, opacity 0.2s;
   width: calc(33.3333333333% - 40px - 4px);
   margin: 0 0 40px 40px;
   border-color: var(--color-main-semi);
