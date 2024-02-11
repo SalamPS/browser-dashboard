@@ -645,6 +645,9 @@ main {
 .spotTask .mark.warn {
   background-color: var(--color-warn);
 }
+.spotTask .dead {
+  font-size: 0.9rem;
+}
 
 .shalatList {
   margin-top: 10px !important;
