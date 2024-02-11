@@ -5,8 +5,8 @@ import { Chivo_Mono } from "next/font/google";
 const font = Chivo_Mono({ subsets: ['latin'], weight:'400' })
 
 export default function JadwalShalat ({remove, id}) {
+  const [Cities, setCities] = useState([{id: "", lokasi: ""}])
   const [Search, setSearch] = useState('')
-  const [Cities, setCities] = useState([])
   const [City, setCity] = useState('')
   const [Data, setData] = useState(
     {
@@ -16,6 +16,15 @@ export default function JadwalShalat ({remove, id}) {
       jadwal:{tanggal:"", imsak:"", subuh:"", terbit:"", dhuha:"", dzuhur:"", ashar:"", maghrib:"", isya:"", date:""}
     }
   )
+
+  const fetcher = (url,action) => {
+    fetch(url)
+    .then(async res => {
+      const result = await res.json()
+      action(result.data)
+    })
+    .catch(err => console.error('Error:', err))
+  }
   
   useEffect(() => {
     if (City) {
@@ -45,6 +54,12 @@ export default function JadwalShalat ({remove, id}) {
     </div>)
   }
 
+  const searchCity = () => {
+    if (Search) {
+      fetcher(`https://api.myquran.com/v2/sholat/kota/cari/${Search}`,setCities)
+    }
+  }
+
   return ( <>
     <h2>
       <span>Jadwal Shalat</span>
@@ -65,15 +80,18 @@ export default function JadwalShalat ({remove, id}) {
           Cari lokasi:
         </span>
         <div className="search">
-          <input type="text" />
-          <button>O</button>
+          <input 
+            type="text" 
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button onClick={(e) => {e.preventDefault(); searchCity()}}>O</button>
         </div>
       </form>
 
       {!Search ? '' : <div className="cityList">
         {Cities.map((city,i) => (
           <div key={i}>
-
+            {city.lokasi}
           </div>
         ))}
       </div>}
