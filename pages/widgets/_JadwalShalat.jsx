@@ -37,7 +37,11 @@ export default function JadwalShalat ({remove, id}) {
   }
   
   useEffect(() => {
-    if (City.id) fetcher(today(),setData)
+    const known = JSON.parse(localStorage.getItem('location'))
+    if (City.id || known) {
+      setCity(known)
+      fetcher(today(),setData)
+    }
   }, [])
 
   useEffect(() => {
