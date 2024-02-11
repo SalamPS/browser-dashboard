@@ -7,7 +7,7 @@ const font = Chivo_Mono({ subsets: ['latin'], weight:'400' })
 export default function JadwalShalat ({remove, id}) {
   const [Cities, setCities] = useState([{id: "", lokasi: ""}])
   const [Search, setSearch] = useState('')
-  const [City, setCity] = useState('')
+  const [City, setCity] = useState({id: "", lokasi: ""})
   const [Data, setData] = useState(
     {
       id:0,
@@ -21,38 +21,27 @@ export default function JadwalShalat ({remove, id}) {
     fetch(url)
     .then(async res => {
       const result = await res.json()
-      console.log(result)
       action(result.data)
       return result.data
     })
     .catch(err => console.error('Error:', err))
   }
-  
-  useEffect(() => {
-    if (City) {
-      const date = new Date(Date.now())
-      const req = `https://api.myquran.com/v2/sholat/jadwal/${City}/`
-      + (date.getFullYear()) + '-'
-      + (date.getMonth()+1) + '-'
-      + (date.getDate())
 
-      fetch(req)
-      .then(async res => {
-        const result = await res.json()
-        setData(result.data)
-      })
-      .catch(err => console.error('Error:', err))
-    }
-  }, [])
-
-  useEffect(() => {
+  const today = () => {
     const date = new Date(Date.now())
-    const req = `https://api.myquran.com/v2/sholat/jadwal/${City}/`
+    const req = `https://api.myquran.com/v2/sholat/jadwal/${City.id}/`
     + (date.getFullYear()) + '-'
     + (date.getMonth()+1) + '-'
     + (date.getDate())
+    return req;
+  }
+  
+  useEffect(() => {
+    if (City.id) fetcher(today(),setData)
+  }, [])
 
-    fetcher(req,setData)
+  useEffect(() => {
+    if (City.id) fetcher(today(),setData)
   }, [City])
 
   const Shalat = ({type}) => {
@@ -77,7 +66,7 @@ export default function JadwalShalat ({remove, id}) {
       <span>Jadwal Shalat</span>
       <i className="bi bi-dash-circle-fill delete" onClick={() => {remove(id)}}></i>
     </h2>
-    {City ? 
+    {City.id ? 
     <div className="shalatList view">
       <Shalat type={'subuh'}/>
       <Shalat type={'dzuhur'}/>
@@ -105,7 +94,8 @@ export default function JadwalShalat ({remove, id}) {
       {!Search ? '' : <div className="shalatList">
         {Cities.map((city,i) => (
           <div key={i} className="city" onClick={() => {
-            setCity(city.id)
+            setCity(city)
+            localStorage.setItem('location', JSON.stringify(city))
           }}>
             {city.lokasi}
           </div>

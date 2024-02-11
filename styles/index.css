@@ -690,21 +690,28 @@ main {
   color: var(--color-font-flip);
   margin: 0;
   width: 20%;
+  transition: 0.2s;
   cursor: pointer;
+  background-color: var(--color-font-fade);
+}
+.shalatSelect button:hover {
   background-color: var(--color-font);
 }
 .shalatSelect input {
   width: 80%;
   transition: 0.2s;
-  border: solid 1px var(--color-line-fade);
   outline: none;
   padding: 10px;
   font-size: 1rem;
-  background-color: rgba(0, 0, 0, 0.1);
   color: var(--color-font-fade);
+  border: solid 1px var(--color-line-fade);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .shalatSelect input:active, .shalatSelect input:focus {
   color: var(--color-font);
+}
+.shalatSelect input:hover ~ button {
+  background-color: var(--color-font);
 }
 
 .watermark {
