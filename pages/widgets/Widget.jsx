@@ -2,13 +2,14 @@
 /* eslint-disable react/prop-types */
 'use client'
 
-import { useEffect, useState } from "react";
-import Welcome from "../Welcome";
-import SpotWidget from "./_SpotWidget"
-import AddNew from "./_addNew";
-import Quotes from "./_quote";
-import Jokes from "./_jokes";
 import { Global } from "../Xcontainer";
+import Welcome from "../Welcome";
+import AddNew from "./_addNew";
+
+import SpotWidget from "./_SpotWidget"
+import JadwalShalat from "./_JadwalShalat";
+import Jokes from "./_jokes";
+
 
 const Box = ({children}) => {
   return (
@@ -34,14 +35,15 @@ export default function Widget () {
       type: 'spotTask'
     },
     {
-      name: 'Daily Quote',
-      type: 'quote'
+      name: 'Jadwal Shalat',
+      type: 'JadwalShalat'
     },
     {
       name: 'Dad Jokes',
       type: 'jokes'
     }
   ]
+  
   const fetchWidget = async (dest,setData) => {
     if (Login != false && Login != "guest") {
       try {
@@ -74,7 +76,7 @@ export default function Widget () {
           return (
             <Box key={i}>
               {item.type=='spotTask' ? <SpotWidget id={id} fetchWidget={fetchWidget} type={type} remove={removeBlock}/> : ''}
-              {item.type=='quote' ? <Quotes id={id} remove={removeBlock}/> : ''}
+              {item.type=='JadwalShalat' ? <JadwalShalat id={id} remove={removeBlock}/> : ''}
               {item.type=='jokes' ? <Jokes id={id} remove={removeBlock}/> : ''}
             </Box>
           )
@@ -92,7 +94,7 @@ export default function Widget () {
           return (
             <Box key={i}>
               {item.type=='spotTask' ? <SpotWidget id={id} fetchWidget={fetchWidget} type={type} remove={removeBlock}/> : ''}
-              {item.type=='quote' ? <Quotes id={id} remove={removeBlock}/> : ''}
+              {item.type=='JadwalShalat' ? <JadwalShalat id={id} remove={removeBlock}/> : ''}
               {item.type=='jokes' ? <Jokes id={id} remove={removeBlock}/> : ''}
             </Box>
           )

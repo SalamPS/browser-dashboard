@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-export default function Quotes ({remove, id}) {
+export default function JadwalShalat ({remove, id}) {
   return ( <>
     <h2>
-      <span>Quotes</span>
+      <span>Jadwal Shalat</span>
       <i className="bi bi-dash-circle-fill delete" onClick={() => {remove(id)}}></i>
     </h2>
   </>)
