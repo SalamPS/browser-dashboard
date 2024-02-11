@@ -19,7 +19,7 @@ export default function Welcome () {
       <div className="pad">
         <div className="head">
           <h1>
-            Welcome, {Login ? Login.nama : 'Master'}
+            Halo, {Login ? Login.nama : 'Master'}
             {' '}
             <i className="login bi bi-sliders" onClick={() => {setTogglePopup('Login')}}></i>
           </h1>
